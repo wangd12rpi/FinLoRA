@@ -4,9 +4,10 @@
 
 ### Motivation
 
-Large Language Models (LLMs) have shown remarkable performance, but pre-training and fine-tuning LLMs can be
-computationally expensive. The low-rank and quantization techniques show success. Our project aims to provide a thorough
-evaluation of these techniques with a focus on financial applications.
+The closed-source BloombergGPT was announced in April 2023, then the financial sector started to value FinLLMs. However,
+its train-from-scratch approach requires millions of GPU hours, which is too expensive. Instead, we adopt the LoRA
+fine-tuning approach to leverage open-source models like Llama. The trainable parameters are reduced to only 0.01% of
+the full parameters. The trainable parameters are reduced to as low as only 0.01% of the full parameters.
 
 ### Current XBRL Tasks
 
@@ -19,8 +20,12 @@ evaluation of these techniques with a focus on financial applications.
 
 ### Additional XBRL Tasks
 
+[//]: # (refernec to paper)
+
 Current XBRL tasks are limit in variety and the datasets are new and might be perceived as unreliable, therefore more
 established XBRL tasks are required.
+
+[//]: # (TODO: this table in paper appendix)
 
 | Name                             | Category         | Train samples | Link                                                                                                                          |
 |:---------------------------------|:-----------------|:--------------|:------------------------------------------------------------------------------------------------------------------------------|
@@ -55,6 +60,16 @@ Multiple institutions might want to collaborate for finetuning using combined da
 Differentially Private Low-Rank Adaptation (DP-LoRA) [5] offers an approach using federated learning and by adding noise
 in weight updates to avoid inferring sensitive information from model outputs. Adding zero-knowledge learning on top of
 DP-LoRA allows additional privacy.
+
+[//]: # (Different user base, our model serve community, open-source well, we use finetuning)
+
+[//]: # (assume large amount of user: )
+
+[//]: # (e)
+
+[//]: # (percentage)
+
+[//]: # (compare results with icdcs)
 
 ## References
 
