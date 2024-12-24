@@ -32,12 +32,12 @@ Currently we finetune one LoRA adaptor for every task. Although single-task fine
 not be practical in application.
 
 Mixture of LoRA Experts (LoRA MoE): each LoRA module acts as an expert, a router network assigns the LoRA weights. One
-implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148)[4]. X-LoRA is built on top of huggingface PEFT, therefore
+implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT, therefore
 implementation should be relatively straightforward.
 
 ### Improve Performance and Scalability for Inference
 
-SLoRA[5] is designed for the serving of many LoRA adapters efficiently. It stores all adapters in the memory and
+SLoRA [5] is designed for the serving of many LoRA adapters efficiently. It stores all adapters in the memory and
 fetches the adapters needed to GPU memory. It might be possible to use some of the ideas of SLoRA with LoRA MoE for a
 more
 efficient implementation of LoRA MoE.
