@@ -79,4 +79,4 @@ Adapters, https://arxiv.org/pdf/2311.03285
 
 [6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu,
 Differentially Private Low-Rank Adaptation of Large Language Model Using Federated
-Learning, https://arxiv.org/abs/2312.17493
+Learning, https://arxiv.org/abs/2312.17493 ACM Transactions on Management Information Systems, 2024.
