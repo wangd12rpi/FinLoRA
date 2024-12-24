@@ -7,7 +7,7 @@
 The closed-source BloombergGPT was announced in April 2023, then the financial sector started to value FinLLMs. However,
 its train-from-scratch approach requires millions of GPU hours, which is too expensive. Instead, we adopt the LoRA
 fine-tuning approach to leverage open-source models like Llama. The trainable parameters are reduced to only 0.01% of
-the full parameters. The trainable parameters are reduced to as low as only 0.01% of the full parameters. 
+the full parameters. The trainable parameters are reduced to as low as only 0.01% of the full parameters.  
 
 ### Current XBRL Tasks
 
