@@ -1,4 +1,4 @@
-# FinLoRA: Finetuning Qauntized Financial Large Language Models using Low-Rank Adaptation
+# FinLoRA: Finetuning Qauntized Financial Large Language Models Using Low-Rank Adaptation
 
 
 ### Motivation
