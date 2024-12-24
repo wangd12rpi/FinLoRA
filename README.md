@@ -16,7 +16,6 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 | XBRL Tags Extraction  | XBRL QA  | > 500         | -    |
 | XBRL Value Extraction | XBRL qA  | > 2K          | -    |
 
-## Next Steps
 
 ### Additional XBRL Tasks
 
