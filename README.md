@@ -9,31 +9,23 @@ its train-from-scratch approach requires millions of GPU hours, which is too exp
 fine-tuning approach to leverage open-source models like Llama. The trainable parameters are reduced to only 0.01% of
 the full parameters. The trainable parameters are reduced to as low as only 0.01% of the full parameters.  
 
-### Current XBRL Tasks
+###  XBRL Tasks
 
-| Name                  | Category | Train samples | Link |
-|:----------------------|:---------|:--------------|:-----|
-| XBRL Tags Extraction  | XBRL QA  | > 500         | -    |
-| XBRL Value Extraction | XBRL qA  | > 2K          | -    |
-
-
-### Additional XBRL Tasks
-
-[//]: # (refernec to paper)
-
-Current XBRL tasks are limit in variety and the datasets are new and might be perceived as unreliable, therefore more
-established XBRL tasks are required.
-
-[//]: # (TODO: this table in paper appendix)
-
-| Name                             | Category         | Train samples | Link                                                                                                                          |
-|:---------------------------------|:-----------------|:--------------|:------------------------------------------------------------------------------------------------------------------------------|
-| FiNER                            | XBRL Tagging     | 900K          | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16)                                                                |
-| FNXL                             | XBRL Tagging     | 1K            | [GitHub](https://github.com/soummyaah/FNXL)                                                                                   |
-| XBRL Term                        | XBRL Terminology | -             | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
-| Financial Math                   | Math             | -             | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
-| XBRL Formula Formatted with Tags | XBRL QA          | > 2K          | -                                                                                                                             |
-| XBRL Formula Calculations        | XBRL QA          | > 2K          | -                                                                                                                             |
+| Dataset Name | Type | Train/Test Split | Metrics | Source |
+|---|---|---|---|---|
+| FiNER \[1] | Tagging | 900K / 100K | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
+| FNXL \[2] | Tagging | 1K / 1K | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL) |
+| Warrant Tagging | Tagging | - / - | Accuracy, F1 | - |
+| Tags Extraction | Extraction | 300 / 150 | Accuracy | - |
+| Values Extraction | Extraction | 1K / 150 | Accuracy | - |
+| Formulas | Extraction | 300 / 150 | Accuracy | - |
+| Formula Calculations | Extraction | 1K / 150 | Accuracy | - |
+| Tag Query \[3] | Tagging | - / 50 | FActScore | - |
+| XBRL Term \[4] | Terminology | - / 6K | FActScore | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx) |
+| Financial Math \[4] | Math | - / 1K | Accuracy | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
+| Ratio Formulas \[3] | Math | - / 50 | Accuracy | - |
+| Domain Query to XBRL Reports \[4] | QA | - / 50 | FActScore | - |
+| Numeric Query to XBRL Reports \[4] | QA | - / 50 | FActScore | - |
 
 ### Cross-task Generalization (LoRA MoE)
 
