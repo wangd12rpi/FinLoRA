@@ -1,6 +1,5 @@
 # FinLoRA: Finetuning Quantized Financial Large Language Models Using Low-Rank Adaptation
 
-
 ### Motivation
 
 The closed-source BloombergGPT was announced in April 2023, then the financial sector started to value FinLLMs. However,
@@ -10,21 +9,21 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 
 ### XBRL Datasets
 
-| Dataset Name                       | Type        | Train/Test Split | Metrics      | Source                                                                                                                        |
-|------------------------------------|-------------|------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------|
-| FiNER \[1]                         | Tagging     | 900K / 100K      | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16)                                                                |
-| FNXL \[2]                          | Tagging     | 1K / 1K          | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                                                                                   |
-| Warrant Tagging                    | Tagging     | - / -            | Accuracy, F1 | -                                                                                                                             |
-| Tags Extraction                    | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
-| Values Extraction                  | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
-| Formulas                           | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
-| Formula Calculations               | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
-| Tag Query \[3]                     | Tagging     | - / 50           | FActScore    | -                                                                                                                             |
-| XBRL Term \[4]                     | Terminology | - / 6K           | FActScore    | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
-| Financial Math \[4]                | Math        | - / 1K           | Accuracy     | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
-| Ratio Formulas \[3]                | Math        | - / 50           | Accuracy     | -                                                                                                                             |
-| Domain Query to XBRL Reports \[4]  | QA          | - / 50           | FActScore    | -                                                                                                                             |
-| Numeric Query to XBRL Reports \[4] | QA          | - / 50           | FActScore    | -                                                                                                                             |
+| Dataset Name                        | Type        | Train/Test Split | Metrics      | Source                                                                                                                        |
+|-------------------------------------|-------------|------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------|
+| FiNER \[7]                          | Tagging     | 900K / 100K      | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16)                                                                |
+| FNXL \[8]                           | Tagging     | 1K / 1K          | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                                                                                   |
+| Warrant Tagging                     | Tagging     | - / -            | Accuracy, F1 | -                                                                                                                             |
+| Tags Extraction                     | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
+| Values Extraction                   | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
+| Formulas                            | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
+| Formula Calculations                | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
+| Tag Query \[9]                      | Tagging     | - / 50           | FActScore    | -                                                                                                                             |
+| XBRL Term \[10]                     | Terminology | - / 6K           | FActScore    | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
+| Financial Math \[10]                | Math        | - / 1K           | Accuracy     | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
+| Ratio Formulas \[9]                 | Math        | - / 50           | Accuracy     | -                                                                                                                             |
+| Domain Query to XBRL Reports \[10]  | QA          | - / 50           | FActScore    | -                                                                                                                             |
+| Numeric Query to XBRL Reports \[10] | QA          | - / 50           | FActScore    | -                                                                                                                             |
 
 ### Cross-task Generalization (LoRA MoE)
 
@@ -80,3 +79,30 @@ Adapters, https://arxiv.org/pdf/2311.03285
 [6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu,
 Differentially Private Low-Rank Adaptation of Large Language Model Using Federated
 Learning, https://arxiv.org/abs/2312.17493 ACM Transactions on Management Information Systems, 2024.
+
+[7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.;
+and Paliouras, G. 2022. FiNER: Financial Numeric En
+tity Recognition for XBRL Tagging. In Muresan, S.;
+Nakov, P.; and Villavicencio, A., eds., Proceedings of
+the 60th Annual Meeting of the Association for Compu
+tational Linguistics (Volume 1: Long Papers). Dublin,
+Ireland: Association for Computational Linguistics.
+
+[8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Das-
+gupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric Extreme Labelling: A dataset and benchmarking. In Rogers,
+A.; Boyd-Graber, J.; and Okazaki,
+N., eds., Findings of the Association for Computational
+Linguistics: ACL 2023, 3550–3561. Toronto, Canada:
+Association for Computational Linguistics.
+
+[9] Han, S.; Kang, H.; Jin, B.; Liu, X.-Y.; and Yang,
+S. Y. 2024. XBRL Agent: Leveraging Large Language Models for Financial Report Analysis. In Proceedings of the 5th ACM
+International Conference on
+AI in Finance, ICAIF ’24, 856–864. New York, NY, USA: Association for Computing Machinery. ISBN
+9798400710810.
+
+[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin,
+A.; Borella, L.; Osborne, C.; White, M.; Yang, S.;
+and Yanglet, K. X. X.-Y. L. 2024. A Report on
+Financial Regulations Challenge at COLING 2025.
+arXiv:2412.11159.
