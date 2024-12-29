@@ -27,19 +27,16 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 
 ### Cross-task Generalization (LoRA MoE)
 
-Currently we finetune one LoRA adaptor for every task. Although single-task finetuning have higher performance, it might
-not be practical in application.
+Currently we used single-task finetuning, i.e., finetune a LoRA adaptor for a task, and got higher performance. It is practical for applications.
 
-Mixture of LoRA Experts (LoRA MoE): each LoRA module acts as an expert, a router network assigns the LoRA weights. One
-implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT, therefore
-implementation should be relatively straightforward.
+Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights. One
+implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT, 
+implementation should be easy.
 
 ### Improve Performance and Scalability for Inference
 
-SLoRA [5] is designed for the serving of many LoRA adapters efficiently. It stores all adapters in the memory and
-fetches the adapters needed to GPU memory. It might be possible to use some of the ideas of SLoRA with LoRA MoE for a
-more
-efficient implementation of LoRA MoE.
+SLoRA [5] is designed for the serving of many LoRA adapters efficiently. It stores all adapters in the CPU memory and
+fetches the adapters needed to GPU memory. We will deploy it on a cloud server.
 
 Difficulty: Current SLoRA implementation does not work with HuggingFace, and does not support newer model like Llama 3.
 
