@@ -9,28 +9,36 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 
 ### XBRL Datasets
 
-| Dataset Name                        | Type        | Train/Test Split | Metrics      | Source                                                                                                                        |
-|-------------------------------------|-------------|------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------|
-| FiNER \[7]                          | Tagging     | 900K / 100K      | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16)                                                                |
-| FNXL \[8]                           | Tagging     | 1K / 1K          | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                                                                                   |
-| Warrant Tagging                     | Tagging     | - / -            | Accuracy, F1 | -                                                                                                                             |
-| Tags Extraction                     | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
-| Values Extraction                   | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
-| Formulas                            | Extraction  | 300 / 150        | Accuracy     | -                                                                                                                             |
-| Formula Calculations                | Extraction  | 1K / 150         | Accuracy     | -                                                                                                                             |
-| Tag Query \[9]                      | Tagging     | - / 50           | FActScore    | -                                                                                                                             |
-| XBRL Term \[10]                     | Terminology | - / 6K           | FActScore    | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
-| Financial Math \[10]                | Math        | - / 1K           | Accuracy     | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
-| Ratio Formulas \[9]                 | Math        | - / 50           | Accuracy     | -                                                                                                                             |
-| Domain Query to XBRL Reports \[10]  | QA          | - / 50           | FActScore    | -                                                                                                                             |
-| Numeric Query to XBRL Reports \[10] | QA          | - / 50           | FActScore    | -                                                                                                                             |
+#### Reporting Datasets
+
+| Datasets        | Type    | Train/Test Split | Metrics      | Source                                                         |
+|-----------------|---------|------------------|--------------|----------------------------------------------------------------|
+| FiNER [7]       | Tagging | 900K / 100K      | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
+| FNXL [8]        | Tagging | 1K / 1K          | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                    |
+| Warrant Tagging | Tagging | - / -            | Accuracy, F1 | -                                                              |
+| Tag Query [10]  | Tagging | - / 50           | FActScore    | -                                                              |
+
+#### Analysis Datasets
+
+| Datasets             | Type        | Train/Test Split | Metrics   | Source                                                                                                                        |
+|----------------------|-------------|------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------|
+| Tags Extraction      | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
+| Values Extraction    | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
+| Formulas             | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
+| Formula Calculations | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
+| Financial Math [9]   | Math        | - / 1K           | Accuracy  | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
+| Ratio Formulas [10]  | Math        | - / 50           | Accuracy  | -                                                                                                                             |
+| XBRL Term [9]        | Terminology | - / 6K           | FActScore | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
+| Domain Query [9]     | QA          | - / 50           | FActScore | -                                                                                                                             |
+| Numeric Query [9]    | QA          | - / 50           | FActScore | -                                                                                                                             |
 
 ### Cross-task Generalization (LoRA MoE)
 
-Currently we used single-task finetuning, i.e., finetune a LoRA adaptor for a task, and got higher performance. It is practical for applications.
+Currently we used single-task finetuning, i.e., finetune a LoRA adaptor for a task, and got higher performance. It is
+practical for applications.
 
 Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights. One
-implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT, 
+implementation is [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT,
 implementation should be easy.
 
 ### Improve Performance and Scalability for Inference
@@ -40,12 +48,11 @@ fetches the adapters needed to GPU memory. We will deploy it on a cloud server.
 
 Difficulty: Current SLoRA implementation does not work with HuggingFace, and does not support newer model like Llama 3.
 
-### Federated Learning with Enhanced Privacy
+### Distributed Training with Enhanced Privacy
 
-Multiple institutions might want to collaborate for finetuning using combined data using Federated Learning.
-Differentially Private Low-Rank Adaptation (DP-LoRA) [5] offers an approach using federated learning and by adding noise
-in weight updates to avoid inferring sensitive information from model outputs. Adding zero-knowledge learning on top of
-DP-LoRA allows additional privacy.
+Multiple institutions might want to collaborate for finetuning using their private data. Using zero-knowledge proof in
+the finetuning stage allows enhanced privacy.
+
 
 [//]: # (Different user base, our model serve community, open-source well, we use finetuning)
 
