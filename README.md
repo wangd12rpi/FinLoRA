@@ -32,6 +32,39 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 | Domain Query [9]     | QA          | - / 50           | FActScore | -                                                                                                                             |
 | Numeric Query [9]    | QA          | - / 50           | FActScore | -                                                                                                                             |
 
+### File Structures
+
+```
+FinLoRA
+├── benchmarks
+│   ├── run_evaluate.sh
+│   ├── run_test_all.sh
+│   ├── benchmarks.py
+│   ├── test_all.py
+│   ├── fiqa.py
+│   ├── fpb.py
+│   ├── headline.py
+│   ├── ner.py
+│   ├── nwgi.py
+│   ├── tfns.py
+│   └── xbrl.py
+├── data
+│   ├── gen_fin_data.ipynb
+│   ├── test
+│   │   ├── fingpt_headline_test.jsonl
+│   │   └── fingpt_ner_cls_test.jsonl
+│   ├── train
+│   │   ├── fingpt_headline_train.jsonl
+│   │   ├── fingpt_ner_cls_train.jsonl
+│   │   └── fingpt_sentiment_train.jsonl
+│   └── xbrl_extract.ipynb
+├── environment.yml
+└── src
+    └── finetune
+        ├── script_train.sh
+        ├── train_lora.py
+        └── utils.py
+```
 ### Cross-task Generalization (LoRA MoE)
 
 Currently we used single-task finetuning, i.e., finetune a LoRA adaptor for a task, and got higher performance. It is
