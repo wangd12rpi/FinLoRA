@@ -10,3 +10,7 @@ wandb/
 
 # Ignore train/ft_models folder
 train/ft_models/
+/mamba/
+/xbrl/
+
+xbrl

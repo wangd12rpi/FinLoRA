@@ -1,7 +1,7 @@
 import os
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 from transformers.integrations import TensorBoardCallback
-from transformers import AutoTokenizer, AutoModel, AutoConfig# Model,Tokenizer
+from transformers import AutoTokenizer, AutoModel, AutoConfig  # Model,Tokenizer
 from transformers import DataCollatorForLanguageModeling  # Datacollator
 from transformers import TrainingArguments, Trainer
 from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM, LlamaTokenizerFast, DataCollatorForSeq2Seq, \
@@ -18,14 +18,15 @@ from functools import partial
 from tqdm import tqdm
 import json
 import wandb
-import benchmarks.utils as utils
+
 
 def bytes_to_giga_bytes(bytes):
-  return bytes / 1024 / 1024 / 1024
-    
+    return bytes / 1024 / 1024 / 1024
+
+
 # Trainer
 class ModifiedTrainer(Trainer):
-    def compute_loss(self, model, inputs, num_items_in_batch, return_outputs=False):
+    def compute_loss(self, model, inputs, return_outputs=False):
         return model(
             input_ids=inputs["input_ids"],
             labels=inputs["labels"],
@@ -49,6 +50,7 @@ class ModifiedTrainer(Trainer):
         }
         torch.save(saved_params, os.path.join(output_dir, "adapter_model.bin"))
 
+
 class CastOutputToFloat(torch.nn.Sequential):
     def forward(self, x):
         return super().forward(x).to(torch.float32)
@@ -58,14 +60,14 @@ def get_data(args):
     def preprocess(example, max_seq_length):
         prompt = example["context"]
         target = example["target"]
-        
+
         prompt_ids = tokenizer.encode(prompt)
         target_ids = tokenizer.encode(
             target, add_special_tokens=False)
         input_ids = prompt_ids + target_ids + [config.eos_token_id[0]]
         # print(input_ids, "\n\n")
         return {"input_ids": input_ids, "seq_len": len(prompt_ids)}
-    
+
     def load_dataset_jsonl(name):
         with open(name, "r") as f:
             for line in tqdm(f.readlines()):
@@ -73,7 +75,7 @@ def get_data(args):
                 feature = preprocess(example, args.max_length)
                 # feature["input_ids"] = feature["input_ids"]
                 yield feature
-        
+
     # dataset_list = load_dataset(args.dataset, args.from_remote)
     # dataset_train = datasets.concatenate_datasets([d['train'] for d in dataset_list]).shuffle(seed=42)
 
@@ -93,37 +95,14 @@ def get_data(args):
     # print(dataset['train'][0])
     # return dataset
     # return load_jsonl_dataset(args.dataset, tokenizer)
-    
+
     dataset = datasets.Dataset.from_generator(
-        lambda: load_dataset_jsonl(args.dataset), num_proc = 64
+        lambda: load_dataset_jsonl(args.dataset), num_proc=64
     )
 
     dataset = dataset.train_test_split(test_size=0.05)
     return dataset
-    
 
-# def data_collator(features: list) -> dict:
-#     len_ids = [len(feature["input_ids"]) for feature in features]
-#     longest = max(len_ids)
-#     input_ids = []
-#     labels_list = []
-#     for ids_l, feature in sorted(zip(len_ids, features), key=lambda x: -x[0]):
-#         ids = feature["input_ids"]
-#         seq_len = feature["seq_len"]
-#         labels = (
-#                 [tokenizer.pad_token_id] * (seq_len - 1) + ids[(seq_len - 1):] + [tokenizer.pad_token_id] * (
-#                     longest - ids_l)
-#         )
-#         ids = ids + [tokenizer.pad_token_id] * (longest - ids_l)
-#         _ids = torch.LongTensor(ids)
-#         labels_list.append(torch.LongTensor(labels))
-#         input_ids.append(_ids)
-#     input_ids = torch.stack(input_ids)
-#     labels = torch.stack(labels_list)
-#     return {
-#         "input_ids": input_ids,
-#         "labels": labels,
-#     }
 
 def data_collator(features: list) -> dict:
     len_ids = [len(feature["input_ids"]) for feature in features]
@@ -132,9 +111,9 @@ def data_collator(features: list) -> dict:
     labels_list = []
     for ids_l, feature in sorted(zip(len_ids, features), key=lambda x: -x[0]):
         ids = feature["input_ids"]
-        seq_len = feature["seq_len"] # prompt length
+        seq_len = feature["seq_len"]  # prompt length
         labels = (
-            [-100] * (seq_len - 1) + ids[(seq_len - 1) :] + [-100] * (longest - ids_l)
+                [-100] * (seq_len - 1) + ids[(seq_len - 1):] + [-100] * (longest - ids_l)
         )
         ids = ids + [tokenizer.pad_token_id] * (longest - ids_l)
         _ids = torch.LongTensor(ids)
@@ -146,6 +125,7 @@ def data_collator(features: list) -> dict:
         "input_ids": input_ids,
         "labels": labels,
     }
+
 
 def main(args):
     local_rank = int(os.environ["LOCAL_RANK"])
@@ -160,18 +140,10 @@ def main(args):
         PeftModel
     )
 
-    # Model,Tokenizer, Datacollator
     model_name = args.base_model
-
-    # load data
-    # dataset = datasets.load_from_disk("./data/dataset_new")
-
     dataset = get_data(args)
 
     # Create a timestamp for model saving
-    current_time = datetime.now()
-    formatted_time = current_time.strftime('%Y%m%dT%H%M')
-
     device_map = "auto"
     world_size = int(os.environ.get("WORLD_SIZE", 1))
     # world_size = 1
@@ -182,14 +154,12 @@ def main(args):
 
     # config
     deepspeed_config = args.ds_config
-    # import deepspeed
-    # deepspeed.init_distributed(dist_backend = "gloo")
-
     dataset_name = args.dataset.split('/')[-1]
-    task_name = f"{dataset_name}-{args.base_model.replace('meta-llama-', '')}-{args.quant_bits}bits-r{args.r}".replace("/", "-")
-    
+    task_name = f"{dataset_name}-{args.base_model.replace('meta-llama-', '')}-{args.quant_bits}bits-r{args.r}".replace(
+        "/", "-")
+
     training_args = TrainingArguments(
-        output_dir='./finetuned_models/' + "/" + task_name,
+        output_dir='../../finetuned_models/' + "/" + task_name,
 
         logging_steps=0.1,
         save_steps=args.eval_steps,
@@ -209,7 +179,7 @@ def main(args):
         deepspeed=deepspeed_config,
         torch_compile=False,
         load_best_model_at_end=False,
-        evaluation_strategy="steps",
+        eval_strategy="steps",
         remove_unused_columns=False,
         ddp_find_unused_parameters=False if ddp else None,
         # testing only, comment otherwise
@@ -252,7 +222,6 @@ def main(args):
     )
 
     model = get_peft_model(model, peft_config)
-        
     model.print_trainable_parameters()
 
     model.gradient_checkpointing_enable()
@@ -264,14 +233,6 @@ def main(args):
     model.config.use_cache = (
         False  # silence the warnings. Please re-enable for inference!
     )
-
-    # model.config.use_cache = False
-    # old_state_dict = model.state_dict
-    # model.state_dict = (
-    #     lambda self, *_, **__: get_peft_model_state_dict(
-    #         self, old_state_dict()
-    #     )
-    # ).__get__(model, type(model))
 
     # Train
     writer = SummaryWriter()
@@ -290,8 +251,6 @@ def main(args):
     # save model
     model.save_pretrained(training_args.output_dir)
     print("\n*********\nAfter training:", bytes_to_giga_bytes(torch.cuda.max_memory_allocated()))
-
-    
 
 
 if __name__ == "__main__":
@@ -328,7 +287,7 @@ if __name__ == "__main__":
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
     config = AutoConfig.from_pretrained(model_name, trust_remote_code=True)
-    
+
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
     # Run the main function
@@ -340,4 +299,3 @@ if __name__ == "__main__":
     )
 
     wandb.config = args
-    
