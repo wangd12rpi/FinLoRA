@@ -50,14 +50,9 @@ FinLoRA
 │   └── xbrl.py
 ├── data
 │   ├── gen_fin_data.ipynb
-│   ├── test
-│   │   ├── fingpt_headline_test.jsonl
-│   │   └── fingpt_ner_cls_test.jsonl
-│   ├── train
-│   │   ├── fingpt_headline_train.jsonl
-│   │   ├── fingpt_ner_cls_train.jsonl
-│   │   └── fingpt_sentiment_train.jsonl
 │   └── xbrl_extract.ipynb
+│   ├── test
+│   ├── train
 ├── environment.yml
 └── src
     └── finetune
