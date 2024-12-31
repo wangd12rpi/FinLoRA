@@ -48,7 +48,7 @@ FinLoRA
 │   ├── nwgi.py
 │   ├── tfns.py
 │   └── xbrl.py
-├── data
+├── data 
 │   ├── gen_fin_data.ipynb
 │   └── xbrl_extract.ipynb
 │   ├── test
