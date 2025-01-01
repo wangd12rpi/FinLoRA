@@ -36,10 +36,10 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 
 ```
 FinLoRA
-├── benchmarks
+├── test
 │   ├── run_evaluate.sh
 │   ├── run_test_all.sh
-│   ├── benchmarks.py
+│   ├── test.py
 │   ├── test_all.py
 │   ├── fiqa.py
 │   ├── fpb.py

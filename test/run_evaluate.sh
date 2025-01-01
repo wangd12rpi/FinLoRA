@@ -6,7 +6,7 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3
 
 #---- ner ----
 
-python benchmarks.py \
+python test.py \
 --dataset xbrl_tag \
 --base_model meta-llama/Llama-3.1-8B-Instruct \
 --batch_size 8 \
