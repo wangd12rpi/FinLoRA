@@ -1,21 +1,20 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-from peft import PeftModel, get_peft_model, LoraConfig, TaskType  # 0.4.0
+from peft import PeftModel  # 0.4.0
 import torch
 import argparse
 
-from fpb import test_fpb, test_fpb_mlt
-from fiqa import test_fiqa, test_fiqa_mlt
-from tfns import test_tfns
-from nwgi import test_nwgi
-from headline import test_headline
-from ner import test_ner
+from test.general_fin.fpb import test_fpb
+from test.general_fin.fiqa import test_fiqa
+from test.general_fin.tfns import test_tfns
+from test.general_fin.nwgi import test_nwgi
+from test.general_fin.headline import test_headline
+from test.general_fin.ner import test_ner
 # from convfinqa import test_convfinqa
 from xbrl import test_xbrl
 
 import sys
 
 sys.path.append('../')
-from src.finetune.utils import *
 
 
 def main(args):
@@ -65,6 +64,7 @@ def main(args):
 
     with torch.no_grad():
         for data in args.dataset.split(','):
+            print(data)
             if data == 'fpb':
                 test_fpb(args, model, tokenizer)
             elif data == 'fiqa':
@@ -77,8 +77,8 @@ def main(args):
                 test_headline(args, model, tokenizer)
             elif data == 'ner':
                 test_ner(args, model, tokenizer)
-            elif data == 'xbrl_tag':
-                test_xbrl(args, model, tokenizer)
+            elif "xbrl" in data:
+                test_xbrl(args, model, tokenizer, path=data)
             else:
                 raise ValueError('undefined dataset.')
 

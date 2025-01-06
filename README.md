@@ -22,8 +22,8 @@ the full parameters. The trainable parameters are reduced to as low as only 0.01
 
 | Datasets             | Type        | Train/Test Split | Metrics   | Source                                                                                                                        |
 |----------------------|-------------|------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------|
-| Tags Extraction      | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
-| Values Extraction    | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
+| Tags                 | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
+| Values               | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
 | Formulas             | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
 | Formula Calculations | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
 | Financial Math [9]   | Math        | - / 1K           | Accuracy  | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
@@ -60,6 +60,7 @@ FinLoRA
         ├── train_lora.py
         └── utils.py
 ```
+
 ### Cross-task Generalization (LoRA MoE)
 
 Currently we used single-task finetuning, i.e., finetune a LoRA adaptor for a task, and got higher performance. It is

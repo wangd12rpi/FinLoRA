@@ -13,4 +13,4 @@ train/ft_models/
 /mamba/
 /xbrl/
 
-xbrl
+/finetuned_models/*/checkpoint-*/
