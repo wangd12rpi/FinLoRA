@@ -118,8 +118,4 @@ A.; Boyd-Graber, J.; and Okazaki, N., eds., Findings of the Association for Comp
 [9] Han, S.; Kang, H.; Jin, B.; Xiao-Yang Liu; and Yang, S. Y. 2024. XBRL Agent: Leveraging Large Language Models for Financial Report Analysis. In Proceedings of the 5th ACM
 International Conference on AI in Finance, ICAIF ’24, 856–864. New York, NY, USA:
 
-[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin,
-A.; Borella, L.; Osborne, C.; White, M.; Yang, S.;
-and Yanglet, K. X. X.-Y. L. 2024. A Report on
-Financial Regulations Challenge at COLING 2025.
-arXiv:2412.11159.
+[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin, A.; Borella, L.; Osborne, C.; White, M.; Yang, S.; and Yanglet, K. X. Xiao-Yang Liu. 2024. A Report on Financial Regulations Challenge at COLING 2025. arXiv:2412.11159.
