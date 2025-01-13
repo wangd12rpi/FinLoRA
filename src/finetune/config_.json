@@ -38,5 +38,6 @@
         },
     "fp16": {
         "enabled": true
-        }
+        },
+  "gradient_clipping": 0.5
 }

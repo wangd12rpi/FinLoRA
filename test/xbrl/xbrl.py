@@ -11,7 +11,6 @@ import pandas as pd
 from torch.utils.data import DataLoader
 from functools import partial
 from pathlib import Path
-from src.finetune import utils
 
 dataset_path = {
     "xbrl_tags": "../xbrl/xbrl_xbrl_tags_test.jsonl",
@@ -30,13 +29,13 @@ def evaluate_accuracy(out, target):
 
 
 def test_xbrl(args, model, tokenizer, path="finer,", prompt_fun=None):
-    batch_size = 156
+    batch_size = 128
     results = []
     for data_name in path.split(","):
         if data_name in dataset_path:
 
             instructions = pd.read_json(path_or_buf=dataset_path[data_name], lines=True)
-            instructions = instructions[:3000]
+            instructions = instructions
             # instructions = instructions.head(10)
             # print(f"\n\nPrompt example:\n{instructions['context'][0]}\n\n")
             context = instructions['context'].tolist()
@@ -48,6 +47,7 @@ def test_xbrl(args, model, tokenizer, path="finer,", prompt_fun=None):
 
             for i in tqdm(range(total_steps)):
                 tmp_context = context[i * batch_size: min(len(context), (i + 1) * batch_size)]
+                tmp_context = [x + "Answer:" for x in tmp_context]
                 # tmp_context = [utils.add_xml(x, limit=80000) for x in tmp_context]
                 tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
@@ -57,9 +57,11 @@ def test_xbrl(args, model, tokenizer, path="finer,", prompt_fun=None):
                                    return_token_type_ids=False)
                 for k in tokens.keys():
                     tokens[k] = tokens[k].cuda()
-                res = model.generate(**tokens, max_new_tokens=40, eos_token_id=tokenizer.eos_token_id)
+                res = model.generate(**tokens, max_new_tokens=60, eos_token_id=tokenizer.eos_token_id)
                 res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
-                out_text = [o.split("\n")[2].strip() for o in res_sentences]
+                out_text = ["".join(o.split("\n")[1:]).strip() for o in res_sentences]
+                # print(out_text)
+
                 out_text_list += out_text
                 # torch.cuda.empty_cache()
 

@@ -3,14 +3,14 @@ from peft import PeftModel  # 0.4.0
 import torch
 import argparse
 
-from test.general_fin.fpb import test_fpb
-from test.general_fin.fiqa import test_fiqa
-from test.general_fin.tfns import test_tfns
-from test.general_fin.nwgi import test_nwgi
-from test.general_fin.headline import test_headline
-from test.general_fin.ner import test_ner
+from general_fin.fpb import test_fpb
+from general_fin.fiqa import test_fiqa
+from general_fin.tfns import test_tfns
+from general_fin.nwgi import test_nwgi
+from general_fin.headline import test_headline
+from general_fin.ner import test_ner
 # from convfinqa import test_convfinqa
-from xbrl import test_xbrl
+from xbrl.xbrl import test_xbrl
 
 import sys
 

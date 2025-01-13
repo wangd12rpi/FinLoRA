@@ -172,7 +172,6 @@ def main(args):
         gradient_accumulation_steps=args.grad_accu,
         learning_rate=args.learning_rate,
         weight_decay=0.005,
-
         # ddp_backend = 'gloo',
         # bf16=True,
         fp16=True,
@@ -182,12 +181,11 @@ def main(args):
         eval_strategy="steps",
         remove_unused_columns=False,
         ddp_find_unused_parameters=False if ddp else None,
-        # testing only, comment otherwise
         dataloader_num_workers=64,
         dataloader_pin_memory=True,
         report_to='wandb',
         run_name=task_name,
-        max_grad_norm=1.0
+        max_grad_norm=0.5
     )
 
     bnb_config = BitsAndBytesConfig(
