@@ -8,4 +8,4 @@ To finetune using LoRA with custom dataset:
 
 ```shell
 bash script_train.sh
-```
+``` 
