@@ -2,10 +2,10 @@
 
 ### Motivation
 
-The closed-source BloombergGPT was announced in early 2023, making the financial sector value the potentials of FinLLMs. However,
-its train-from-scratch approach requires millions of GPU hours, which is expensive (around $3 million). 
+The closed-source BloombergGPT， announced in April 2023, made the financial sector value the potentials of FinLLMs. However,
+its train-from-scratch approach took one million GPU hours, which is expensive (around $3 million, at a price of $3 per GPU hour in 2023). 
 
-Leveraging open-source models like Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are reduced to only 0.01% of
+Leveraging open-source models, e.g., Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are reduced to 0.01% of
 the full parameters.
 
 ### XBRL Datasets
