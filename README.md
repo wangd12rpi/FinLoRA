@@ -17,7 +17,7 @@ statements using XBRL. XBRL is based on XML so it is complex and difficult to ge
 We are interested in XBRL reporting and analysis.
 
 - XBRL reporting: Help small- and medium-business (SMBs) report in XBRL format
-- XBRL analysis: Assist the extraction and analysis of XBRL reports.
+- XBRL analysis: Assist the extraction and analysis of XBRL reports. 
 
 #### Reporting Datasets
 
