@@ -2,15 +2,22 @@
 
 ### Motivation
 
-The closed-source BloombergGPT was announced in early 2023, making the financial sector value the potentials of FinLLMs. However,
-its train-from-scratch approach requires millions of GPU hours, which is expensive (around $3 million). 
+The closed-source BloombergGPT was announced in early 2023, making the financial sector value the potentials of FinLLMs.
+However,
+its train-from-scratch approach requires millions of GPU hours, which is expensive (around $3 million).
 
-Leveraging open-source models like Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are reduced to only 0.01% of
-the full parameters.
+Leveraging open-source models like Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are
+reduced to as low as 0.01% of the full parameters.
 
 ### XBRL Datasets
 
-We are interested in XBRL filing and analysis.
+XBRL is a standard format for financial reporting. Regulators like the SEC requires public companies to file financial
+statements using XBRL. XBRL is based on XML so it is complex and difficult to generate and interpret by humans.
+
+We are interested in XBRL reporting and analysis.
+
+- XBRL reporting: Help small- and medium-business (SMBs) report in XBRL format
+- XBRL analysis: Assist the extraction and analysis of XBRL reports.
 
 #### Reporting Datasets
 
@@ -68,7 +75,8 @@ FinLoRA
 
 We started with single-task finetuning, i.e., finetune a LoRA adaptor for a task. We got good performance.
 
-Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as in [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT.
+Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as
+in [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT.
 
 ### Improving Performance and Scalability for Inference Stage
 
@@ -79,7 +87,8 @@ Difficulty: Current SLoRA implementation does not work with HuggingFace, and doe
 
 ### Distributed Training with Enhanced Privacy
 
-Multiple institutions might want to collaborate to finetune a FinLLM using their private datasets. Using zero-Knowledge Proofs (ZKPs) in
+Multiple institutions might want to collaborate to finetune a FinLLM using their private datasets. Using zero-Knowledge
+Proofs (ZKPs) in
 the finetuning stage allows enhanced data privacy.
 
 
@@ -106,16 +115,26 @@ preprint arXiv:2407.11046.
 [4] E.L. Buehler, M.J. Buehler. X-LoRA: Mixture of Low-Rank Adapter Experts, a Flexible Framework for Large Language
 Models with Applications in Protein Mechanics and Design}, https://arxiv.org/abs/2402.07148
 
-[5] Sheng, Ying and Cao, Shiyi and Li. Dacheng and Hooper, et al. S-LoRA: Serving Thousands of Concurrent LoRA Adapters, https://arxiv.org/pdf/2311.03285
+[5] Sheng, Ying and Cao, Shiyi and Li. Dacheng and Hooper, et al. S-LoRA: Serving Thousands of Concurrent LoRA
+Adapters, https://arxiv.org/pdf/2311.03285
 
-[6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu, Differentially Private Low-Rank Adaptation of Large Language Model Using Federated Learning, https://arxiv.org/abs/2312.17493 ACM Transactions on Management Information Systems, 2024.
+[6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu, Differentially Private
+Low-Rank Adaptation of Large Language Model Using Federated Learning, https://arxiv.org/abs/2312.17493 ACM Transactions
+on Management Information Systems, 2024.
 
-[7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.; and Paliouras, G. 2022. FiNER: Financial Numeric Entity Recognition for XBRL Tagging. In Muresan, S.; Nakov, P.; and Villavicencio, A., eds., Proceedings of the 60th Annual Meeting of the Association for Compu tational Linguistics (Volume 1: Long Papers). Dublin, Ireland: Association for Computational Linguistics.
+[7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.; and Paliouras,
+G. 2022. FiNER: Financial Numeric Entity Recognition for XBRL Tagging. In Muresan, S.; Nakov, P.; and Villavicencio, A.,
+eds., Proceedings of the 60th Annual Meeting of the Association for Compu tational Linguistics (Volume 1: Long Papers).
+Dublin, Ireland: Association for Computational Linguistics.
 
-[8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Dasgupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric Extreme Labelling: A dataset and benchmarking. In Rogers,
-A.; Boyd-Graber, J.; and Okazaki, N., eds., Findings of the Association for Computational Linguistics: ACL 2023, 3550–3561. Toronto, Canada.
+[8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Dasgupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric
+Extreme Labelling: A dataset and benchmarking. In Rogers,
+A.; Boyd-Graber, J.; and Okazaki, N., eds., Findings of the Association for Computational Linguistics: ACL 2023,
+3550–3561. Toronto, Canada.
 
-[9] Han, S.; Kang, H.; Jin, B.; Xiao-Yang Liu; and Yang, S. Y. 2024. XBRL Agent: Leveraging Large Language Models for Financial Report Analysis. In Proceedings of the 5th ACM
+[9] Han, S.; Kang, H.; Jin, B.; Xiao-Yang Liu; and Yang, S. Y. 2024. XBRL Agent: Leveraging Large Language Models for
+Financial Report Analysis. In Proceedings of the 5th ACM
 International Conference on AI in Finance, ICAIF ’24, 856–864. New York, NY, USA:
 
-[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin, A.; Borella, L.; Osborne, C.; White, M.; Yang, S.; and Yanglet, K. X. Xiao-Yang Liu. 2024. A Report on Financial Regulations Challenge at COLING 2025. arXiv:2412.11159.
+[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin, A.; Borella, L.; Osborne, C.; White, M.; Yang, S.; and
+Yanglet, K. X. Xiao-Yang Liu. 2024. A Report on Financial Regulations Challenge at COLING 2025. arXiv:2412.11159.

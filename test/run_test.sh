@@ -1,6 +1,6 @@
 # export TRANSFORMERS_NO_ADVISORY_WARNINGS=1
 # export TOKENIZERS_PARALLELISM=0
-export CUDA_VISIBLE_DEVICES=4,5,6,7
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 
 
 
@@ -8,8 +8,8 @@ export CUDA_VISIBLE_DEVICES=4,5,6,7
 
 python test.py \
 --dataset xbrl_finer \
---base_model meta-llama/Llama-3.1-8B-Instruct \
+--base_model deepseek-ai/DeepSeek-R1-Distill-Llama-8B \
 --batch_size 8 \
 --quant_bits 8 \
-# --peft_model ../finetuned_models/finer_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-4bits-r4 \
+# --peft_model ../src/finetune/OpenFedLLM/output/fingpt-sentiment-train_20000_fedavg_c4s2_i10_b8a1_l512_r8a16_20250116215837/checkpoint-200/
 

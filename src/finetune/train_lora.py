@@ -76,26 +76,6 @@ def get_data(args):
                 # feature["input_ids"] = feature["input_ids"]
                 yield feature
 
-    # dataset_list = load_dataset(args.dataset, args.from_remote)
-    # dataset_train = datasets.concatenate_datasets([d['train'] for d in dataset_list]).shuffle(seed=42)
-
-    # # if args.test_dataset:
-    # #     dataset_list = load_dataset(args.test_dataset, args.from_remote)
-    # dataset_test = datasets.concatenate_datasets([d['test'] for d in dataset_list])
-
-    # dataset = datasets.DatasetDict({'train': dataset_train, 'test': dataset_test})
-    # # Display first sample from the training dataset
-    # print(dataset['train'][0])
-    # # Filter out samples that exceed the maximum token length and remove unused columns
-    # dataset = dataset.map(partial(tokenize, args, tokenizer))
-    # print('original dataset length: ', len(dataset['train']))
-    # dataset = dataset.filter(lambda x: not x['exceed_max_length'])
-    # print('filtered dataset length: ', len(dataset['train']))
-    # dataset = dataset.remove_columns(['instruction', 'input', 'output', 'exceed_max_length'])
-    # print(dataset['train'][0])
-    # return dataset
-    # return load_jsonl_dataset(args.dataset, tokenizer)
-
     dataset = datasets.Dataset.from_generator(
         lambda: load_dataset_jsonl(args.dataset), num_proc=64
     )
@@ -185,7 +165,7 @@ def main(args):
         dataloader_pin_memory=True,
         report_to='wandb',
         run_name=task_name,
-        max_grad_norm=0.5
+        max_grad_norm=1
     )
 
     bnb_config = BitsAndBytesConfig(

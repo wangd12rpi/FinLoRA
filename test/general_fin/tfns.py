@@ -64,9 +64,9 @@ def test_tfns(args, model, tokenizer, prompt_fun=None):
         # tokens.pop('token_type_ids')
         for k in tokens.keys():
             tokens[k] = tokens[k].cuda()
-        res = model.generate(**tokens, max_new_tokens=20, eos_token_id=tokenizer.eos_token_id)
+        res = model.generate(**tokens, max_new_tokens=5, eos_token_id=tokenizer.eos_token_id)
         res_sentences = [tokenizer.decode(i, skip_special_tokens=False) for i in res]
-        out_text = [o.split("Answer: ")[1] for o in res_sentences]
+        out_text = [o.split("Answer:")[1] for o in res_sentences]
         # print(res_sentences[0])
         out_text_list += out_text
         torch.cuda.empty_cache()

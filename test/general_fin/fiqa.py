@@ -99,7 +99,7 @@ def test_fiqa(args, model, tokenizer, prompt_fun=add_instructions):
         for k in tokens.keys():
             tokens[k] = tokens[k].cuda()
 
-        res = model.generate(**tokens, max_new_tokens=20, eos_token_id=tokenizer.eos_token_id)
+        res = model.generate(**tokens, max_new_tokens=5, eos_token_id=tokenizer.eos_token_id)
         res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
         # tqdm.write(f'{i}: {res_sentences[0]}')
         out_text = [o.split("Answer: ")[1] for o in res_sentences]

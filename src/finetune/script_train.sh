@@ -39,7 +39,7 @@ tmux new-session -d -s "training_job_${task}" '
     --max_length 128000 \
     --batch_size 4 \
     --grad_accu 4 \
-    --learning_rate 1e-5 \
+    --learning_rate 3e-5 \
     --num_epochs 4 \
     --log_interval 10 \
     --warmup_ratio 0.03 \

@@ -1,5 +1,6 @@
 import warnings
 
+
 warnings.filterwarnings("ignore")
 
 from sklearn.metrics import accuracy_score, f1_score
@@ -29,7 +30,7 @@ def evaluate_accuracy(out, target):
 
 
 def test_xbrl(args, model, tokenizer, path="finer,", prompt_fun=None):
-    batch_size = 128
+    batch_size = 256
     results = []
     for data_name in path.split(","):
         if data_name in dataset_path:
@@ -57,7 +58,7 @@ def test_xbrl(args, model, tokenizer, path="finer,", prompt_fun=None):
                                    return_token_type_ids=False)
                 for k in tokens.keys():
                     tokens[k] = tokens[k].cuda()
-                res = model.generate(**tokens, max_new_tokens=60, eos_token_id=tokenizer.eos_token_id)
+                res = model.generate(**tokens, max_new_tokens=60, eos_token_id=tokenizer.eos_token_id, temperature=0.7)
                 res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
                 out_text = ["".join(o.split("\n")[1:]).strip() for o in res_sentences]
                 # print(out_text)

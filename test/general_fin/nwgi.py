@@ -77,7 +77,7 @@ def test_nwgi(args, model, tokenizer, prompt_fun=None):
         # tokens.pop('token_type_ids')
         for k in tokens.keys():
             tokens[k] = tokens[k].cuda()
-        res = model.generate(**tokens, max_new_tokens=20, eos_token_id=tokenizer.eos_token_id)
+        res = model.generate(**tokens, max_new_tokens=5, eos_token_id=tokenizer.eos_token_id)
         res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
         out_text = [o.split("Answer:")[1].strip() for o in res_sentences]
         # print(out_text)
