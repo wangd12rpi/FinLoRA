@@ -59,15 +59,22 @@ FinLoRA
 │   └── xbrl.py
 ├── data 
 │   ├── gen_fin_data.ipynb
-│   └── xbrl_extract.ipynb
+│   ├── xbrl_extract.ipynb
+│   ├── process_multitask_data.py
+│   ├── process_xbrl_data.py
+│   ├── process_xbrl_formula.py
+│   ├── process_xbrl_tag.py
 │   ├── test
 │   ├── train
 ├── environment.yml
 └── src
+    ├── LoRAMoE 
+    ├── OpenFedLLM
     └── finetune
         ├── script_train.sh
         ├── train_lora.py
         └── utils.py
+        
 ```
 
 ### Cross-task Generalization (Mixture of LoRA Experts)
