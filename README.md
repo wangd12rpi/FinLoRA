@@ -1,47 +1,67 @@
 # FinLoRA: Finetuning Quantized Financial Large Language Models Using Low-Rank Adaptation on GPUs
 
-### Motivation
+## Motivation
 
-The closed-source BloombergGPT, announced in April 2023, made the financial sector value the potentials of FinLLMs. However,
-its train-from-scratch approach took one million GPU hours, which is expensive (around $3 million, at a price of $3 per GPU hour in 2023). 
+The closed-source BloombergGPT, announced in April 2023, made the financial sector value the potentials of FinLLMs.
+However,
+its train-from-scratch approach took one million GPU hours, which is expensive (around $3 million, at a price of $3 per
+GPU hour in 2023).
 
-Leveraging open-source models, e.g., Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are reduced to 0.01% of
+Leveraging open-source models, e.g., Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are
+reduced to 0.01% of
 the full parameters.
 
-### XBRL Datasets
+## Financial Tasks
+
+We want our models to have the ability to perform both general financial tasks and XBRL related tasks. We select the
+following datasets to evaluate the models performance.
+
+### General Financial Tasks
+
+| Datasets | Type                     | # Test Samples | Metrics      | Source                                                                          |   
+|----------|--------------------------|----------------|--------------|---------------------------------------------------------------------------------|
+| FPB      | Sentiment Analysis       | 970            | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/en-fpb)                           |
+| FiQA SA  | Sentiment Analysis       | 234            | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
+| TFNS     | Sentiment Analysis       | 2.4K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
+| NWGI     | Sentiment Analysis       | 4.1K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/NWGI_test)                        |
+| Headline | Headline Analysis        | 20.5K          | Accuracy, F1 | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
+| NER      | Named Entity Recognition | 3.5K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/FinGPT/fingpt-ner-cls)                     |
+
+### XBRL tasks
 
 XBRL is a standard format for financial reporting. Regulators like the SEC requires public companies to file financial
-statements using XBRL. XBRL is based on XML so it is complex and difficult to generate and interpret by humans.
+statements using XBRL. XBRL is based on XML so it is complex and difficult to generate and interpret by humans. We are
+interested in XBRL reporting and analysis.
 
-We are interested in XBRL reporting and analysis.
+#### XBRL Reporting Tasks: Help small and medium-business (SMBs) report in XBRL format
 
-- XBRL reporting: Help small- and medium-business (SMBs) report in XBRL format
-- XBRL analysis: Assist the extraction and analysis of XBRL reports. 
+| Datasets      | Type    | # Test Samples | Metrics      | Source                                                         |
+|---------------|---------|----------------|--------------|----------------------------------------------------------------|
+| FiNER-139 [7] | Tagging | 100K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
+| FNXL [8]      | Tagging | 1K             | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                    |
 
-#### Reporting Datasets
+#### XBRL Analysis Tasks: Assist the extraction and analysis of XBRL reports.
 
-| Datasets        | Type    | Train/Test Split | Metrics      | Source                                                         |
-|-----------------|---------|------------------|--------------|----------------------------------------------------------------|
-| FiNER [7]       | Tagging | 900K / 100K      | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
-| FNXL [8]        | Tagging | 1K / 1K          | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                    |
-| Warrant Tagging | Tagging | - / -            | Accuracy, F1 | -                                                              |
-| Tag Query [10]  | Tagging | - / 50           | FActScore    | -                                                              |
+| Datasets             | Type            | # Test Samples | Metrics  | Source                                                                                                                        |
+|----------------------|-----------------|----------------|----------|-------------------------------------------------------------------------------------------------------------------------------|
+| Financial Math [9]   | Math            | 1K             | Accuracy | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
+| Tags Extraction      | XBRL Extraction | 150            | Accuracy | -                                                                                                                             |
+| Values Extraction    | XBRL Extraction | 150            | Accuracy | -                                                                                                                             |
+| Formula Calculations | XBRL Extraction | 150            | Accuracy | -                                                                                                                             |
 
-#### Analysis Datasets
+## Training Datasets
 
-| Datasets             | Type        | Train/Test Split | Metrics   | Source                                                                                                                        |
-|----------------------|-------------|------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------|
-| Tags                 | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
-| Values               | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
-| Formulas             | Extraction  | 300 / 150        | Accuracy  | -                                                                                                                             |
-| Formula Calculations | Extraction  | 1K / 150         | Accuracy  | -                                                                                                                             |
-| Financial Math [9]   | Math        | - / 1K           | Accuracy  | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
-| Ratio Formulas [10]  | Math        | - / 50           | Accuracy  | -                                                                                                                             |
-| XBRL Term [9]        | Terminology | - / 6K           | FActScore | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx)                                |
-| Domain Query [9]     | QA          | - / 50           | FActScore | -                                                                                                                             |
-| Numeric Query [9]    | QA          | - / 50           | FActScore | -                                                                                                                             |
+We selected the following collection of training datasets.
 
-### File Structures
+| Datasets              | Type                     | # Train Samples | Source                                                                          |   
+|-----------------------|--------------------------|-----------------|---------------------------------------------------------------------------------|
+| Sentiment Train       | Sentiment Analysis       | 76.8K           | [HF](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train)             |
+| Headline              | Headline Analysis        | 82.2K           | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
+| NER                   | Named Entity Recognition | 13.5K           | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
+| FiNER-139             | XBRL Tagging             | 900K            | [HF](https://huggingface.co/datasets/TheFinAI/NWGI_test)                        |
+| XBRL Extraction Train | XBRL Extraction          | -               | -                                                                               |
+
+## File Structures
 
 ```
 FinLoRA
@@ -76,6 +96,8 @@ FinLoRA
         └── utils.py
         
 ```
+
+## Scenarios
 
 ### Cross-task Generalization (Mixture of LoRA Experts)
 
