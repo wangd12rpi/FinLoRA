@@ -16,6 +16,11 @@ the full parameters.
 We want our models to have the ability to perform both general financial tasks and XBRL related tasks. We select the
 following datasets to evaluate the models performance.
 
+**About XBRL**: XBRL is a standard format for financial reporting. Regulators like the SEC requires public companies to file financial
+statements using XBRL. XBRL is based on XML so it is complex and difficult to generate and interpret by humans. We are
+interested in XBRL reporting and analysis.  
+**XBRL Reporting**: Helping small and medium-business (SMBs) report in XBRL format.  
+**XBRL Analysis**: Assisting the extraction and analysis of XBRL reports.
 ### General Financial Tasks
 
 | Datasets | Type                     | # Test Samples | Metrics      | Source                                                                          |   
@@ -29,18 +34,15 @@ following datasets to evaluate the models performance.
 
 ### XBRL tasks
 
-XBRL is a standard format for financial reporting. Regulators like the SEC requires public companies to file financial
-statements using XBRL. XBRL is based on XML so it is complex and difficult to generate and interpret by humans. We are
-interested in XBRL reporting and analysis.
 
-#### XBRL Reporting Tasks: Help small and medium-business (SMBs) report in XBRL format
+#### XBRL Reporting
 
 | Datasets      | Type    | # Test Samples | Metrics      | Source                                                         |
 |---------------|---------|----------------|--------------|----------------------------------------------------------------|
 | FiNER-139 [7] | Tagging | 100K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
 | FNXL [8]      | Tagging | 1K             | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                    |
 
-#### XBRL Analysis Tasks: Assist the extraction and analysis of XBRL reports.
+#### XBRL Analysis
 
 | Datasets             | Type            | # Test Samples | Metrics  | Source                                                                                                                        |
 |----------------------|-----------------|----------------|----------|-------------------------------------------------------------------------------------------------------------------------------|
