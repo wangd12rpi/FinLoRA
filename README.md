@@ -53,13 +53,13 @@ interested in XBRL reporting and analysis.
 
 We selected the following collection of training datasets.
 
-| Datasets              | Type                     | # Train Samples | Source                                                                          |   
-|-----------------------|--------------------------|-----------------|---------------------------------------------------------------------------------|
-| Sentiment Train       | Sentiment Analysis       | 76.8K           | [HF](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train)             |
-| Headline              | Headline Analysis        | 82.2K           | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
-| NER                   | Named Entity Recognition | 13.5K           | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
-| FiNER-139             | XBRL Tagging             | 900K            | [HF](https://huggingface.co/datasets/TheFinAI/NWGI_test)                        |
-| XBRL Extraction Train | XBRL Extraction          | -               | -                                                                               |
+| Datasets        | Type                     | # Train Samples | Source                                                                          |   
+|-----------------|--------------------------|-----------------|---------------------------------------------------------------------------------|
+| Sentiment       | Sentiment Analysis       | 76.8K           | [HF](https://huggingface.co/datasets/FinGPT/fingpt-sentiment-train)             |
+| Headline        | Headline Analysis        | 82.2K           | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
+| NER             | Named Entity Recognition | 13.5K           | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
+| FiNER-139       | XBRL Tagging             | 900K            | [HF](https://huggingface.co/datasets/TheFinAI/NWGI_test)                        |
+| XBRL Extraction | XBRL Extraction          | -               | -                                                                               |
 
 ## File Structures
 
