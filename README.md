@@ -7,9 +7,8 @@ However,
 its train-from-scratch approach took one million GPU hours, which is expensive (around $3 million, at a price of $3 per
 GPU hour in 2023).
 
-Leveraging open-source models, e.g., Llama, we adopt the LoRA fine-tuning method. The number of trainable parameters are
-reduced to 0.01% of
-the full parameters.
+Leveraging open-source models, e.g., Llama3 and DeepSeek's V3/R1 models, we adopt the LoRA fine-tuning method. The number of trainable parameters are
+reduced to 0.01% of the full parameters, while the compute cost is less than $100.
 
 ## Financial Tasks
 
