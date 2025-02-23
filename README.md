@@ -27,7 +27,7 @@ interested in XBRL reporting and analysis.
 | FiQA SA  | Sentiment Analysis       | 234            | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
 | TFNS     | Sentiment Analysis       | 2.4K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
 | NWGI     | Sentiment Analysis       | 4.1K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/NWGI_test)                        |
-| Headline | Headline Analysis        | 20.5K          | Accuracy, F1 | [HF](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment) |
+| Headline | Headline Analysis        | 20.5K          | Accuracy, F1 | [HF](https://huggingface.co/datasets/FinGPT/fingpt-headline-cls) |
 | NER      | Named Entity Recognition | 3.5K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/FinGPT/fingpt-ner-cls)                     |
 
 ### XBRL tasks
