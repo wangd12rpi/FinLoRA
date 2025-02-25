@@ -21,7 +21,7 @@ interested in XBRL reporting and analysis.
 **XBRL Analysis**: Assisting the extraction and analysis of XBRL reports.
 ### General Financial Tasks
 
-| Datasets | Type                     | # Test Samples | Metrics      | Source                                                                          |   
+| Question Sets | Type                     | # Test Samples | Metrics      | Source                                                                          |   
 |----------|--------------------------|----------------|--------------|---------------------------------------------------------------------------------|
 | FPB      | Sentiment Analysis       | 970            | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/en-fpb)                           |
 | FiQA SA  | Sentiment Analysis       | 234            | Accuracy, F1 | [HF](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification)    |
@@ -35,7 +35,7 @@ interested in XBRL reporting and analysis.
 
 #### XBRL Reporting
 
-| Datasets      | Type    | # Test Samples | Metrics      | Source                                                         |
+| Question Sets      | Type    | # Test Samples | Metrics      | Source                                                         |
 |---------------|---------|----------------|--------------|----------------------------------------------------------------|
 | FiNER-139 [7] | Tagging | 100K           | Accuracy, F1 | [HF](https://huggingface.co/datasets/nlpaueb/finer-139?row=16) |
 | FNXL [8]      | Tagging | 1K             | Accuracy, F1 | [GitHub](https://github.com/soummyaah/FNXL)                    |
