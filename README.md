@@ -42,7 +42,7 @@ interested in XBRL reporting and analysis.
 
 #### XBRL Analysis
 
-| Datasets             | Type            | # Test Samples | Metrics  | Source                                                                                                                        |
+| Question Sets             | Type            | # Test Samples | Metrics  | Source                                                                                                                        |
 |----------------------|-----------------|----------------|----------|-------------------------------------------------------------------------------------------------------------------------------|
 | Financial Math [9]   | Math            | 1K             | Accuracy | [GitHub](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx) |
 | Tags Extraction      | XBRL Extraction | 150            | Accuracy | -                                                                                                                             |
