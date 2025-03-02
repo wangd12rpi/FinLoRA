@@ -288,10 +288,10 @@ labels = _LABELS = [
 ]
 labels = [x.split("-")[1] for x in labels]
 random.seed(42)
+batched_prompt_size = 4
 
 
 def process_finer139_dataset(dataset_name):
-    batched_prompt_size = 30
     for split in ['train', 'test']:
         dataset = load_dataset(dataset_name, split=split)
         # dataset = dataset.shuffle(seed=45)
@@ -353,14 +353,13 @@ def create_batched_prompt(batch_examples):
     targets = []
 
     for example in batch_examples:
-        prompt_questions.append(f'what is best tag for entity "{example["word"]}" in sentence: "{example["sentence"]}"')
+        prompt_questions.append(f'What is best tag for entity "{example["word"]}" in sentence: "{example["sentence"]}?"')
         targets.append(example["target"])
 
     combined_prompt = (
-            "You are XBRL expert. Choose the best XBRL US GAAP tag for each highlighted entity in the sentences below. "
-            "Provide only the US GAAP tags, comma-separated, in the order of the sentences and highlighted entity. Provide nothing else\n"
-            f"Here is a list of US GAAP tags options {",".join(list(set(labels)))}"
-            "Sentences and Highlighted entity:\n" +
+            "You are XBRL expert.  "
+            "Here is a list of US GAAP tags options: " + ",".join(list(set(labels))) + ". "
+            f"Answer the following {batched_prompt_size} independent questions by providing only  {batched_prompt_size} US GAAP tags answers in the order of the questions. Each answer must be saperated by a comma (,).  Provide nothing else. \n" +
             "\n".join([f"{i + 1}. {question}" for i, question in enumerate(prompt_questions)]) +
             "\nOutput US GAAP tags:"
     )

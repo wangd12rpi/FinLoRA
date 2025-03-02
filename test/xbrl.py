@@ -64,7 +64,9 @@ def test_xbrl_tagging(args, dataset_names="xbrl_finer,", prompt_fun=None):
 
             instructions = pd.read_json(path_or_buf=dataset_path[data_name], lines=True)
             instructions = instructions
-            instructions = instructions.sample(frac=1, random_state=42)
+            instructions = instructions.sample(frac=.01, random_state=42)
+            # instructions = instructions.sample(2, random_state=42)
+
             # print(f"\n\nPrompt example:\n{instructions['context'][0]}\n\n")
             context = instructions['context'].tolist()
 
@@ -84,6 +86,7 @@ def test_xbrl_tagging(args, dataset_names="xbrl_finer,", prompt_fun=None):
 
                 out_text = inference.inference(args, tmp_context, if_print_out=True, max_new_token=3000)
                 out_text_list += out_text
+                print(out_text)
                 time.sleep(3)  # avoid rate limit
 
             instructions["target"] = instructions["target"]
@@ -98,7 +101,7 @@ def test_xbrl_tagging(args, dataset_names="xbrl_finer,", prompt_fun=None):
             print(f"Acc {acc}")
             f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
             # f1 = -1
-            print(f"{data_name} Acc: {acc}. F1: {f1} ")
+            print(f"{data_name} Acc: {round(acc * 100, 2)} %. F1: {round(f1, 3)} ")
 
             results += [{"acc": acc, "f1": f1}]
 
