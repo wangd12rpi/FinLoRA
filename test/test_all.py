@@ -10,7 +10,7 @@ from test.general_fin.tfns import test_tfns
 from test.general_fin.nwgi import test_nwgi
 from test.general_fin.headline import test_headline
 from test.general_fin.ner import test_ner
-from xbrl import test_xbrl_tagging
+from xbrl import test_xbrl_tasks
 # from convfinqa import test_convfinqa
 # from fineval import test_fineval
 # from finred import test_re
@@ -78,9 +78,9 @@ def main(args):
             elif data == 'ner':
                 results[(args.base_model, args.quant_bits, args.rank, data)] = test_ner(args, model, tokenizer)
             elif data == 'xbrl_tags':
-                results[(args.base_model, args.quant_bits, args.rank, data)] = test_xbrl_tagging(args, model, tokenizer)
+                results[(args.base_model, args.quant_bits, args.rank, data)] = test_xbrl_tasks(args, model, tokenizer)
             elif data == 'xbrl_value':
-                results[(args.base_model, args.quant_bits, args.rank, data)] = test_xbrl_tagging(args, model, tokenizer, path="../data/xbrl/xbrl_value_test.jsonl")
+                results[(args.base_model, args.quant_bits, args.rank, data)] = test_xbrl_tasks(args, model, tokenizer, path="../data/xbrl/xbrl_value_test.jsonl")
             else:
                 raise ValueError('undefined dataset.')
 

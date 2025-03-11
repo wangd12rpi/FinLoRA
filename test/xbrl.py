@@ -9,7 +9,8 @@ from tqdm import tqdm
 import pandas as pd
 
 dataset_path = {
-    "xbrl_tags": "../xbrl/xbrl_xbrl_tags_test.jsonl",
+    "xbrl_tags_extract": "../data/test/xbrl_xbrl_tags_test.jsonl",
+    "xbrl_value_extract": "../data/test/xbrl_value_test.jsonl",
     "xbrl_finer": "../data/test/finer_test_batched.jsonl",
     "xbrl_fnxl": "../data/test/fnxl_test_batched.jsonl",
 
@@ -56,7 +57,7 @@ def process_batched(out_text_list, target_list):
     return processed_out_text_list, processed_target_list
 
 
-def test_xbrl_tagging(args, dataset_names="xbrl_finer,", prompt_fun=None):
+def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None):
     batch_size = 1
     results = []
     for data_name in dataset_names.split(","):

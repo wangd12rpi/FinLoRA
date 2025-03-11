@@ -14,3 +14,4 @@ train/ft_models/
 /xbrl/
 
 /finetuned_models/*/checkpoint-*/
+/data/train/DowJones30/

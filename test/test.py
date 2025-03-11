@@ -3,7 +3,7 @@ import torch
 import argparse
 
 # from convfinqa import test_convfinqa
-from xbrl import test_xbrl_tagging
+from xbrl import test_xbrl_tasks
 
 import sys
 
@@ -29,7 +29,7 @@ def main(args):
             # elif data == 'ner':
             #     test_ner(args, model, tokenizer)
             if "xbrl" in data:
-                test_xbrl_tagging(args, dataset_names=data)
+                test_xbrl_tasks(args, dataset_names=data)
             else:
                 raise ValueError('undefined dataset.')
 
