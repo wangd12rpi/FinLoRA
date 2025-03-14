@@ -5,11 +5,62 @@ import requests
 import json
 import dotenv
 from fireworks.client import Fireworks
+import time
+import warnings
+import inference
+import sklearn
+import sys
+from tqdm import tqdm
+import pandas as pd
+import argparse
 
 
 def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False):
     config = dotenv.dotenv_values("../.env")
-    if "fireworks" in args.base_model:  # Use API
+    
+    together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
+    
+    temperature = args.temperature if hasattr(args, 'temperature') else 0.0
+    
+    if together_api_key:
+        # Use Together API for all models when API key is provided
+        answer = []
+        headers = {
+            "Authorization": f"Bearer {together_api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        url = "https://api.together.xyz/v1/chat/completions"
+        
+        model_name = args.base_model
+        
+        if if_print_out:
+            print(f"Using Together API with model: {model_name}, temperature: {temperature}")
+        
+        for x in inputs:
+            payload = {
+                "model": model_name,
+                "max_tokens": max_new_token,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": x
+                    }
+                ],
+                "temperature": temperature
+            }
+            
+            response = requests.post(url, headers=headers, json=payload)
+            if response.status_code == 200:
+                response_json = response.json()
+                answer.append(response_json["choices"][0]["message"]["content"])
+            else:
+                print(f"Error calling Together AI API: {response.status_code} - {response.text}")
+                answer.append("Error: Failed to get response from Together AI API")
+            
+        return answer
+    
+    elif "fireworks" in args.base_model:  # Use Fireworks API
         answer = []
         for x in inputs:
             client = Fireworks(api_key=config["FIREWORKS_KEY"])
@@ -89,3 +140,43 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
         if_print_out and print(out_text)
 
         return out_text
+
+
+def evaluate_accuracy(out, target):
+    correct_count = 0
+    response = []
+    for x, y in zip(out, target):
+        if y in x:
+            correct_count += 1
+            response.append(y)
+        else:
+            response.append(x)
+
+    accuracy = correct_count / len(out)
+    return accuracy, response
+
+
+def process_batched(out_text_list, target_list):
+    processed_out_text_list = []
+    processed_target_list = []
+
+    for out_text, target in zip(out_text_list, target_list):
+        split_output = [x.strip().replace("\n", "") for x in out_text.split(',')]
+        split_target = [x.strip().replace("\n", "") for x in target.split(',')]
+        processed_target_list += (split_target)
+        output_len = len(split_output)
+        target_len = len(split_target)
+
+        if output_len != target_len:
+            if output_len > target_len:
+                # Output is longer, truncate
+                processed_out_text_list += (split_output[:target_len])
+            else:
+                # Target is longer, pad output with empty strings
+                padding_needed = target_len - output_len
+                processed_out_text_list += (split_output + [""] * padding_needed)
+        else:
+            # Lengths match, use output as is
+            processed_out_text_list += (split_output)
+    assert len(processed_out_text_list) == len(processed_target_list)
+    return processed_out_text_list, processed_target_list
