@@ -1,17 +1,16 @@
 
 # Task selection (headline, ner, senti, xbrl)
-task="senti"
+task="xbrl_extract"
 quant_bits=4
 lora_r=4
-model_name_short="llama_3.1_70b"  # Can be "llama_3.1_8b" or "llama_3.1_70b"
+model_name_short="llama_3.1_8b"  # Can be "llama_3.1_8b" or "llama_3.1_70b"
 
 # Map tasks to dataset paths
 declare -A dataset_map=(
   ["headline"]="./data/train/fingpt_headline_train.jsonl"
   ["ner"]="./data/train/fingpt_ner_cls_train.jsonl"
   ["senti"]="../../data/train/fingpt_sentiment_train.jsonl"
-  ["xbrl"]="./xbrl/xbrl_train.jsonl"
-  ["xbrl_formula"]="./xbrl/xbrl_formula_formatted_with_tags_train.jsonl"
+  ["xbrl_extract"]="../../data/train/xbrl_train.jsonl"
   ["finer"]="../../data/train/finer_train.jsonl"
 )
 

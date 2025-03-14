@@ -32,4 +32,4 @@ python xbrl.py --dataset "xbrl_tags_extract" --base_model "${MODEL}" --together_
 # echo "Running xbrl_formula_extract..."
 # python xbrl.py --dataset "xbrl_formula_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
-echo "All XBRL extraction tasks completed" 
+echo "All XBRL extraction tasks completed"
