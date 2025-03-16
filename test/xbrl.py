@@ -85,7 +85,7 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
                 sample_size = len(instructions)
             total_examples += sample_size
 
-    main_pbar = tqdm(total=total_examples, position=0, desc="Overall Progress", leave=True)
+    # main_pbar = tqdm(total=total_examples, position=0, desc="Overall Progress", leave=True)
 
     for data_name in task_list:
         if data_name in dataset_path:
@@ -104,8 +104,7 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
             total_steps = instructions.shape[0] // batch_size
             out_text_list = []
 
-            task_pbar = tqdm(range(total_steps), desc=f"Task {completed_tasks}/{total_tasks}: {data_name}",
-                             position=1, leave=False)
+            task_pbar = tqdm(range(total_steps), desc=f"Task {completed_tasks}/{total_tasks}: {data_name}", leave=True)
 
             for i in task_pbar:
                 example_start_time = time.time()
@@ -144,12 +143,12 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
                 out_text = inference.inference(args, tmp_context, if_print_out=False, max_new_token=3000)
                 out_text_list += out_text
 
-                main_pbar.update(1)
+                # main_pbar.update(1)
 
                 # Sleep to avoid rate limiting
                 time.sleep(0.1)
 
-            task_pbar.close()
+            # task_pbar.close()
             instructions["target"] = instructions["target"]
             target_list = instructions["target"].tolist()
             target_list = [str(x) for x in target_list]
@@ -181,7 +180,7 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
                 f.write(f"Sample Ratio: {sample_ratio}\n")
                 f.write(f"Temperature: {args.temperature}\n")
 
-    main_pbar.close()
+    # main_pbar.close()
 
     # Calculate total time taken
     total_time = time.time() - start_time
