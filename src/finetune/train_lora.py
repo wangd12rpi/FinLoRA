@@ -26,7 +26,7 @@ def bytes_to_giga_bytes(bytes):
 
 # Trainer
 class ModifiedTrainer(Trainer):
-    def compute_loss(self, model, inputs, return_outputs=False):
+    def compute_loss(self, model, inputs, num_items_in_batch, return_outputs=False):
         return model(
             input_ids=inputs["input_ids"],
             labels=inputs["labels"],
