@@ -86,6 +86,7 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
             total_examples += sample_size
 
     # main_pbar = tqdm(total=total_examples, position=0, desc="Overall Progress", leave=True)
+    model, tokenizer = inference.load_local_model(args)
 
     for data_name in task_list:
         if data_name in dataset_path:
@@ -140,7 +141,7 @@ def test_xbrl_tasks(args, dataset_names="xbrl_finer,", prompt_fun=None, sample_r
                 overall_percent = f"{completed_examples}/{total_examples}"
                 task_pbar.set_description(f"Task {data_name} - {overall_percent}")
 
-                out_text = inference.inference(args, tmp_context, if_print_out=False, max_new_token=3000)
+                out_text = inference.inference(args, tmp_context, if_print_out=True, max_new_token=30, model=model, tokenizer=tokenizer)
                 out_text_list += out_text
 
                 # main_pbar.update(1)

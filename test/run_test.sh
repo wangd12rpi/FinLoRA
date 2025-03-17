@@ -7,10 +7,11 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3
 #---- ner ----
 
 python test.py \
---dataset xbrl_finer \
+--dataset xbrl_formula_extract \
 --batch_size 8 \
 --quant_bits 8 \
---base_model accounts/fireworks/models/deepseek-v3 \
+--base_model meta-llama/Llama-3.1-8B-Instruct \
+--peft_model ../finetuned_models/xbrl_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-4bits-r4
 
 
 #--base_model accounts/fireworks/models/llama-v3p1-70b-instruct \

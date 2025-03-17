@@ -15,13 +15,64 @@ import pandas as pd
 import argparse
 
 
-def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False):
-    config = dotenv.dotenv_values("../.env")
-    
+def load_local_model(args):
     together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
-    
+    if together_api_key or "fireworks" in args.base_model:
+        return None, None
+
+    model_name = args.base_model
+
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=args.quant_bits == 4,  # Load in 4-bit if quant_bits is 4
+        load_in_8bit=args.quant_bits == 8,  # Load in 8-bit if quant_bits is 8
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=torch.bfloat16
+    )
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name, trust_remote_code=True,
+        quantization_config=bnb_config,
+        device_map="auto",
+        torch_dtype=torch.bfloat16,
+    )
+
+    model.model_parallel = True
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name,
+                                              torch_dtype=torch.bfloat16,
+                                              trust_remote_code=True,
+                                              device_map="auto"
+                                              )
+
+    tokenizer.padding_side = "left"
+    if args.base_model == 'qwen':
+        tokenizer.eos_token_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
+        tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('<|extra_0|>')
+
+    tokenizer.pad_token = tokenizer.eos_token
+    # if not tokenizer.pad_token or tokenizer.pad_token_id == tokenizer.eos_token_id:
+    #     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+    #     model.resize_token_embeddings(len(tokenizer))
+
+    print(f'pad: {tokenizer.pad_token_id}, eos: {tokenizer.eos_token_id}')
+    # model.generation_config.pad_token_id = tokenizer.pad_token_id
+
+    if args.peft_model != "":
+        model = PeftModel.from_pretrained(model, args.peft_model)
+
+    model = model.eval()
+    model.generation_config.pad_token_id = tokenizer.pad_token_id
+    return model, tokenizer
+
+
+def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False, model=None, tokenizer=None):
+    config = dotenv.dotenv_values("../.env")
+
+    together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
+
     temperature = args.temperature if hasattr(args, 'temperature') else 0.0
-    
+
     if together_api_key:
         # Use Together API for all models when API key is provided
         answer = []
@@ -29,14 +80,14 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
             "Authorization": f"Bearer {together_api_key}",
             "Content-Type": "application/json"
         }
-        
+
         url = "https://api.together.xyz/v1/chat/completions"
-        
+
         model_name = args.base_model
-        
+
         if if_print_out:
             print(f"Using Together API with model: {model_name}, temperature: {temperature}")
-        
+
         for x in inputs:
             payload = {
                 "model": model_name,
@@ -49,7 +100,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
                 ],
                 "temperature": temperature
             }
-            
+
             response = requests.post(url, headers=headers, json=payload)
             if response.status_code == 200:
                 response_json = response.json()
@@ -57,9 +108,9 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
             else:
                 print(f"Error calling Together AI API: {response.status_code} - {response.text}")
                 answer.append("Error: Failed to get response from Together AI API")
-            
+
         return answer
-    
+
     elif "fireworks" in args.base_model:  # Use Fireworks API
         answer = []
         for x in inputs:
@@ -80,51 +131,6 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
         return answer
 
     else:  # Local
-
-        model_name = args.base_model
-
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=args.quant_bits == 4,  # Load in 4-bit if quant_bits is 4
-            load_in_8bit=args.quant_bits == 8,  # Load in 8-bit if quant_bits is 8
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_use_double_quant=True,
-            bnb_4bit_compute_dtype=torch.bfloat16
-        )
-
-        model = AutoModelForCausalLM.from_pretrained(
-            model_name, trust_remote_code=True,
-            quantization_config=bnb_config,
-            device_map="auto",
-            torch_dtype=torch.bfloat16,
-        )
-
-        model.model_parallel = True
-
-        tokenizer = AutoTokenizer.from_pretrained(model_name,
-                                                  torch_dtype=torch.bfloat16,
-                                                  trust_remote_code=True,
-                                                  device_map="auto"
-                                                  )
-
-        tokenizer.padding_side = "left"
-        if args.base_model == 'qwen':
-            tokenizer.eos_token_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
-            tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('<|extra_0|>')
-
-        tokenizer.pad_token = tokenizer.eos_token
-        # if not tokenizer.pad_token or tokenizer.pad_token_id == tokenizer.eos_token_id:
-        #     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-        #     model.resize_token_embeddings(len(tokenizer))
-
-        print(f'pad: {tokenizer.pad_token_id}, eos: {tokenizer.eos_token_id}')
-        # model.generation_config.pad_token_id = tokenizer.pad_token_id
-
-        if args.peft_model != "":
-            model = PeftModel.from_pretrained(model, args.peft_model)
-
-        model = model.eval()
-        model.generation_config.pad_token_id = tokenizer.pad_token_id
-
         if len(inputs) == 0:
             return []
 

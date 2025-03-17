@@ -67,7 +67,7 @@ def create_batched_qa_dataset_from_csv_jsonl(csv_file_path, examples_per_batch, 
 if __name__ == '__main__':
     csv_file_path = 'test/test_sample.csv'  # Replace with the path to your CSV file
     output_jsonl_path = 'test/fnxl_test_batched.jsonl'  # Path for the output JSONL file
-    examples_per_batch = 30  # Set the desired number of examples per batch
+    examples_per_batch = 4  # Set the desired number of examples per batch
 
     create_batched_qa_dataset_from_csv_jsonl(csv_file_path, examples_per_batch, output_jsonl_path)
 
