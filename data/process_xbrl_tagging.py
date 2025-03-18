@@ -308,7 +308,7 @@ def process_finer139_dataset(dataset_name):
                     batched_data.append(create_batched_prompt(batch_to_process))
                     current_batch_examples = current_batch_examples[batched_prompt_size:]
 
-            if len(batched_data) * batched_prompt_size + len(current_batch_examples) > size_limit[split]:  # Adjust break condition for batched data count
+            if len(batched_data)  > size_limit[split]:  # Adjust break condition for batched data count
                 break
 
         # Process any remaining examples less than 100
