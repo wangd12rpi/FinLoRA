@@ -45,6 +45,7 @@ if __name__ == "__main__":
     parser.add_argument("--instruct_template", default='default')
     parser.add_argument("--from_remote", default=False, type=bool)
     parser.add_argument("--quant_bits", default=8, type=int)
+    parser.add_argument("--temperature", default=0.0, type=float, help="Temperature for text generation")
 
     args = parser.parse_args()
 

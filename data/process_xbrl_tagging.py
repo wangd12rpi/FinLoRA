@@ -290,7 +290,7 @@ labels = [x.split("-")[1] for x in labels]
 random.seed(42)
 batched_prompt_size = 4
 
-
+size_limit = {"train": 10000, "test": 2000}
 def process_finer139_dataset(dataset_name):
     for split in ['train', 'test']:
         dataset = load_dataset(dataset_name, split=split)
@@ -308,8 +308,7 @@ def process_finer139_dataset(dataset_name):
                     batched_data.append(create_batched_prompt(batch_to_process))
                     current_batch_examples = current_batch_examples[batched_prompt_size:]
 
-            if len(batched_data) * batched_prompt_size + len(
-                    current_batch_examples) > 50e3:  # Adjust break condition for batched data count
+            if len(batched_data) * batched_prompt_size + len(current_batch_examples) > size_limit[split]:  # Adjust break condition for batched data count
                 break
 
         # Process any remaining examples less than 100
