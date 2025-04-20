@@ -32,7 +32,7 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
 1.  **Datasets Used:**
 
     *   Financial PhraseBank (FPB) ``financial_phrasebank``
-    *   FiQA Sentiment Analysis (FiQA SA) ``pauri32/fiqa-2018``
+    *   FiQA Sentiment Analysis (FiQA SA) ``ChanceFocus/flare-fiqasa``
     *   Twitter Financial News Sentiment (TFNS) ``zeroshot/twitter-financial-news-sentiment``
     *   News with GPT Instructions (NWGI) ``oliverwang15/news_with_gpt_instructions``
 
@@ -53,10 +53,10 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
 
     *   **FiQA Sentiment Analysis (FiQA SA):**
 
-        *   **Source:** The original ``train``, ``validation``, and ``test`` splits were loaded and merged.
-        *   **Splitting:** Manual split was using. (22.6% test, 77.4% train, seed 42)
-        *   **Contribution to Combined Training Set:** The training portion resulting from this custom split (duplicated 21 times)
-        *   **Test Set:** The test portion  from the split.
+        *   **Source:** The original ``train``, ``validation``, and ``test`` splits were loaded.
+        *   **Splitting:** Original.
+        *   **Contribution to Combined Training Set:** The original ``train`` split. (duplicated 21 times)
+        *   **Test Set:** The original ``test`` split.
 
     *   **Twitter Financial News Sentiment (TFNS):**
 
@@ -73,7 +73,7 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
         *   **Test Set:** The original ``test`` split.
 
 4.  **Final Combined Training Set Construction:**
-    The processed and augmented **training portions** from FPB, FiQA, TFNS, and NWGI (as described above) were concatenated into a single large dataset and shuffled (seed=42). Total size 77,772.
+    The processed and augmented **training portions** from FPB, FiQA, TFNS, and NWGI (as described above) were concatenated into a single large dataset and shuffled (seed=42). Total size PENDING.
 
 5.  **Evaluation Strategy:**
     The fine-tuned Sentiment Analysis model was evaluated separately against each of the **test sets** created for FPB, FiQA, TFNS, and NWGI.
