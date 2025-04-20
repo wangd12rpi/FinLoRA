@@ -222,13 +222,13 @@ def main(args):
         data_collator=data_collator,
         callbacks=[TensorBoardCallback(writer)],
     )
-    print("\n*********\nBefore training:", bytes_to_giga_bytes(torch.cuda.max_memory_allocated()))
+    print("\n*********\nBefore fine-tuning:", bytes_to_giga_bytes(torch.cuda.max_memory_allocated()))
 
     trainer.train()
     writer.close()
     # save model
     model.save_pretrained(training_args.output_dir)
-    print("\n*********\nAfter training:", bytes_to_giga_bytes(torch.cuda.max_memory_allocated()))
+    print("\n*********\nAfter fine-tuning:", bytes_to_giga_bytes(torch.cuda.max_memory_allocated()))
 
 
 if __name__ == "__main__":
@@ -240,7 +240,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_length", default=512, type=int)
     parser.add_argument("--batch_size", default=4, type=int, help="The train batch size per device")
     parser.add_argument("--learning_rate", default=1e-4, type=float, help="The learning rate")
-    parser.add_argument("--num_epochs", default=8, type=float, help="The training epochs")
+    parser.add_argument("--num_epochs", default=8, type=float, help="The fine-tuning epochs")
     parser.add_argument("--gradient_steps", default=8, type=float, help="The gradient accumulation steps")
     parser.add_argument("--num_workers", default=8, type=int, help="dataloader workers")
     parser.add_argument("--log_interval", default=20, type=int)

@@ -1,6 +1,6 @@
 
 
-# Start the training job in a detached tmux session
+# Start the fine-tuning job in a detached tmux session
 tmux new-session -d -s "bench_job" '
  export CUDA_VISIBLE_DEVICES=0,1,4,7
   eval "$(conda shell.bash hook)"

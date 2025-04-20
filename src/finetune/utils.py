@@ -76,7 +76,7 @@ def test_mapping(args, feature):
 
 def tokenize(args, tokenizer, feature):
     """
-    Tokenizes the input prompt and target/output for model training or evaluation.
+    Tokenizes the input prompt and target/output for model fine-tuning or evaluation.
 
     Args:
     args (Namespace): A namespace object containing various settings and configurations.
@@ -120,7 +120,7 @@ def tokenize(args, tokenizer, feature):
     if input_ids[-1] != tokenizer.eos_token_id and not exceed_max_length:
         input_ids.append(tokenizer.eos_token_id)
 
-    # Create label IDs for training.
+    # Create label IDs for fine-tuning.
     # The labels should start from where the prompt ends, and be padded for the prompt portion.
     label_ids = [tokenizer.pad_token_id] * len(prompt_ids) + input_ids[len(prompt_ids):]
     
@@ -272,7 +272,7 @@ def load_jsonl_dataset(path, tokenizer):
             # if input_ids[-1] != tokenizer.eos_token_id and not exceed_max_length:
             #     input_ids.append(tokenizer.eos_token_id)
             
-            # # Create label IDs for training.
+            # # Create label IDs for fine-tuning.
             # # The labels should start from where the prompt ends, and be padded for the prompt portion.
             # label_ids = [tokenizer.pad_token_id] * len(prompt_ids) + input_ids[len(prompt_ids):]
             

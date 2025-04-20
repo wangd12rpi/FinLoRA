@@ -77,13 +77,13 @@ Use the code below to get started with the model.
 
 ### Training Data
 
-<!-- This should link to a Dataset Card, perhaps with a short stub of information on what the training data is all about as well as documentation related to data pre-processing or additional filtering. -->
+<!-- This should link to a Dataset Card, perhaps with a short stub of information on what the fine-tuning data is all about as well as documentation related to data pre-processing or additional filtering. -->
 
 [More Information Needed]
 
 ### Training Procedure
 
-<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->
+<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the fine-tuning procedure. -->
 
 #### Preprocessing [optional]
 

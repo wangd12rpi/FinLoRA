@@ -23,7 +23,7 @@ declare -A model_map=(
 )
 
 
-# Start the training job in a detached tmux session
+# Start the fine-tuning job in a detached tmux session
 tmux new-session -d -s "training_job_${task}" '
   export CUDA_VISIBLE_DEVICES=0,1,2,3
     export NCCL_IGNORE_DISABLED_P2P=1
