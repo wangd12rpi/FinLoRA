@@ -2,6 +2,10 @@
     margin-bottom: 20px !important;
 }
 
+.sidebar-brand-text {
+    font-weight: bold !important;
+}
+
 .toctree-wrapper ul ul{
     margin-top: 0 !important;
     margin-bottom: 0 !important;

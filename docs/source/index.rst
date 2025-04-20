@@ -13,14 +13,9 @@ FinLoRA Documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-.. toctree::
-   :maxdepth: 2
    :caption: Introduction
 
    intro/overview
-
 
 .. toctree::
    :maxdepth: 2
@@ -30,10 +25,10 @@ FinLoRA Documentation
    tasks/xbrl_tasks
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Training
+   :maxdepth: 3
+   :caption: Fine tuning
 
-   training/datasets
+   fine-tuning/general
 
 
 
