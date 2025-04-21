@@ -1,0 +1,2 @@
+.. [headline] Sinha, A., & Khandait, P. (2020). *Headline-Enhanced Financial Embedding*. In Proceedings of the 2nd Workshop on Economics and Natural Language Processing (pp. 66-74).
+.. [ner] Salinas Alvarado, D., Rönnqvist, S., & Niklaus, J. (2015). *Domain-Specific Named Entity Recognition: A Case Study in Finance*. In Proceedings of the 1st Workshop on Vector Space Modeling for Natural Language Processing (pp. 110-115).

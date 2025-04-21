@@ -27,7 +27,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinx.ext.mathjax",
-    "sphinx-rtd-theme",
+    "sphinx_rtd_theme",
     "nbsphinx",
     "nbsphinx_link",
 ]
@@ -46,7 +46,7 @@ language = 'en'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = "sphinx-rtd-theme"
+html_theme = "sphinx_rtd_theme"
 
 html_static_path = ['_static']
 html_css_files = [
