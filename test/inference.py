@@ -7,17 +7,18 @@ import dotenv
 from fireworks.client import Fireworks
 import time
 import warnings
-import inference
 import sklearn
 import sys
 from tqdm import tqdm
 import pandas as pd
 import argparse
+from google import genai
+from google.genai import types
+import base64
 
 
 def load_local_model(args):
-    together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
-    if together_api_key or "fireworks" in args.base_model:
+    if args.source != 'hf':
         return None, None
 
     model_name = args.base_model
@@ -66,8 +67,10 @@ def load_local_model(args):
     return model, tokenizer
 
 
-def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False, model=None, tokenizer=None):
+def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False, model=None,
+              tokenizer=None):
     config = dotenv.dotenv_values("../.env")
+
 
     together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
 
@@ -129,6 +132,33 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
             answer.append(response.choices[0].message.content)
             # print(answer)
         return answer
+
+    elif args.source == 'google':
+
+        client = genai.Client(
+            vertexai=True,
+            project="1023064188719",
+            location="us-central1",
+            # api_key=config["GOOGLE_KEY"],
+        )
+        answer = []
+        for x in inputs:
+            generate_content_config = types.GenerateContentConfig(
+                temperature=args.temperature,
+                top_p=0.95,
+                max_output_tokens=max_new_token,
+                response_modalities=["TEXT"],
+            )
+
+            response = client.models.generate_content(
+                model=args.base_model,
+                contents=x,
+                config=generate_content_config,
+            )
+            # print(response.text)
+            answer.append(response.text)
+        return answer
+
 
     else:  # Local
         if len(inputs) == 0:

@@ -6,7 +6,6 @@
 # -- Path Setup --------------------------------------------------------------
 import os
 import sys
-import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath(''))
 sys.path.insert(0, os.path.abspath('..'))
 
@@ -27,7 +26,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinx.ext.mathjax",
-    "sphinx-rtd-theme",
+    "sphinx_rtd_theme",
     "nbsphinx",
     "nbsphinx_link",
 ]
@@ -46,7 +45,7 @@ language = 'en'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = "sphinx-rtd-theme"
+html_theme = "sphinx_rtd_theme"
 
 html_static_path = ['_static']
 html_css_files = [
@@ -56,7 +55,7 @@ html_css_files = [
 html_context = {
     "display_github": True, # Integrate GitHub
     "github_user": "Open-Finance-Lab", # Username
-    "github_repo": "FinLoRA", # Repo name
+    "github_repo": "FinRL-Contest", # Repo name
     "github_version": "main", # Version
     "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
 }

@@ -18,18 +18,18 @@ echo "Using full dataset with temperature=${TEMPERATURE}"
 echo "Model: ${MODEL}"
 
 # echo "Running xbrl_finer..."
-# python xbrl.py --dataset "xbrl_finer" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
+# python test_dataset.py --dataset "xbrl_finer" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
 # echo "Running xbrl_fnxl..."
-# python xbrl.py --dataset "xbrl_fnxl" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
+# python test_dataset.py --dataset "xbrl_fnxl" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
 echo "Running xbrl_tags_extract..."
 python xbrl.py --dataset "xbrl_tags_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
 # echo "Running xbrl_value_extract..."
-# python xbrl.py --dataset "xbrl_value_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
+# python test_dataset.py --dataset "xbrl_value_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
 # echo "Running xbrl_formula_extract..."
-# python xbrl.py --dataset "xbrl_formula_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
+# python test_dataset.py --dataset "xbrl_formula_extract" --base_model "${MODEL}" --together_api_key "${API_KEY}" --sample_ratio ${SAMPLE_RATIO} --temperature ${TEMPERATURE}
 
 echo "All XBRL extraction tasks completed"

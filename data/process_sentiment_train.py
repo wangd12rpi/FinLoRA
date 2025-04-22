@@ -1,6 +1,7 @@
 from datasets import load_dataset
 import datasets
 import jsonlines
+
 dic = {
     0: "negative",
     1: 'neutral',
@@ -26,41 +27,70 @@ def add_instructions(x):
 
 def process_fpb():
     fpb_datasets = load_dataset("financial_phrasebank", "sentences_50agree")["train"]
-    fpb_datasets = fpb_datasets.train_test_split(test_size=0.25, seed=42)['train'].to_pandas()
-    fpb_datasets.columns = ["input", "output"]
-    fpb_datasets["output"] = fpb_datasets["output"].apply(lambda x: dic[x])
-    fpb_datasets[
-        "instruction"] = "What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}."
-    return datasets.Dataset.from_pandas(fpb_datasets)
+    fpb_datasets = fpb_datasets.train_test_split(test_size=0.25, seed=42)
+    train, test = fpb_datasets["train"].to_pandas(), fpb_datasets["test"].to_pandas()
+
+    def change_prompt(data):
+        data.columns = ["input", "output"]
+        data["output"] = data["output"].apply(lambda x: dic[x])
+        data[
+            "instruction"] = "What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}."
+        data = datasets.Dataset.from_pandas(data)
+        return data
+
+    train = change_prompt(train)
+    test = change_prompt(test)
+    return train, test
 
 
 def process_fiqa():
-    fiqa_datasets = load_dataset('ChanceFocus/flare-fiqasa')['train'].to_pandas()
-    fiqa_datasets["instruction"] = fiqa_datasets["query"].apply(add_instructions)
-    fiqa_datasets = fiqa_datasets[['text', 'answer', "instruction"]]
-    fiqa_datasets.columns = ["input", "output", "instruction"]
-    fiqa_datasets = datasets.Dataset.from_pandas(fiqa_datasets)
-    return fiqa_datasets
+    fiqa = load_dataset('ChanceFocus/flare-fiqasa')
+    train, test = fiqa['train'].to_pandas(), fiqa['test'].to_pandas()
+
+    def change_prompt(data):
+        data["instruction"] = data["query"].apply(add_instructions)
+        data = data[['text', 'answer', "instruction"]]
+        data.columns = ["input", "output", "instruction"]
+        data = datasets.Dataset.from_pandas(data)
+        return data
+
+    train = change_prompt(train)
+    test = change_prompt(test)
+    return train, test
 
 
 def process_tfns():
-    social_media_dataset = load_dataset('zeroshot/twitter-financial-news-sentiment')['train'].to_pandas()
-    social_media_dataset['label'] = social_media_dataset['label'].apply(lambda x: dic[x])
-    social_media_dataset[
-        'instruction'] = 'What is the sentiment of this tweet? Please choose an answer from {negative/neutral/positive}.'
-    social_media_dataset.columns = ['input', 'output', 'instruction']
-    return datasets.Dataset.from_pandas(social_media_dataset)
+    tfns = load_dataset('zeroshot/twitter-financial-news-sentiment')
+    train, test = tfns['train'].to_pandas(), tfns['validation'].to_pandas()
+
+    def change_prompt(data):
+        data['label'] = data['label'].apply(lambda x: dic[x])
+        data[
+            'instruction'] = 'What is the sentiment of this tweet? Please choose an answer from {negative/neutral/positive}.'
+        data.columns = ['input', 'output', 'instruction']
+        return datasets.Dataset.from_pandas(data)
+
+    train = change_prompt(train)
+    test = change_prompt(test)
+    return train, test
 
 
 def process_nwgi():
-    finance_dataset = load_dataset('oliverwang15/news_with_gpt_instructions')['train'].to_pandas()
-    finance_dataset['output'] = finance_dataset['label']
-    finance_dataset["input"] = finance_dataset["news"]
-    finance_dataset[
-        "instruction"] = 'What is the sentiment of this news? Please choose an answer from {strong negative/moderately negative/mildly negative/neutral/mildly positive/moderately positive/strong positive}.'
-    finance_dataset = finance_dataset[['input', 'output', 'instruction']]
-    finance_dataset = datasets.Dataset.from_pandas(finance_dataset)
-    return finance_dataset
+    nwgi = load_dataset('oliverwang15/news_with_gpt_instructions')
+    train, test = nwgi['train'].to_pandas(), nwgi['test'].to_pandas()
+
+    def change_prompt(data):
+        data['output'] = data['label']
+        data["input"] = data["news"]
+        data[
+            "instruction"] = 'What is the sentiment of this news? Please choose an answer from {strong negative/moderately negative/mildly negative/neutral/mildly positive/moderately positive/strong positive}.'
+        data = data[['input', 'output', 'instruction']]
+        data = datasets.Dataset.from_pandas(data)
+        return data
+
+    train = change_prompt(train)
+    test = change_prompt(test)
+    return train, test
 
 
 def process_data(example):
@@ -78,13 +108,16 @@ def process_save_data(all_data, file_name, split='train'):
         writer.write_all(processed_data_normal)
 
 
-
-
 if __name__ == '__main__':
-    fpb_train = process_fpb()
-    fiqa_train = process_fiqa()
-    nwgi_train = process_nwgi()
-    tfns_train = process_tfns()
+    ner = load_dataset('FinGPT/fingpt-ner-cls')
+    headline = load_dataset('FinGPT/fingpt-headline')
+
+    fpb_train, fpb_test = process_fpb()
+    fiqa_train, fiqa_test = process_fiqa()
+    nwgi_train, nwgi_test = process_nwgi()
+    tfns_train, tfns_test = process_tfns()
+    ner_train, ner_test = ner['train'], ner['test']
+    headline_train, headline_test = headline['train'], headline['test']
 
     fpb_train = datasets.concatenate_datasets([fpb_train] * 6)
     fiqa_train = datasets.concatenate_datasets([fiqa_train] * 21)
@@ -97,5 +130,14 @@ if __name__ == '__main__':
     sentiment_train_dataset = datasets.concatenate_datasets([fpb_train, fiqa_train, tfns_train, nwgi_train])
     print("final", sentiment_train_dataset)
 
-    process_save_data(sentiment_train_dataset, "finlora_sentiment_train")
+    process_save_data(sentiment_train_dataset, "finlora_sentiment_train", split='train')
+    process_save_data(headline_train, "headline_train", split='train')
+    process_save_data(ner_train, "ner_train", split='train')
+
+    process_save_data(fpb_test, "fpb_test", split='test')
+    process_save_data(fiqa_test, "fiqa_test", split='test')
+    process_save_data(nwgi_test, "nwgi_test", split='test')
+    process_save_data(tfns_test, "tfns_test", split='test')
+    process_save_data(headline_test, "headline_test", split='test')
+    process_save_data(ner_test, "ner_test", split='test')
 
