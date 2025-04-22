@@ -17,3 +17,5 @@ train/ft_models/
 /data/train/DowJones30/
 
 data/train/xbrl_extract_raw.json
+
+docs/build
