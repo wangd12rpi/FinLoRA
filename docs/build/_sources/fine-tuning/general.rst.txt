@@ -47,7 +47,7 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
     *   **Financial PhraseBank (FPB):**
 
         *   **Source:** Original ``train`` split (``sentences_50agree`` configuration).
-        *   **Splitting:** Manual split (25% test, 75% train, seed 42)
+        *   **Splitting:** Manual split (10% test, 90% train, seed 42)
         *   **Contribution to Combined Training Set:** The training portion from the split (duplicated 6 times)
         *   **Test Set:** The test portion from the split.
 
