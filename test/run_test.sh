@@ -7,11 +7,11 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3
 #---- ner ----
 
 python test.py \
---dataset tfns \
+--dataset nwgi \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
---base_model gemini-2.0-flash-lite-001
+--base_model projects/1023064188719/locations/us-central1/endpoints/1842980499757203456
 
 # --peft_model ../finetuned_models/xbrl_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-4bits-r4
 

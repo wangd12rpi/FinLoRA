@@ -62,14 +62,14 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
 
         *   **Source:** The original ``train`` and ``test`` split was loaded and processed.
         *   **Splitting:** Original.
-        *   **Contribution to Combined Training Set:** The original ``train`` split  (duplicated 2 times)
+        *   **Contribution to Combined Training Set:** The original ``train`` split. (duplicated 2 times)
         *   **Test Set:** The original ``test`` split.
 
     *   **News with GPT Instructions (NWGI):**
 
         *   **Source:** The original ``train`` and ``test`` split was loaded and processed.
         *   **Splitting:** Original.
-        *   **Contribution to Combined Training Set:** The original ``train`` split  (duplicated 2 times)
+        *   **Contribution to Combined Training Set:** The original ``train`` split.
         *   **Test Set:** The original ``test`` split.
 
 4.  **Final Combined Training Set Construction:**

@@ -1,6 +1,6 @@
 
 # Task selection (headline, ner, senti, xbrl)
-task="xbrl_extract"
+task="senti"
 quant_bits=4
 lora_r=4
 model_name_short="llama_3.1_8b"  # Can be "llama_3.1_8b" or "llama_3.1_70b"
@@ -9,7 +9,7 @@ model_name_short="llama_3.1_8b"  # Can be "llama_3.1_8b" or "llama_3.1_70b"
 declare -A dataset_map=(
   ["headline"]="./data/train/fingpt_headline_train.jsonl"
   ["ner"]="./data/train/fingpt_ner_cls_train.jsonl"
-  ["senti"]="../../data/train/fingpt_sentiment_train.jsonl"
+  ["senti"]="../../data/train/finlora_sentiment_train.jsonl"
   ["xbrl_extract"]="../../data/train/xbrl_train.jsonl"
   ["finer"]="../../data/train/finer_train.jsonl"
 )
@@ -38,7 +38,7 @@ tmux new-session -d -s "training_job_${task}" '
     --max_length 128000 \
     --batch_size 4 \
     --grad_accu 4 \
-    --learning_rate 3e-5 \
+    --learning_rate 1e-4 \
     --num_epochs 4 \
     --log_interval 10 \
     --warmup_ratio 0.03 \
