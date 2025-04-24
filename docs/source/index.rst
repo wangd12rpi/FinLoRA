@@ -22,13 +22,16 @@ FinLoRA Documentation
    :caption: Tasks
 
    tasks/general_financial_tasks
-   tasks/xbrl_tasks
+   tasks/xbrl_reporting_tasks
+   tasks/xbrl_analysis_tasks
 
 .. toctree::
    :maxdepth: 3
    :caption: Fine tuning
 
-   fine-tuning/general
+   fine-tuning/tutorial
+   fine-tuning/lora_methods
+   fine-tuning/results
 
 
 

@@ -19,7 +19,7 @@ dataset_path = {
     "tfns": "../data/test/tfns_test.jsonl",
     "nwgi": "../data/test/nwgi_test.jsonl",
     "headline": "../data/test/headline_test.jsonl",
-    "ner": "../data/test/ner-test.jsonl",
+    "ner": "../data/test/ner_test.jsonl",
 }
 
 max_new_token_dict = {
