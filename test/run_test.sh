@@ -17,7 +17,7 @@ python test.py \
 
 
 #--base_model accounts/fireworks/models/llama-v3p1-70b-instruct \
-# --peft_model ../src/finetune/OpenFedLLM/output/fingpt-sentiment-train_20000_fedavg_c4s2_i10_b8a1_l512_r8a16_20250116215837/checkpoint-200/
+# --peft_model ../src/lora/OpenFedLLM/output/fingpt-sentiment-train_20000_fedavg_c4s2_i10_b8a1_l512_r8a16_20250116215837/checkpoint-200/
 # model gemini-2.0-flash-lite-001
 
 # Sentiment gemini 2.0 lite: projects/1023064188719/locations/us-central1/endpoints/1842980499757203456

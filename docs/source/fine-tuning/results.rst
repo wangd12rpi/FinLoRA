@@ -1,5 +1,5 @@
 =======
-Results
+Benchmark Results
 =======
 
 Table

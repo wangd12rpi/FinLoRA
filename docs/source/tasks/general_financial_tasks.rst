@@ -9,11 +9,6 @@ Overview
 
 We aim to enhance and benchmark our model with three main general capabilities: sentiment analysis, headline analysis, and name entity recognition.
 
-
-
-Size and Evaluation Metrics
-********************************
-
 .. list-table:: Question/training sets for general financial tasks.
    :widths: auto
    :header-rows: 1
@@ -61,13 +56,15 @@ Size and Evaluation Metrics
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-ner-cls>`__
 
-Input/Output example
+Tasks Details
 ************************
 
 
 This section provides examples for various general financial datasets commonly used in NLP tasks.
 
 **Financial Phrase Bank (FPB)** (Sentiment Analysis) [fpb]_
+--------------------
+Financial Phrase Bank (FPB) contains sentences extracted from financial news and reports. These sentences are annotated with sentiment labels "positive", "negative", and "neutral". We manually created the train/test split.
 
 .. list-table::
    :widths: 10 90
@@ -80,6 +77,9 @@ This section provides examples for various general financial datasets commonly u
      - negative
 
 **FiQA SA** (Sentiment Analysis) [fiqa]_
+--------------------
+
+Financial question-answering sentiment analysis (FiQA SA) is another sentiment analysis dataset with the same labels as FPB from microblog headlines and financial news.
 
 .. list-table::
    :widths: 10 90
@@ -93,6 +93,8 @@ This section provides examples for various general financial datasets commonly u
      - positive
 
 **Twitter Financial News Sentiment (TFNS)** (Sentiment Analysis) [tfns]_
+--------------------
+Twitter financial news sentiment (TFNS) comprises annotated tweets related to financial news labeled with the same sentiment categories as FPB.
 
 .. list-table::
    :widths: 10 90
@@ -106,6 +108,8 @@ This section provides examples for various general financial datasets commonly u
      - negative
 
 **News with GPT (NWGI)** (Sentiment Analysis)
+--------------------
+News with GPT instruction (NWGI) comprises samples with seven labels ranging from strong negative to strong positive.
 
 .. list-table::
    :widths: 10 90
@@ -119,6 +123,9 @@ This section provides examples for various general financial datasets commonly u
      - moderately negative
 
 **Financial Headline Analysis** (Headline Analysis) [headline-tasks]_
+--------------------
+The Headline dataset classifies headlines based on various questions into two classes: "yes" and
+"no".
 
 .. list-table::
    :widths: 10 90
@@ -132,6 +139,9 @@ This section provides examples for various general financial datasets commonly u
      - No
 
 **Named Entity Recognition (NER)** (Named Entity Recognition) [ner-tasks]_
+--------------------
+
+The NER dataset annotates one entity per sentence, categorized into one of three classes: "location", "person", and "organization".
 
 .. list-table::
    :widths: 10 90
@@ -143,6 +153,8 @@ This section provides examples for various general financial datasets commonly u
      - Instruction: What is the entity type of '40 William St' in the input sentence. Options: person, location, organization Input: This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (" Bank "), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste . Answer:
    * - **Output**
      - location
+
+
 Citations
 ****************
 .. [fpb] Malo, P., H. Lu, M. Ahlgren, S. Rönnqvist, and P. Nyberg. (2014). *FinancialPhraseBank-v1.0*. Available at SSRN: https://ssrn.com/abstract=2512146 or http://dx.doi.org/10.2139/ssrn.2512146

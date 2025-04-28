@@ -1,5 +1,5 @@
 ==================================================================
-Fine-tuning Guide
+Fine-tuning Tutorials
 ==================================================================
 
 This document outlines the Low-Rank Adaptation (LoRA) fine-tuning process employed to enhance pre-trained language models for specific financial Natural Language Processing (NLP) capabilities. We fine-tuned models separately for three core tasks: Sentiment Analysis, Headline Analysis, and Named Entity Recognition.
@@ -20,10 +20,10 @@ This document outlines the Low-Rank Adaptation (LoRA) fine-tuning process employ
    | Named Entity Recognition | Financial Named Entity Recognition (NER)             |
    +--------------------------+------------------------------------------------------+
 
-Sentiment Analysis Fine-tuning
+Training Data Preparation
 -------------------------------
 
-Data Preparation
+Sentiment Analysis
 ~~~~~~~~~~~~~~~~
 
 The training data for the Sentiment Analysis LoRA model was constructed by aggregating and processing 4 distinct financial sentiment datasets.
@@ -79,10 +79,7 @@ The training data for the Sentiment Analysis LoRA model was constructed by aggre
     The fine-tuned Sentiment Analysis model was evaluated separately against each of the **test sets** created for FPB, FiQA, TFNS, and NWGI.
 
 
-Headline Analysis Fine-tuning
-------------------------------
-
-Data Preparation
+Headline Analysis
 ~~~~~~~~~~~~~~~~
 
 The data preparation for the Headline Analysis LoRA model was more straightforward:
@@ -91,10 +88,7 @@ The data preparation for the Headline Analysis LoRA model was more straightforwa
 2.  **Train/Test Split:** The original ``train`` split provided with the dataset was used directly as the training set for LoRA fine-tuning. The original ``test`` split was reserved and used as the evaluation set to measure performance after fine-tuning.
 3.  **Formatting:** Data was formatted to include ``input`` (the headline), ``output`` (the classification label, e.g., "Yes"/"No"), and an appropriate ``instruction`` guiding the model on the headline analysis task.
 
-Named Entity Recognition Fine-tuning
--------------------------------------
-
-Data Preparation
+Named Entity Recognition
 ~~~~~~~~~~~~~~~~
 
 Similar to Headline Analysis, the data preparation for the Named Entity Recognition (NER) LoRA model utilized the standard splits of the chosen dataset:
@@ -102,6 +96,19 @@ Similar to Headline Analysis, the data preparation for the Named Entity Recognit
 1.  **Dataset Used:** The financial Named Entity Recognition (NER) dataset [ner]_ was used.
 2.  **Train/Test Split:** The official ``train`` split accompanying the dataset formed the training data for fine-tuning. The corresponding official ``test`` split was used for model evaluation.
 3.  **Formatting:** Data was formatted into the required structure, typically involving an ``instruction`` asking for the entity type of a specific phrase within the ``input`` sentence, and the ``output`` being the correct entity label (e.g., "location", "person", "organization").
+
+
+Setup Finetuning Environment
+----------------
+
+Configure Finetuning Hyper-parameters
+----------------
+
+Start Finetuning Process
+-------------------
+
+Run and Deploy Finetuned Models
+-------------------
 
 
 .. rubric:: Citations
