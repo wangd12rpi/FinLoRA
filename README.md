@@ -152,7 +152,7 @@ on Management Information Systems, 2024.
 
 [7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.; and Paliouras,
 G. 2022. FiNER: Financial Numeric Entity Recognition for XBRL Tagging. In Muresan, S.; Nakov, P.; and Villavicencio, A.,
-eds., Proceedings of the 60th Annual Meeting of the Association for Compu tational Linguistics (Volume 1: Long Papers).
+eds., Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers).
 Dublin, Ireland: Association for Computational Linguistics.
 
 [8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Dasgupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric
