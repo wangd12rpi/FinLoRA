@@ -29,8 +29,8 @@ FinLoRA Documentation
    :maxdepth: 3
    :caption: Finetuning
 
-   fine-tuning/tutorial
    fine-tuning/lora_methods
+   fine-tuning/tutorial
    fine-tuning/results
 
 
