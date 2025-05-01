@@ -11,7 +11,7 @@ models = {"Llama 3.1 8B (Finetuned for tagging)": "accounts/d0nnw0n9-c1910b/mode
           "Llama 3.1 8B (Base)": "accounts/fireworks/models/llama-v3p1-8b-instruct"}
 
 
-def inference(inputs: str, model, max_new_token=15, delimiter="\n", if_print_out=False):
+def inference(inputs: str, model, max_new_token=35, delimiter="\n", if_print_out=False):
     config = 0
     try:
         config = dotenv.dotenv_values("../.env")['FIREWORKS_KEY']

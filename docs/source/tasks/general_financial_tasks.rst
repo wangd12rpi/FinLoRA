@@ -7,12 +7,7 @@ General Financial Tasks
 Overview
 ************
 
-We aim to enhance and benchmark our model with three main general financial capabilities: sentiment analysis, headline analysis, and name entity recognition.
-
-
-
-Size and Evaluation Metrics
-********************************
+We aim to enhance and benchmark our model with three main general capabilities: sentiment analysis, headline analysis, and name entity recognition.
 
 .. list-table:: Question/training sets for general financial tasks.
    :widths: auto
@@ -24,25 +19,25 @@ Size and Evaluation Metrics
      - #Test
      - Metrics
      - Source
-   * - FPB
+   * - Financial Phrase Bank (FPB)
      - Sentiment Analysis
      -
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/en-fpb>`__
-   * - FiQA SA
+   * - Financial Question Answering (FiQA SA)
      - Sentiment Analysis
      -
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification>`__
-   * - TFNS
+   * - Twitter Financial News Sentiment (TFNS)
      - Sentiment Analysis
      -
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment>`__
-   * - NWGI
+   * - News with GPT (NWGI)
      - Sentiment Analysis
      -
      -
@@ -54,48 +49,111 @@ Size and Evaluation Metrics
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-headline-cls>`__
-   * - NER
+   * - Named Entity Recognition (NER)
      - Named Entity Recognition
      -
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-ner-cls>`__
 
-Input/Output example
+Tasks Details
 ************************
 
 
 This section provides examples for various general financial datasets commonly used in NLP tasks.
 
 **Financial Phrase Bank (FPB)** (Sentiment Analysis) [fpb]_
+--------------------
+Financial Phrase Bank (FPB) contains sentences extracted from financial news and reports. These sentences are annotated with sentiment labels "positive", "negative", and "neutral". We manually created the train/test split.
 
-*   **Input:** ``Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Pharmaceuticals group Orion Corp reported a fall in its third-quarter earnings that were hit by larger expenditures on R&D and marketing. Answer:``
-*   **Output:** ``negative``
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+
+   * - **Input**
+     - Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Pharmaceuticals group Orion Corp reported a fall in its third-quarter earnings that were hit by larger expenditures on R&D and marketing. Answer:
+   * - **Output**
+     - negative
 
 **FiQA SA** (Sentiment Analysis) [fiqa]_
+--------------------
 
-*   **Input:** ``Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Johnson Matthey raises prospect of investor payout Answer:``
-*   **Output:** ``positive``
+Financial question-answering sentiment analysis (FiQA SA) is another sentiment analysis dataset with the same labels as FPB from microblog headlines and financial news.
+
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+   :align: left
+
+   * - **Input**
+     - Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Johnson Matthey raises prospect of investor payout Answer:
+   * - **Output**
+     - positive
 
 **Twitter Financial News Sentiment (TFNS)** (Sentiment Analysis) [tfns]_
+--------------------
+Twitter financial news sentiment (TFNS) comprises annotated tweets related to financial news labeled with the same sentiment categories as FPB.
 
-*   **Input:** ``What is the sentiment of this tweet? Please choose an answer from {negative/neutral/positive}.Input: $BYND - JPMorgan reels in expectations on Beyond Meat https://t.co/bd0xbFGjkT Answer:``
-*   **Output:** ``negative``
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+   :align: left
+
+   * - **Input**
+     - What is the sentiment of this tweet? Please choose an answer from {negative/neutral/positive}.Input: $BYND - JPMorgan reels in expectations on Beyond Meat https://t.co/bd0xbFGjkT Answer:
+   * - **Output**
+     - negative
 
 **News with GPT (NWGI)** (Sentiment Analysis)
+--------------------
+News with GPT instruction (NWGI) comprises samples with seven labels ranging from strong negative to strong positive.
 
-*   **Input:** ``Instruction: What is the sentiment of this news? Please choose an answer from {strong negative/moderately negative/mildly negative/neutral/mildly positive/moderately positive/strong positive}. Input: Amid a soft performance for the major equity indices on Tuesday, Nvidia (NASDAQ: NVDA ) posted a particularly glaring loss. Shares continued to fall in sympathy with fellow semiconductor specialist Micron Technology (NASDAQ: MU ) following its disappointing earnings results last week. Answer:``
-*   **Output:** ``moderately negative``
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+   :align: left
+
+   * - **Input**
+     - Instruction: What is the sentiment of this news? Please choose an answer from {strong negative/moderately negative/mildly negative/neutral/mildly positive/moderately positive/strong positive}. Input: Amid a soft performance for the major equity indices on Tuesday, Nvidia (NASDAQ: NVDA ) posted a particularly glaring loss. Shares continued to fall in sympathy with fellow semiconductor specialist Micron Technology (NASDAQ: MU ) following its disappointing earnings results last week. Answer:
+   * - **Output**
+     - moderately negative
 
 **Financial Headline Analysis** (Headline Analysis) [headline-tasks]_
+--------------------
+The Headline dataset classifies headlines based on various questions into two classes: "yes" and
+"no".
 
-*   **Input:** ``Instruction: Does the news headline talk about price? Please choose an answer from {Yes/No}. Input: Gold futures edge up after two-session decline Answer:``
-*   **Output:** ``No``
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+   :align: left
+
+   * - **Input**
+     - Instruction: Does the news headline talk about price? Please choose an answer from {Yes/No}. Input: Gold futures edge up after two-session decline Answer:
+   * - **Output**
+     - No
 
 **Named Entity Recognition (NER)** (Named Entity Recognition) [ner-tasks]_
+--------------------
 
-*   **Input:** ``Instruction: What is the entity type of '40 William St' in the input sentence. Options: person, location, organization Input: This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (\" Bank \"), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste . Answer:``
-*   **Output:** ``location``
+The NER dataset annotates one entity per sentence, categorized into one of three classes: "location", "person", and "organization".
+
+.. list-table::
+   :widths: 10 90
+   :header-rows: 0
+   :stub-columns: 1
+   :align: left
+
+   * - **Input**
+     - Instruction: What is the entity type of '40 William St' in the input sentence. Options: person, location, organization Input: This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (" Bank "), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste . Answer:
+   * - **Output**
+     - location
+
 
 Citations
 ****************
