@@ -38,7 +38,7 @@ def create_batched_qa_dataset_from_csv_jsonl(csv_file_path, examples_per_batch, 
     possible_tags_prompt_section = ("You are XBRL expert. Choose the best XBRL US GAAP tag for each highlighted entity in "
                                     "the sentences below. Provide only the US GAAP tags, comma-separated, in the order of the sentences and highlighted entity. "
                                     "Provide nothing else\n") + ", ".join(
-        sorted(list(all_possible_tags))) + ".\n"
+        sorted(list(all_possible_tags))) + "\n"
 
     possible_tags_prompt_section = possible_tags_prompt_section.replace("  ", "").replace("us-gaap:", "")
     print(len(all_possible_tags))
@@ -51,7 +51,7 @@ def create_batched_qa_dataset_from_csv_jsonl(csv_file_path, examples_per_batch, 
         for example in batch_examples:
             prompt = example['question'] + "\n"
             batch_qa_pairs['context'] += prompt
-
+        batch_qa_pairs['context'] += "\nOutput US GAAP tags:"
         batch_qa_pairs['target'] = ",".join([x['answer'] for x in batch_examples]).replace("us-gaap:", "")
         batched_dataset.append(batch_qa_pairs)
 

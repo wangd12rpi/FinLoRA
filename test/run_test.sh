@@ -7,12 +7,14 @@
 #---- ner ----
 
 python test.py \
---dataset xbrl_finer \
---batch_size 12 \
+--dataset xbrl_fnxl \
+--batch_size 1 \
 --quant_bits 8 \
---source hf \
---base_model meta-llama/Llama-3.1-8B-Instruct \
---peft_model ../finetuned_models/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8
+--source google \
+--base_model gemini-2.0-flash-lite-001
+
+#--base_model meta-llama/Llama-3.1-8B-Instruct \
+#--peft_model ../finetuned_models/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8
 
 
 

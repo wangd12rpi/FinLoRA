@@ -290,11 +290,12 @@ labels = [x.split("-")[1] for x in labels]
 random.seed(42)
 batched_prompt_size = 4
 
-size_limit = {"train": 10000, "test": 2000}
+size_limit = {"train": 10000, "test": 10000}
+
 def process_finer139_dataset(dataset_name):
     for split in ['train', 'test']:
         dataset = load_dataset(dataset_name, split=split)
-        # dataset = dataset.shuffle(seed=45)
+        dataset = dataset.shuffle(seed=42)
         batched_data = []
         current_batch_examples = []
 
@@ -311,10 +312,11 @@ def process_finer139_dataset(dataset_name):
             if len(batched_data)  > size_limit[split]:  # Adjust break condition for batched data count
                 break
 
-        # Process any remaining examples less than 100
+        # Process any remaining examples
         if current_batch_examples:
             batched_data.append(create_batched_prompt(current_batch_examples))
 
+        print(len(batched_data))
         with open(f"{split}/finer_{split}_batched.jsonl", 'w') as writer:  # Changed filename to indicate batched data
             random.shuffle(batched_data)
             for x in batched_data:

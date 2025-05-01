@@ -30,6 +30,8 @@ if __name__ == "__main__":
     parser.add_argument("--quant_bits", default=8, type=int)
     parser.add_argument("--temperature", default=0.0, type=float, help="Temperature for text generation")
     parser.add_argument("--source", required=True, type=str)
+    parser.add_argument("--if_print", required=False, type=bool, default=False)
+
     args = parser.parse_args()
 
     print(args.base_model)

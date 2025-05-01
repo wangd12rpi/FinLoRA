@@ -67,7 +67,7 @@ def load_local_model(args):
     return model, tokenizer
 
 
-def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_print_out=False, model=None,
+def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=None,
               tokenizer=None):
     config = dotenv.dotenv_values("../.env")
 
@@ -87,9 +87,6 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
         url = "https://api.together.xyz/v1/chat/completions"
 
         model_name = args.base_model
-
-        if if_print_out:
-            print(f"Using Together API with model: {model_name}, temperature: {temperature}")
 
         for x in inputs:
             payload = {
@@ -157,6 +154,8 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", if_prin
             )
             # print(response.text)
             answer.append(response.text)
+        if args.if_print:
+            print(answer)
         return answer
 
 

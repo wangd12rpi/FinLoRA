@@ -114,7 +114,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1
 
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
-        out_text = inference.inference(args, tmp_context, if_print_out=False, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
+        out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
                                        tokenizer=tokenizer)
         # print(out_text)
         out_text_list += out_text
@@ -142,7 +142,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1
 
     results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
-    fname = f"{data_name}_{base_model_in_path}_{args.peft_model}_results.txt".replace("/", "-")
+    fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
     # Save results to file
     with open(f"results/{fname}", "w+") as f:
         f.write(f"Task: {data_name}\n")
