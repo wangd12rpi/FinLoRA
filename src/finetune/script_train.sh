@@ -25,19 +25,20 @@ declare -A model_map=(
 
 # Start the fine-tuning job in a detached tmux session
 tmux new-session -d -s "training_job_${task}" '
+export HF_TOKEN=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
+
   export CUDA_VISIBLE_DEVICES=0,1,2,3
     export NCCL_IGNORE_DISABLED_P2P=1
     export TRANSFORMERS_NO_ADVISORY_WARNINGS=1
     export TOKENIZERS_PARALLELISM=0
   eval "$(conda shell.bash hook)"
-  conda activate finenv
-  
+
    deepspeed train_lora.py \
     --base_model '"${model_map[$model_name_short]}"' \
     --dataset '"${dataset_map[$task]}"' \
     --max_length 128000 \
-    --batch_size 4 \
-    --grad_accu 4 \
+    --batch_size 8 \
+    --grad_accu 2 \
     --learning_rate 1e-4 \
     --num_epochs 4 \
     --log_interval 10 \

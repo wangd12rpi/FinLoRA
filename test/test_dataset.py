@@ -26,8 +26,8 @@ max_new_token_dict = {
     "xbrl_tags_extract": 10,
     "xbrl_value_extract": 20,
     "xbrl_formula_extract": 30,
-    "xbrl_finer": 100,
-    "xbrl_fnxl": 100,
+    "xbrl_finer": 60,
+    "xbrl_fnxl": 60,
     "fpb": 10,
     "fiqa": 10,
     "tfns": 10,
@@ -79,7 +79,7 @@ def process_batched(out_text_list, target_list):
 
 def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1.0):
     start_time = time.time()
-    batch_size = 1
+    batch_size = args.batch_size
     results = {}
 
     print(f"Testing model: {args.base_model} on {data_name} with temperature={args.temperature}")
@@ -114,7 +114,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1
 
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
-        out_text = inference.inference(args, tmp_context, if_print_out=True, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
+        out_text = inference.inference(args, tmp_context, if_print_out=False, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
                                        tokenizer=tokenizer)
         # print(out_text)
         out_text_list += out_text
@@ -142,9 +142,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1
 
     results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
-    base_model_in_path = args.base_model.replace("/", "-")
+    fname = f"{data_name}_{base_model_in_path}_{args.peft_model}_results.txt".replace("/", "-")
     # Save results to file
-    with open(f"results/{data_name}_{base_model_in_path}_{args.peft_model}_results.txt", "w+") as f:
+    with open(f"results/{fname}", "w+") as f:
         f.write(f"Task: {data_name}\n")
         f.write(f"Accuracy: {acc * 100:.2f}%\n")
         f.write(f"F1 Score: {f1:.3f}\n")

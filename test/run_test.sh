@@ -1,19 +1,18 @@
 # export TRANSFORMERS_NO_ADVISORY_WARNINGS=1
 # export TOKENIZERS_PARALLELISM=0
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+
 
 
 
 #---- ner ----
 
 python test.py \
---dataset nwgi \
---batch_size 1 \
+--dataset xbrl_finer \
+--batch_size 12 \
 --quant_bits 8 \
---source google \
---base_model projects/1023064188719/locations/us-central1/endpoints/1842980499757203456
-
-# --peft_model ../finetuned_models/xbrl_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-4bits-r4
+--source hf \
+--base_model meta-llama/Llama-3.1-8B-Instruct \
+--peft_model ../finetuned_models/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8
 
 
 #--base_model accounts/fireworks/models/llama-v3p1-70b-instruct \
