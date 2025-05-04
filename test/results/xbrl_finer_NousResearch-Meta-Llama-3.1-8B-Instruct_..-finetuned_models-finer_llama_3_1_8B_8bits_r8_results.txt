@@ -1,0 +1,8 @@
+Task: xbrl_finer
+Accuracy: 73.96%
+F1 Score: 0.741
+Per question time: 1.62 minutes
+Model: NousResearch/Meta-Llama-3.1-8B-Instruct
+PEFT Model: ../finetuned_models/finer_llama_3_1_8B_8bits_r8
+Sample Ratio: 0.01
+Temperature: 0.0

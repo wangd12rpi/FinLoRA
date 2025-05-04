@@ -26,8 +26,8 @@ max_new_token_dict = {
     "xbrl_tags_extract": 10,
     "xbrl_value_extract": 20,
     "xbrl_formula_extract": 30,
-    "xbrl_finer": 60,
-    "xbrl_fnxl": 60,
+    "xbrl_finer": 100,
+    "xbrl_fnxl": 100,
     "fpb": 10,
     "fiqa": 10,
     "tfns": 10,
@@ -99,6 +99,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     task_start_time = time.time()
 
     context = instructions['context'].tolist()
+    target_list = instructions["target"].tolist()
+    target_list = [str(x) for x in target_list]
+    
     total_steps = instructions.shape[0] // batch_size
     out_text_list = []
 
@@ -116,9 +119,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
 
         # time.sleep(0.1)
 
-    instructions["target"] = instructions["target"]
-    target_list = instructions["target"].tolist()
-    target_list = [str(x) for x in target_list]
+    # instructions["target"] = instructions["target"]
 
     if "finer" in data_name or "fnxl" in data_name:
         out_text_list, target_list = process_batched(out_text_list, target_list)
@@ -146,7 +147,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         f.write(f"Per question time: {per_question_time:.2f} minutes\n")
         f.write(f"Model: {args.base_model}\n")
         f.write(f"PEFT Model: {args.peft_model}\n")
-        f.write(f"Sample Ratio: {sample_ratio}\n")
+        f.write(f"Sample Ratio: {args.sample_ratio}\n")
         f.write(f"Temperature: {args.temperature}\n")
 
     return results

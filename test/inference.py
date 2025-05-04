@@ -172,7 +172,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
         out_text = ["".join(o.split(delimiter)[-1]).strip() for o in res_sentences]
 
-        if_print_out and print(out_text)
+        args.if_print and print(out_text)
 
         return out_text
 
