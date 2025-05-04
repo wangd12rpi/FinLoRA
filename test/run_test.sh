@@ -7,11 +7,11 @@
 #---- ner ----
 
 python test.py \
---dataset xbrl_fnxl \
+--dataset xbrl_finer \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
---base_model gemini-2.0-flash-lite-001
+--base_model projects/1023064188719/locations/us-central1/endpoints/7929384289915895808
 
 #--base_model meta-llama/Llama-3.1-8B-Instruct \
 #--peft_model ../finetuned_models/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8
@@ -25,3 +25,4 @@ python test.py \
 # Sentiment gemini 2.0 lite: projects/1023064188719/locations/us-central1/endpoints/1842980499757203456
 # ner projects/1023064188719/locations/us-central1/endpoints/5585682896334618624
 # headline projects/1023064188719/locations/us-central1/endpoints/576343104559251456
+# finer projects/1023064188719/locations/us-central1/endpoints/7929384289915895808
