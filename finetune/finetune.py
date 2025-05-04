@@ -37,7 +37,7 @@ AXOLOTL_YAML_TEMPLATE = {
         # "down_proj" # Often included
     ],
 
-    "chat_template": "llama3",  # Default, adjust if model needs different template
+    # "chat_template": "llama3",  # Default, adjust if model needs different template
     "datasets": [
         {
             "path": "../data/train/placeholder_dataset.jsonl",  # Placeholder
@@ -59,9 +59,9 @@ AXOLOTL_YAML_TEMPLATE = {
     "val_set_size": 0.02,  # Default validation split
     "output_dir": "./axolotl-output/placeholder-run",  # Placeholder
 
-    "sequence_len": 16384,  # Max length of input sequence
+    "sequence_len": 4096,  # Max length of input sequence
     "sample_packing": False,
-    "pad_to_sequence_len": True,
+    "pad_to_sequence_len": False,
 
     # --- WandB Config (Optional) ---
     "wandb_project": "finlora_models",  # Your project name
@@ -77,8 +77,8 @@ AXOLOTL_YAML_TEMPLATE = {
     # --- Training Optimizations ---
     "gradient_checkpointing": True,
     "resume_from_checkpoint": None,  # Set to path or True to resume
-    "logging_steps": 1,
-    "flash_attention": True,  # Use Flash Attention if available
+    "logging_steps": 500,
+    "flash_attention": False,  # Use Flash Attention if available
 
     # --- DeepSpeed (Optional) ---
     # Ensure the deepspeed config file exists if specified

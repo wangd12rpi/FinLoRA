@@ -77,7 +77,7 @@ def process_batched(out_text_list, target_list):
     return processed_out_text_list, processed_target_list
 
 
-def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1.0):
+def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     start_time = time.time()
     batch_size = args.batch_size
     results = {}
@@ -89,19 +89,14 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None, sample_ratio=1
 
     instructions = pd.read_json(path_or_buf=dataset_path[data_name], lines=True)
     sample_size = len(instructions)
-    if sample_ratio < 1.0:
-        sample_size = int(len(instructions) * sample_ratio)
 
-    # main_pbar = tqdm(total=total_examples, position=0, desc="Overall Progress", leave=True)
+    if args.sample_ratio < 1.0:
+        sample_size = int(len(instructions) * args.sample_ratio)
+        instructions = instructions.sample(frac=args.sample_ratio, random_state=42)
+
     model, tokenizer = inference.load_local_model(args)
 
     task_start_time = time.time()
-
-    # Load dataset
-
-    # Apply sample ratio to control test size
-    if sample_ratio < 1.0:
-        instructions = instructions.sample(frac=sample_ratio, random_state=42)
 
     context = instructions['context'].tolist()
     total_steps = instructions.shape[0] // batch_size

@@ -31,10 +31,12 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", default=0.0, type=float, help="Temperature for text generation")
     parser.add_argument("--source", required=True, type=str)
     parser.add_argument("--if_print", required=False, type=bool, default=False)
+    parser.add_argument("--sample_ratio", required=False, type=float, default=1.0)
 
     args = parser.parse_args()
 
     print(args.base_model)
     print(args.peft_model)
+    print("Sample Ratio", args.sample_ratio)
 
     main(args)

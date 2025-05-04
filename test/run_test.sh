@@ -11,6 +11,7 @@ python test.py \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
+--sample_ratio 1.0 \
 --base_model projects/1023064188719/locations/us-central1/endpoints/7929384289915895808
 
 #--base_model meta-llama/Llama-3.1-8B-Instruct \
