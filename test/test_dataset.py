@@ -9,9 +9,10 @@ from tqdm import tqdm
 import pandas as pd
 
 dataset_path = {
-    "xbrl_tags_extract": "../data/test/xbrl_xbrl_tags_test.jsonl",
-    "xbrl_value_extract": "../data/test/xbrl_value_test.jsonl",
-    "xbrl_formula_extract": "../data/test/xbrl_formula_test.jsonl",
+    "xbrl_tags_extract": "../data/test/xbrl_extract_tags_test.jsonl",
+    "xbrl_value_extract": "../data/test/xbrl_extract_value_test.jsonl",
+    "xbrl_formula_extract": "../data/test/xbrl_extract_formula_test.jsonl",
+    "xbrl_formula_calc_extract": "../data/test/xbrl_extract_formula_calculations_test.jsonl",
     "xbrl_finer": "../data/test/finer_test_batched.jsonl",
     "xbrl_fnxl": "../data/test/fnxl_test_batched.jsonl",
     "fpb": "../data/test/fpb_test.jsonl",
@@ -26,6 +27,7 @@ max_new_token_dict = {
     "xbrl_tags_extract": 10,
     "xbrl_value_extract": 20,
     "xbrl_formula_extract": 30,
+    "xbrl_formula_calc_extract": 30,
     "xbrl_finer": 100,
     "xbrl_fnxl": 100,
     "fpb": 10,
@@ -34,6 +36,21 @@ max_new_token_dict = {
     "nwgi": 10,
     "headline": 10,
     "ner": 10,
+}
+
+max_new_token_dict_for_base_models = {
+    "xbrl_tags_extract": 60,
+    "xbrl_value_extract": 60,
+    "xbrl_formula_extract": 60,
+    "xbrl_formula_calc_extract": 60,
+    "xbrl_finer": 100,
+    "xbrl_fnxl": 100,
+    "fpb": 60,
+    "fiqa": 60,
+    "tfns": 60,
+    "nwgi": 60,
+    "headline": 60,
+    "ner": 60,
 }
 
 

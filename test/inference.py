@@ -69,14 +69,13 @@ def load_local_model(args):
 
 def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=None,
               tokenizer=None):
+
     config = dotenv.dotenv_values("../.env")
-
-
-    together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
-
     temperature = args.temperature if hasattr(args, 'temperature') else 0.0
 
-    if together_api_key:
+    if args.source == "together":
+        together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get(
+            "TOGETHER_API_KEY")
         # Use Together API for all models when API key is provided
         answer = []
         headers = {
@@ -111,7 +110,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
 
         return answer
 
-    elif "fireworks" in args.base_model:  # Use Fireworks API
+    elif args.source == "fireworks":  # Use Fireworks API
         answer = []
         for x in inputs:
             client = Fireworks(api_key=config["FIREWORKS_KEY"])
