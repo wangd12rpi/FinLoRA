@@ -173,6 +173,8 @@ keys and values are updated; all other weights remain frozen.
 Because the modification is in‑place, no extra layers or parameters are
 added and inference time is unchanged.
 
+4 Quantized Low-Rank Adaptation (QLoRA)
+---------------------------------------
 
 References
 ----------
