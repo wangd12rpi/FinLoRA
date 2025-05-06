@@ -195,6 +195,32 @@ The last part of QLoRA is Paged Optimizers, where QLoRA reduces GPU memory spike
 
 5 LoRA Methods with Federated Learning
 ---------------------------------------
+In the financial domain, banks may have multiple departments who want to work together on a model to predict credit risk and whether a client will default on a loan. Each department may have a different dataset but they cannot share their data due to compliance reasons and privacy concerns.
+Federated learning solves this issue by fine-tuning a model on local data and aggregating updates during backpropogation to a centralized model via a server.
+
+Differentially Private Low-Rank Adaptation (DP-LoRA) is a method to use federated learning with LoRA. 
+
+DP-LoRA first uses a server to send the current global LoRA weights (the A and B vectors from earlier) to all clients.
+
+Every client does the following:
+1) Get a minibatch of its private data
+2) Compute the gradient for only its local A and B weights clipped with an l2 norm (square root of the sum of the squares of elements in the vector)
+3) Adds Gaussian noise to the gradients
+4) Updates the A and B vectors
+5) Sends the updated A and B vectors to the server.
+
+By adding noise, DP-LoRA prevents the centralized model from inferring the private data later on. This would allow the banks in the credit risk example to work on a model together.
+
+As in normal federated learning, the server than aggregates the weights from all clients in a weighted average and sends the updated weights to all clients.
+
+DP-LoRA can take advantage of the following:
+1. File sharing using IPFS: IPFS is a protocols for decentralized organization and transferring
+of files. Files shared on IPFS are verifiable as it uses cryptographic hashes to verify the
+authenticity of files. The decentralized and distributed nature of IPFS also means that it is
+good method for managing and transferring LoRA weights during federated training.
+2. Proof of training: Zero-knowledge proof of training
+3. Auditing of inference
+4. Logs onto a chain (IPFS for major, small on chain);
 
 6 LoRA Methods with Mixture of Experts (MoE)
 ---------------------------------------------
@@ -232,6 +258,17 @@ References
       volume={36},
       pages={10088--10115},
       year={2023}
+    }
+
+    @article{liu2025differentially,
+      title={Differentially private low-rank adaptation of large language model using federated learning},
+      author={Liu, Xiao-Yang and Zhu, Rongyi and Zha, Daochen and Gao, Jiechao and Zhong, Shan and White, Matt and Qiu, Meikang},
+      journal={ACM Transactions on Management Information Systems},
+      volume={16},
+      number={2},
+      pages={1--24},
+      year={2025},
+      publisher={ACM New York, NY}
     }
 
     @article{jiang2024mixtral,
