@@ -141,7 +141,7 @@ Say instead, we fine-tune with **Low-Rank Adaptation**. Model M is adapted as th
 Low-rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
 
 For every Multi-head Attention layer in Model M, there are unique weight matrices
-for the…
+for the
 
 * **Queries** (:math:`W_q`)
 * **Keys** (:math:`W_k`)
@@ -172,7 +172,7 @@ keys and values are updated; all other weights remain frozen.
    W_{V\text{new}}^{(n)} = W_{V\text{old}}^{(n)} + A_V^{(n)} B_V^{(n)}
 
 Because the modification is in-place, no extra layers or parameters are
-added and inference time is unchanged.
+added, and inference time is unchanged.
 
 4 Quantized Low-Rank Adaptation (QLoRA)
 ---------------------------------------
@@ -184,7 +184,7 @@ Quantization is a technique that reduces the precision of the weights to reduce 
 It consists of two parts: Rounding to the nearest integer and truncating to remove the decimal portion of a floating point number.
 QLoRA specifically uses 4-bit NormalFloat (NF4), an optimal data type for normally distributed weights, quantization. Pre-trained weights are usually normally distributed and centered around 0, which is why NF4 is ideal for quantization.
 
-Say we want to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent 2^{(4)} = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
+Say we want to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent :math:`2^{4}` = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
 Very close together values, however, will be mapped to the same bin. This means that the precision is lost if we want to convert back to Float16. However, we can use blockwise quantization, where we divide the input range into blocks and quantize each block separately. QLoRA uses a 64 blocksize for better precision.
 
 Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution (remember, pre-trained weights are usually normally distributed and centered around 0). The spacing between bins is therefore closer together near 0 and further apart further away from 0.
@@ -248,18 +248,54 @@ In MoE, there are multiple experts between the input and output. There is a rout
 The router network assigns weights to each expert and combines the outputs to create a final output.
 
 In Mixtral 8x7B, there are 8 experts and a router network per layer. The router network picks the 2 most relevant experts to use for the input, and performs the previously mentioned process to get the final output.
-Only experts and their parameters are activated in sparse layers (feed-foward networks within transformer blocks), lowering computational costs.
+Only experts and their parameters are activated in sparse layers (feed-forward networks within transformer blocks), lowering computational costs.
 Mixtral 8x7B also uses load balancing where it prevents certain experts from being disproportionately used (leads to better performance). It does this by adding noise during the router netwrok selection process to make it more even. It also uses an additional loss to penalize skewed expert usage.
 
 6.2 Fine-tuning Mixture of Experts (MoE) with QLoRA
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Fine-tuning on a MoE model with LoRA is done just like you would fine-tune a normal model. The router network is usually not updated. Due to the large total parameter count, we can use QLoRA to reduce the memory usage.
 
-6.3 Mixture of Low-Rank Adapter Experts (X-LoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6.3 Mixture of Low-Rank Adapter Experts (MoLE/X-LoRA)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Two popular approaches to using LoRA models with MoE are MoLE and X-LoRA. 
+
+**MoLE**: MoLE uses a learnable gating function that acts similar to MoE by treating multiple task-specific LoRAs at each layer as experts and using their concatenated adapter outputs to get the weights for the aggregated output. The same weights are used for all tokens within each layer.
+MoLE is illustrated below.
+
+.. figure:: ./images/MoLE.png
+   :width: 70%
+   :align: center
+   :alt: MoLE Illustration
+
+When fine-tuning, both the backbone and all LoRA matrices are frozen. Only the layer-wise gates are fine-tuned on a domain-specific dataset.
+
+MoLE has two inference modes: 
+1. Using the learned gate weights as they are.
+2. Masking (zeroing out) undesired LoRAs and renormalizing the weight distribution.
+
+MoLE only uses one forward pass.
+
+**X-LoRA**: X-LoRA adds a scaling head on top of the backbone. The scaling head takes the hidden state (function of inputs at a point) of each token at each layer and produces a vector consisting of scaling factors for each LoRA adapter.
+As in MoLE, X-LoRA's experts are LoRAs at each layer.
+
+X-LoRA uses two passes:
+1. In the first pass, it runs the input on the frozen model and the scaling head to compute the LoRA adapter-specific scaling vectors for each token at each layer.
+2. In the second pass, it runs the same input and gets output from summing the top-k (selected by the largest k scaling factors) LoRA adpaters' outputs multiplied by the scaling factors.
+
+X-LoRA uses a load balancing technique like Mixtral to prevent any LoRA from being disproportionately used.
+
+X-LoRA's architecture is shown below.
+
+.. figure:: ./images/X-LoRA.png
+   :width: 70%
+   :align: center
+   :alt: X-LoRA Architecture
+
+In our paper, we focus on the X-LoRA approach.
 
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
 -----------------------------------------------
+
 
 References
 ----------
@@ -299,6 +335,13 @@ References
       title={Mixtral of experts},
       author={Jiang, Albert Q and Sablayrolles, Alexandre and Roux, Antoine and Mensch, Arthur and Savary, Blanche and Bamford, Chris and Chaplot, Devendra Singh and Casas, Diego de las and Hanna, Emma Bou and Bressand, Florian and others},
       journal={arXiv preprint arXiv:2401.04088},
+      year={2024}
+    }
+
+    @article{wu2024mixture,
+      title={Mixture of lora experts},
+      author={Wu, Xun and Huang, Shaohan and Wei, Furu},
+      journal={arXiv preprint arXiv:2404.13628},
       year={2024}
     }
 
