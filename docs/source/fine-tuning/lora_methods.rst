@@ -170,9 +170,9 @@ keys and values are updated; all other weights remain frozen.
 
 .. math::
 
-   W_{Q,\text{new}}^{(n)} = W_{Q,\text{old}}^{(n)} + A_Q^{(n)} B_Q^{(n)} \\
-   W_{K,\text{new}}^{(n)} = W_{K,\text{old}}^{(n)} + A_K^{(n)} B_K^{(n)} \\
-   W_{V,\text{new}}^{(n)} = W_{V,\text{old}}^{(n)} + A_V^{(n)} B_V^{(n)}
+   W_{Q\text{new}}^{(n)} = W_{Q\text{old}}^{(n)} + A_Q^{(n)} B_Q^{(n)} \\
+   W_{K\text{new}}^{(n)} = W_{K\text{old}}^{(n)} + A_K^{(n)} B_K^{(n)} \\
+   W_{V\text{new}}^{(n)} = W_{V\text{old}}^{(n)} + A_V^{(n)} B_V^{(n)}
 
 Because the modification is in‑place, no extra layers or parameters are
 added and inference time is unchanged.
