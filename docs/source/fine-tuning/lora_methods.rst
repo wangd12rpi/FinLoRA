@@ -176,6 +176,24 @@ added and inference time is unchanged.
 4 Quantized Low-Rank Adaptation (QLoRA)
 ---------------------------------------
 
+5 LoRA Methods with Federated Learning
+---------------------------------------
+
+6 LoRA Methods with Mixture of Experts (MoE)
+---------------------------------------------
+
+6.1 Mixture of Experts (MoE)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+6.2 Fintuning Mixture of Experts (MoE) with LoRA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+6.3 Mixture of Low-Rank Adapter Experts (X-LoRA)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+7 Weight-Decomposed Low-Rank Adaptation (DoRA)
+-----------------------------------------------
+
 References
 ----------
 .. code-block:: bash
