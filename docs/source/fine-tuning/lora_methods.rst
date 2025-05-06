@@ -1,4 +1,4 @@
-Low‑Rank Adaptation Methods for Large Language Models
+Low-Rank Adaptation Methods for Large Language Models
 =======================================================
 
 .. contents::
@@ -9,7 +9,7 @@ Low‑Rank Adaptation Methods for Large Language Models
 1. What is LoRA?
 ----------------
 LoRA is a method to efficiently update the parameters  
-of pre‑trained language models when fine‑tuning on new tasks.
+of pre-trained language models when fine-tuning on new tasks.
 
 
 2. Foundations of LoRA
@@ -18,7 +18,7 @@ of pre‑trained language models when fine‑tuning on new tasks.
 2.1 Ranks
 ~~~~~~~~~
 Rank is the number of linearly independent rows or columns  
-in a matrix. Linearly independent columns, for example, are  
+in a matrix. Linearly independent columns, for example, are  
 columns whose values can't be computed by an addition of  
 previous columns multiplied by an integer.
 
@@ -32,13 +32,13 @@ previous columns multiplied by an integer.
 In the above matrix, there are 2 linearly independent columns,  
 so the rank is 2.
 
-• Column 1 has no previous rows, so it is linearly independent.  
-• Column 2 can't be computed as a multiple of column 1, so  
+• Column 1 has no previous rows, so it is linearly independent.  
+• Column 2 can't be computed as a multiple of column 1, so  
   it is linearly independent.  
-• Columns 3‑5 are linearly dependent.  
-    • C₃ = 2 C₁ + 0 C₂  
-    • C₄ = 1 C₁ + 1 C₂  
-    • C₅ = 1 C₁ + 2 C₂  
+• Columns 3-5 are linearly dependent.  
+    • C₃ = 2C₁ + 0C₂  
+    • C₄ = 1C₁ + 1C₂  
+    • C₅ = 1C₁ + 2C₂  
 
 If we convert the formulas to vectors, we can represent them as:
 
@@ -59,10 +59,10 @@ If we convert the formulas to vectors, we can represent them as:
        [1 2]              0 1 0 1 2]
 
 If we take the matrix multiplication of the two linearly independent  
-columns (C₁ and C₂) and either representation above, we recover the  
+columns (C₁ and C₂) and either representation above, we recover the  
 original matrix **W**.
 
-Low‑rank decomposition example
+Low-rank decomposition example
 ::
 
     W = [1  7  2  8  5
@@ -89,72 +89,71 @@ Low‑rank decomposition example
   of the **A** and **B** matrices.
 
 IF r << min{d,k}, this would be used due to  
-having to store less parameters. This is called *low‑rank*.
+having to store less parameters. This is called *low-rank*.
 
 In the example, 2 << min{4,5} = 2 << 4.
 
 
-2.2 1 Fine‑tuning Without Adapters
+2.2.1 Fine-tuning Without Adapters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Say we have a pre‑trained model **M** with **500 million**  
-parameters. M has the below architecture.
+Say we have a pre-trained model **M** with **500 million** parameters. M has the below architecture.
 
 .. figure:: ./images/Model_M_Architecture.png
    :width: 70%
    :align: center
    :alt: Model M Architecture
 
-Say we pre‑tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
+Say we pre-tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
 
-Say we want to fine‑tune pre‑trained model M on a new task **Named Entity Recognition (NER)**, where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
+Say we want to fine-tune pre-trained model M on a new task **Named Entity Recognition (NER)**, where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
 
-When we fine‑tune the model, all parameters are updated during back‑propagation. Back‑propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight. A pictorial representation is below.
+When we fine-tune the model, all parameters are updated during back-propagation. Back-propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight. A pictorial representation is below.
 
 .. figure:: ./images/backpropogation.png
    :width: 70%
    :align: center
    :alt: Backpropogation Pictorial Representation
 
-If we want to fine‑tune model M on another task **Financial Phrase Bank (FPB)**, where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to over‑fitting and the model forgetting pre‑training tasks.
+If we want to fine-tune model M on another task **Financial Phrase Bank (FPB)**, where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to over-fitting and the model forgetting pre-training tasks.
 
-2.2.2 Fine‑tuning With Adapters (Parameter Efficient Finetuning — PEFT)
+2.2.2 Fine-tuning With Adapters (Parameter Efficient Fine-Tuning—PEFT)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Say instead, when we want to fine‑tune the pre‑trained model M we use **Parameter Efficient Finetuning (PEFT)**, where we add two adapter layers per transformer layer. The architecture of M now looks like the following.
+Say instead, when we want to fine-tune the pre-trained model M we use **Parameter Efficient Fine-Tuning (PEFT)**, where we add two adapter layers per transformer layer. The architecture of M now looks like the following.
 
 .. figure:: ./images/Model_M_Architecture_Adapters.png
    :width: 70%
    :align: center
    :alt: Model M Architecture with Adapters
 
-Now, when we fine‑tune M on NER, only the parameters of the adapter layer are updated, but the other weights/parameters are frozen, so during back‑propagation, the gradients of error pass through them, but those weights/parameters aren't updated. While we do have to replace the adapters and store the updated params separately for FPB, the number of parameters is now much smaller.
+Now, when we fine-tune M on NER, only the parameters of the adapter layer are updated, but the other weights/parameters are frozen, so during back-propagation, the gradients of error pass through them, but those weights/parameters aren't updated. While we do have to replace the adapters and store the updated params separately for FPB, the number of parameters is now much smaller.
 
 
-3 Low‑Rank Adaptation (LoRA)
+3 Low-Rank Adaptation (LoRA)
 ----------------------------
-Say instead, we fine‑tune with **Low‑Rank Adaptation**. Model M is adapted as the following.
+Say instead, we fine-tune with **Low-Rank Adaptation**. Model M is adapted as the following.
 
 .. figure:: ./images/LoRA.png
    :width: 70%
    :align: center
    :alt: LoRA Mechanism
 
-Low‑rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
+Low-rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
 
-For every Multi‑Head Attention layer in Model M, there are unique weight matrices
-for the …
+For every Multi-head Attention layer in Model M, there are unique weight matrices
+for the…
 
-* **Queries** (:math:`W_q`)
-* **Keys**   (:math:`W_k`)
-* **Values** (:math:`W_v`)
+* **Queries** (:math:`W_q`)
+* **Keys** (:math:`W_k`)
+* **Values** (:math:`W_v`)
 
 as shown below.
 
 .. figure:: ./images/Multi_Head_Attention.png
    :width: 70%
    :align: center
-   :alt: Multi-Head Attention Weight Matrices
+   :alt: Multi-head Attention Weight Matrices
 
-In LoRA, we transform these weight matrices into **A B** products exactly as in Section 2.1.1
+In LoRA, we transform these weight matrices into **AB** products exactly as in Section 2.1.1
 
 .. math::
 
@@ -162,7 +161,7 @@ In LoRA, we transform these weight matrices into **A B** products exactly as i
    W_K^{(n)} = A_K^{(n)} \, B_K^{(n)} \\
    W_V^{(n)} = A_V^{(n)} \, B_V^{(n)}
 
-During fine‑tuning, all parameters inside **A** and **B** for the queries,
+During fine-tuning, all parameters inside **A** and **B** for the queries,
 keys and values are updated; all other weights remain frozen.
 
 .. math::
@@ -231,14 +230,14 @@ References
 
     @misc{sharma2023peft,
       author       = {Sharma, Rajeev},
-      title        = {Parameter‐Efficient Fine‐Tuning (PEFT) of LLMs: A Practical Guide},
+      title        = {Parameter-Efficient Fine-Tuning (PEFT) of LLMs: A Practical Guide},
       howpublished = {\url{https://markovate.com/blog/parameter-efficient-fine-tuning-peft-of-llms-a-practical-guide/}},
       year         = {2023}
     }
 
     @misc{doshi2021transformers,
       author       = {Doshi, Ketan},
-      title        = {Transformers Explained Visually (Part 3): Multi‑head Attention, deep dive},
+      title        = {Transformers Explained Visually (Part 3): Multi-head Attention, deep dive},
       howpublished = {\url{https://medium.com/data-science/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853}},
       year         = {2021}
     }
