@@ -220,7 +220,7 @@ authenticity of files. The decentralized and distributed nature of IPFS also mea
 good method for managing and transferring LoRA weights during federated training.
 2. Proof of training: Zero-knowledge proof of training
 3. Auditing of inference
-4. Logs onto a chain (IPFS for major, small on chain);
+4. Logs onto a chain (IPFS for major, small on chain)
 
 6 LoRA Methods with Mixture of Experts (MoE)
 ---------------------------------------------
