@@ -99,7 +99,10 @@ In the example, 2 << min{4,5} = 2 << 4.
 Say we have a pre‑trained model **M** with **500 million**  
 parameters. M has the below architecture.
 
-*Insert Model M Architecture Picture*
+.. figure:: ./images/Model_M_Architecture.png
+   :width: 100%
+   :align: center
+   :alt: Model M Architecture
 
 Say we pre‑tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
 
@@ -108,7 +111,7 @@ Say we want to fine‑tune pre‑trained model M on a new task **Named Entity 
 When we fine‑tune the model, all parameters are updated during back‑propagation. Back‑propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight. A pictorial representation is below.
 
 .. figure:: ./images/backpropogation.png
-   :width: 100%
+   :width: 70%
    :align: center
    :alt: Backpropogation Pictorial Representation
 
@@ -118,7 +121,10 @@ If we want to fine‑tune model M on another task **Financial Phrase Bank (FPB
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Say instead, when we want to fine‑tune the pre‑trained model M we use **Parameter Efficient Finetuning (PEFT)**, where we add two adapter layers per transformer layer. The architecture of M now looks like the following.
 
-*Insert Model M Architecture With Adapters Picture*
+.. figure:: ./images/Model_M_Architecture_Adapters.png
+   :width: 70%
+   :align: center
+   :alt: Model M Architecture with Adapters
 
 Now, when we fine‑tune M on NER, only the parameters of the adapter layer are updated, but the other weights/parameters are frozen, so during back‑propagation, the gradients of error pass through them, but those weights/parameters aren't updated. While we do have to replace the adapters and store the updated params separately for FPB, the number of parameters is now much smaller.
 
@@ -127,22 +133,29 @@ Now, when we fine‑tune M on NER, only the parameters of the adapter layer ar
 ----------------------------
 Say instead, we fine‑tune with **Low‑Rank Adaptation**. Model M is adapted as the following.
 
-*Insert LoRA Pictorial Representation*
+.. figure:: ./images/LoRA.png
+   :width: 70%
+   :align: center
+   :alt: LoRA Mechanism
 
 Low‑rank : r << min(d,k)  
            = r << min(d,d)  
            = r << min(d)  
            = r << d
 
-Model M’s architecture is represented below.  
-For every Multi‑Head Attention layer there are unique weight matrices
+For every Multi‑Head Attention layer in Model M, there are unique weight matrices
 for the …
 
 * **Queries** (:math:`W_q`)
 * **Keys**   (:math:`W_k`)
 * **Values** (:math:`W_v`)
 
-*Insert Model M Architecture With Weight Arrows*
+as shown below.
+
+.. figure:: ./images/Multi_Head_Attention.png
+   :width: 70%
+   :align: center
+   :alt: Multi-Head Attention Weight Matrices
 
 In LoRA, we transform these weight matrices into **A B** products exactly as in Section 2.1.1
 
@@ -217,4 +230,18 @@ References
       title        = {{LoRA Explained!}},
       howpublished = {\url{https://www.youtube.com/watch?v=Bq9zqTJDsjg}},
       year         = {2024}
+    }
+
+    @misc{sharma2023peft,
+      author       = {Sharma, Rajeev},
+      title        = {Parameter‐Efficient Fine‐Tuning (PEFT) of LLMs: A Practical Guide},
+      howpublished = {\url{https://markovate.com/blog/parameter-efficient-fine-tuning-peft-of-llms-a-practical-guide/}},
+      year         = {2023}
+    }
+
+    @misc{doshi2021transformers,
+      author       = {Doshi, Ketan},
+      title        = {Transformers Explained Visually (Part 3): Multi‑head Attention, deep dive},
+      howpublished = {\url{https://medium.com/data-science/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853}},
+      year         = {2021}
     }
