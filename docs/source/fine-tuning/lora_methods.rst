@@ -170,7 +170,7 @@ keys and values are updated; all other weights remain frozen.
    W_{K\text{new}}^{(n)} = W_{K\text{old}}^{(n)} + A_K^{(n)} B_K^{(n)} \\
    W_{V\text{new}}^{(n)} = W_{V\text{old}}^{(n)} + A_V^{(n)} B_V^{(n)}
 
-Because the modification is in‑place, no extra layers or parameters are
+Because the modification is in-place, no extra layers or parameters are
 added and inference time is unchanged.
 
 4 Quantized Low-Rank Adaptation (QLoRA)
