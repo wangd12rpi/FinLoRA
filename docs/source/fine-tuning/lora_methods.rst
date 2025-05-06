@@ -85,15 +85,14 @@ Low-rank decomposition example
     Parameters(B) = 2 x 5 = 10
     Parameters(A+B) = 8 + 10 = 18
 
-∴ Less parameters are stored if we use the representation  
-  of the **A** and **B** matrices.
+∴ Less parameters are stored if we use the representation of the **A** and **B** matrices.
 
-IF r << min{d,k}, this would be used due to  
+If r << min{d,k}, this would be used due to  
 having to store less parameters. This is called *low-rank*.
 
 In the example, 2 << min{4,5} = 2 << 4.
 
-2.2 Fine‑tuning Strategies
+2.2 Fine-tuning Strategies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 2.2.1 Fine-tuning Without Adapters
@@ -105,9 +104,9 @@ Say we have a pre-trained model **M** with **500 million** parameters. M has the
    :align: center
    :alt: Model M Architecture
 
-Say we pre-tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
+Assume we pre-tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
 
-Say we want to fine-tune pre-trained model M on a new task **Named Entity Recognition (NER)**, where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
+If we want to fine-tune pre-trained model M on a new task **Named Entity Recognition (NER)**, where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
 
 When we fine-tune the model, all parameters are updated during back-propagation. Back-propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight. A pictorial representation is below.
 
@@ -185,7 +184,7 @@ Quantization is a technique that reduces the precision of the weights to reduce 
 It consists of two parts: Rounding to the nearest integer and truncating to remove the decimal portion of a floating point number.
 QLoRA specifically uses 4-bit NormalFloat (NF4), an optimal data type for normally distributed weights, quantization. Pre-trained weights are usually normally distributed and centered around 0, which is why NF4 is ideal for quantization.
 
-Say we wanted to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent 2^{4} = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
+Say we want to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent 2^{(4)} = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
 Very close together values, however, will be mapped to the same bin. This means that the precision is lost if we want to convert back to Float16. However, we can use blockwise quantization, where we divide the input range into blocks and quantize each block separately. QLoRA uses a 64 blocksize for better precision.
 
 Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution (remember, pre-trained weights are usually normally distributed and centered around 0). The spacing between bins is therefore closer together near 0 and further apart further away from 0.
