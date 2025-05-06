@@ -141,7 +141,7 @@ Say instead, we fine-tune with **Low-Rank Adaptation**. Model M is adapted as th
 Low-rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
 
 For every Multi-head Attention layer in Model M, there are unique weight matrices
-for the…
+for the
 
 * **Queries** (:math:`W_q`)
 * **Keys** (:math:`W_k`)
@@ -184,7 +184,7 @@ Quantization is a technique that reduces the precision of the weights to reduce 
 It consists of two parts: Rounding to the nearest integer and truncating to remove the decimal portion of a floating point number.
 QLoRA specifically uses 4-bit NormalFloat (NF4), an optimal data type for normally distributed weights, quantization. Pre-trained weights are usually normally distributed and centered around 0, which is why NF4 is ideal for quantization.
 
-Say we want to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent 2^{(4)} = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
+Say we want to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent :math:`2^{4}` = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
 Very close together values, however, will be mapped to the same bin. This means that the precision is lost if we want to convert back to Float16. However, we can use blockwise quantization, where we divide the input range into blocks and quantize each block separately. QLoRA uses a 64 blocksize for better precision.
 
 Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution (remember, pre-trained weights are usually normally distributed and centered around 0). The spacing between bins is therefore closer together near 0 and further apart further away from 0.
@@ -258,8 +258,10 @@ Fine-tuning on a MoE model with LoRA is done just like you would fine-tune a nor
 6.3 Mixture of Low-Rank Adapter Experts (X-LoRA)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
 -----------------------------------------------
+
 
 References
 ----------
