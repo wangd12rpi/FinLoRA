@@ -22,68 +22,100 @@ in a matrix. Linearly independent columns, for example, are
 columns whose values can't be computed by an addition of  
 previous columns multiplied by an integer.
 
-::
+.. math::
 
-    W = [1  7  2  8  5
-         2 10  4 12 10
-         3 15 12 18 27
-         4 12 16 16 36]   ---> Dimensions: 4 x 5 (rows x columns)
+   W \;=\;
+   \begin{bmatrix}
+     1 &  7 &  2 &  8 &  5\\
+     2 & 10 &  4 & 12 & 10\\
+     3 & 15 & 12 & 18 & 27\\
+     4 & 12 & 16 & 16 & 36
+   \end{bmatrix}
+   \quad\text{Dimensions: }4 \times 5\text{ (rows × columns)}
 
-In the above matrix, there are 2 linearly independent columns,  
-so the rank is 2.
 
-• Column 1 has no previous rows, so it is linearly independent.  
-• Column 2 can't be computed as a multiple of column 1, so  
-  it is linearly independent.  
-• Columns 3-5 are linearly dependent.  
-    • C₃ = 2C₁ + 0C₂  
-    • C₄ = 1C₁ + 1C₂  
-    • C₅ = 1C₁ + 2C₂  
+In this matrix there are **two** linearly independent columns, so
+:math:`\operatorname{rank}(W)=2`.
+
+* Column 1 is independent (nothing before it).  
+* Column 2 cannot be written as a multiple of Column 1, so it is also independent.  
+* Columns 3–5 are dependent:
+
+.. math::
+
+   C_3 = 2C_1, \quad
+   C_4 = C_1 + C_2, \quad
+   C_5 = C_1 + 2C_2.
 
 If we convert the formulas to vectors, we can represent them as:
 
-.. code-block:: text
-   :class: matrix
+.. math::
 
-       [1]      [0
-        0        1
-        2        0
-        1] C₁ +  2] C₂
+   \begin{bmatrix}1\\0\\2\\1\end{bmatrix} C_1
+   \;+\;
+   \begin{bmatrix}0\\1\\0\\2\end{bmatrix} C_2
 
-.. code-block:: text
-   :class: matrix
 
-       [1 0
-        0 1
-        2 0         or   [1 0 2 1 1
-        1 2]              0 1 0 1 2]
+.. math::
+
+   \begin{bmatrix}
+     1 & 0\\
+     0 & 1\\
+     2 & 0\\
+     1 & 2
+   \end{bmatrix}
+   \quad\text{or}\quad
+   \begin{bmatrix}
+     1 & 0 & 2 & 1 & 1\\
+     0 & 1 & 0 & 1 & 2
+   \end{bmatrix}
 
 If we take the matrix multiplication of the two linearly independent  
 columns (C₁ and C₂) and either representation above, we recover the  
 original matrix **W**.
 
 Low-rank decomposition example
-::
+.. math::
 
-    W = [1  7  2  8  5
-         2 10  4 12 10
-         3 15 12 18 27
-         4 12 16 16 36]
+   W
+   \;=\;
+   \begin{bmatrix}
+     1 &  7 &  2 &  8 &  5\\
+     2 & 10 &  4 & 12 & 10\\
+     3 & 15 & 12 & 18 & 27\\
+     4 & 12 & 16 & 16 & 36
+   \end{bmatrix}
 
-      = [1  7
-         2 10
-         3 15   [1 0 2 1 1
-         4 12]   0 1 0 1 2]
+.. math::
 
-    Dimensions(W) = d x k = 4 x 5
-    Dimensions(A) = d x r = 4 x 2   r = rank (rank = 2)
-    Dimensions(B) = r x k = 2 x 5
-    Dimensions(A*B) = (d x r) * (r x k) = d x k = Dimensions(W)
+   =
+   \underbrace{\begin{bmatrix}
+     1 &  7\\
+     2 & 10\\
+     3 & 15\\
+     4 & 12
+   \end{bmatrix}}_{A}
+   \;
+   \underbrace{\begin{bmatrix}
+     1 & 0 & 2 & 1 & 1\\
+     0 & 1 & 0 & 1 & 2
+   \end{bmatrix}}_{B}
 
-    Parameters(W) = 4 x 5 = 20
-    Parameters(A) = 4 x 2 =  8
-    Parameters(B) = 2 x 5 = 10
-    Parameters(A+B) = 8 + 10 = 18
+In the example:
+
+.. math::
+
+   \text{Dimensions}(W)   &= d \times k      &= 4 \times 5 \\
+   \text{Dimensions}(A)   &= d \times r      &= 4 \times 2, \quad r=\operatorname{rank}(W)=2 \\
+   \text{Dimensions}(B)   &= r \times k      &= 2 \times 5 \\
+   \text{Dimensions}(A\!\cdot\!B) &= (d \times r)\,\cdot\,(r \times k) &= d \times k &= \text{Dimensions}(W)
+
+.. math::
+
+   \text{Parameters}(W)   &= 4 \times 5 = 20 \\
+   \text{Parameters}(A)   &= 4 \times 2 =  8 \\
+   \text{Parameters}(B)   &= 2 \times 5 = 10 \\
+   \text{Parameters}(A+B) &= 8 + 10 = 18
 
 ∴ Less parameters are stored if we use the representation of the **A** and **B** matrices.
 
