@@ -138,10 +138,7 @@ Say instead, we fine‑tune with **Low‑Rank Adaptation**. Model M is adapt
    :align: center
    :alt: LoRA Mechanism
 
-Low‑rank : r << min(d,k)  
-           = r << min(d,d)  
-           = r << min(d)  
-           = r << d
+Low‑rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
 
 For every Multi‑Head Attention layer in Model M, there are unique weight matrices
 for the …
