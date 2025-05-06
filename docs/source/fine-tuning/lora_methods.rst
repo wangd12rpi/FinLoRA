@@ -3,7 +3,7 @@ Low-Rank Adaptation Methods for Large Language Models
 
 .. contents::
    :local:
-   :depth: 2
+   :depth: 4
 
 
 1. What is LoRA?
@@ -93,9 +93,11 @@ having to store less parameters. This is called *low-rank*.
 
 In the example, 2 << min{4,5} = 2 << 4.
 
+2.2 Fine‑tuning Strategies
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 2.2.1 Fine-tuning Without Adapters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Say we have a pre-trained model **M** with **500 million** parameters. M has the below architecture.
 
 .. figure:: ./images/Model_M_Architecture.png
@@ -117,7 +119,7 @@ When we fine-tune the model, all parameters are updated during back-propagation.
 If we want to fine-tune model M on another task **Financial Phrase Bank (FPB)**, where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to over-fitting and the model forgetting pre-training tasks.
 
 2.2.2 Fine-tuning With Adapters (Parameter Efficient Fine-Tuning—PEFT)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Say instead, when we want to fine-tune the pre-trained model M we use **Parameter Efficient Fine-Tuning (PEFT)**, where we add two adapter layers per transformer layer. The architecture of M now looks like the following.
 
 .. figure:: ./images/Model_M_Architecture_Adapters.png
@@ -175,7 +177,7 @@ added and inference time is unchanged.
 
 4 Quantized Low-Rank Adaptation (QLoRA)
 ---------------------------------------
-When fine-tuning with LoRA, LoRA requires a large amount of GPU Memory. To fix this, we can use Quantized Low-Rank Adaptation (QLoRA).
+When fine-tuning, LoRA requires a large amount of GPU memory. To fix this, we can use Quantized Low-Rank Adaptation (QLoRA).
 QLoRA drastically reduces the memory usage and allows for fine-tuning on a single GPU.
 
 In QLoRA, we can quantize the weights of the adapter layers to reduce the number of parameters and the memory usage.
@@ -220,16 +222,26 @@ authenticity of files. The decentralized and distributed nature of IPFS also mea
 good method for managing and transferring LoRA weights during federated training.
 2. Proof of training: Zero-knowledge proof of training
 3. Auditing of inference
-4. Logs onto a chain (IPFS for major, small on chain);
+4. Logs onto a chain (IPFS for major, small on chain)
 
 6 LoRA Methods with Mixture of Experts (MoE)
 ---------------------------------------------
 
 6.1 Mixture of Experts (MoE)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Since LLMs can be hundreds of billions of parameters, running them at inference time is expensive. In Mixture of Experts (MoE), we split the model into multiple experts. Each expert focuses on a different aspect of the input, and only relevant experts are used to answer the input.
+Each expert is essentially a group of parameters.
 
-6.2 Fintuning Mixture of Experts (MoE) with LoRA
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In MoE, there are multiple experts between the input and output. There is a router network that picks what experts to use. The router network picks the experts based on scoring every expert for each token vector, using softmax to compute probabilities, and picking the k best (top-k) experts.
+The router network assigns weights to each expert and combines the outputs to create a final output.
+
+In Mixtral 8x7B, there are 8 experts and a router network per layer. The router network picks the 2 most relevant experts to use for the input, and performs the previously mentioned process to get the final output.
+Only experts and their parameters are activated in sparse layers (feed-foward networks within transformer blocks), lowering computational costs.
+Mixtral 8x7B also uses load balancing where it prevents certain experts from being disproportionately used (leads to better performance). It does this by adding noise during the router netwrok selection process to make it more even. It also uses an additional loss to penalize skewed expert usage.
+
+6.2 Fine-tuning Mixture of Experts (MoE) with QLoRA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fine-tuning on a MoE model with LoRA is done just like you would fine-tune a normal model. The router network is usually not updated. Due to the large total parameter count, we can use QLoRA to reduce the memory usage.
 
 6.3 Mixture of Low-Rank Adapter Experts (X-LoRA)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
