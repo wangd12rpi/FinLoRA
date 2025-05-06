@@ -215,6 +215,13 @@ By adding noise, DP-LoRA prevents the centralized model from inferring the priva
 
 As in normal federated learning, the server than aggregates the weights from all clients in a weighted average and sends the updated weights to all clients.
 
+The process is shown below.
+
+.. figure:: ./images/DP-LoRA.png
+   :width: 70%
+   :align: center
+   :alt: DP-LoRA Algorithm
+
 DP-LoRA can take advantage of the following:
 1. File sharing using IPFS: IPFS is a protocols for decentralized organization and transferring
 of files. Files shared on IPFS are verifiable as it uses cryptographic hashes to verify the
@@ -232,7 +239,13 @@ good method for managing and transferring LoRA weights during federated training
 Since LLMs can be hundreds of billions of parameters, running them at inference time is expensive. In Mixture of Experts (MoE), we split the model into multiple experts. Each expert focuses on a different aspect of the input, and only relevant experts are used to answer the input.
 Each expert is essentially a group of parameters.
 
-In MoE, there are multiple experts between the input and output. There is a router network that picks what experts to use. The router network picks the experts based on scoring every expert for each token vector, using softmax to compute probabilities, and picking the k best (top-k) experts.
+In MoE, there are multiple experts between the input and output. There is a router network that picks what experts to use. The router network picks the experts based on scoring every expert for each token vector, using softmax to compute probabilities, and picking the k best (top-k) experts. The selection process is shown below.
+
+.. figure:: ./images/MoE.png
+   :width: 70%
+   :align: center
+   :alt: MoE Selection Process
+
 The router network assigns weights to each expert and combines the outputs to create a final output.
 
 In Mixtral 8x7B, there are 8 experts and a router network per layer. The router network picks the 2 most relevant experts to use for the input, and performs the previously mentioned process to get the final output.
