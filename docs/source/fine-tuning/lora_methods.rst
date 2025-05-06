@@ -87,10 +87,10 @@ Low-rank decomposition example
 
 ∴ Less parameters are stored if we use the representation of the **A** and **B** matrices.
 
-If r << min{d,k}, this would be used due to  
+If r << min(d,k), this would be used due to  
 having to store less parameters. This is called *low-rank*.
 
-In the example, 2 << min{4,5} = 2 << 4.
+In the example, 2 << min(4,5) = 2 << 4.
 
 2.2 Fine-tuning Strategies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
