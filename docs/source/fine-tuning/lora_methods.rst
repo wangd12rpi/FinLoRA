@@ -100,7 +100,7 @@ Say we have a pre‑trained model **M** with **500 million**
 parameters. M has the below architecture.
 
 .. figure:: ./images/Model_M_Architecture.png
-   :width: 100%
+   :width: 70%
    :align: center
    :alt: Model M Architecture
 
