@@ -1,237 +1,133 @@
-
 Low‑Rank Adaptation Methods for Large Language Models
-====================================================
+=======================================================
 
 .. contents::
    :local:
    :depth: 2
 
 
-1  Introduction
-===============
-
-Updating *every* parameter of a multi‑billion‑weight Transformer is usually
-impossible on commodity hardware.  *Low‑Rank Adaptation* (**LoRA**)
-(**STILL NEED TO ADD CITATION**) and its 4‑bit quantised variant
-*Quantised LoRA* (**QLoRA**) (**STILL NEED TO ADD CITATION**) replace full
-fine‑tuning with a compact set of trainable matrices, cutting memory and
-wall‑clock time by orders of magnitude.  When multiple parties must
-collaborate without moving sensitive data, *Federated LoRA*
-(**STILL NEED TO ADD CITATION**) provides an adapter‑only aggregation
-protocol that preserves privacy.
-
-This note gives a rigorous but implementation‑oriented treatment of
-
-* **LoRA**   – rank‑*r* adapters in full‑precision backbones;
-* **QLoRA**  – 4‑bit backbones with mixed‑precision adapters;
-* **Federated LoRA** – cross‑organisation training via adapter averaging.
-
-Where useful we assume a single Transformer projection  
-:math:`\mathbf W\in\mathbb R^{d\times d}` and an activation
-:math:`\mathbf x\in\mathbb R^{d}`.
+1. What is LoRA?
+----------------
+LoRA is a method to efficiently update the parameters  
+of pre‑trained language models when fine‑tuning on new tasks.
 
 
-2  Low‑Rank Adaptation (LoRA)
-=============================
-
-2.1  Formal definition
+2. Foundations of LoRA
 ----------------------
 
-The full fine‑tune update :math:`\Delta\mathbf W` is replaced by a rank‑*r*
-product
+2.1 Ranks
+~~~~~~~~~
+Rank is the number of linearly independent rows or columns  
+in a matrix. Linearly independent columns, for example, are  
+columns whose values can't be computed by an addition of  
+previous columns multiplied by an integer.
 
-.. math::
-   \Delta\mathbf W = \mathbf B\mathbf A,\qquad
-   \mathbf A\in\mathbb R^{r\times d},\;
-   \mathbf B\in\mathbb R^{d\times r},\quad r\ll d.
+::
 
-The modified projection is therefore
+    W = [1  7  2  8  5
+         2 10  4 12 10
+         3 15 12 18 27
+         4 12 16 16 36]   ---> Dimensions : 4 x 5
+                               rows         columns
 
-.. math::
-   \mathbf y = \bigl(\mathbf W + \mathbf B\mathbf A\bigr)\mathbf x
-            = \mathbf W\mathbf x + \mathbf B\bigl(\mathbf A\mathbf x\bigr).
+In the above matrix, there are 2 linearly independent columns,  
+so the rank is 2.
 
-During inference one may *merge* once
+• Column 1 has no previous rows, so it is linearly independent.  
+• Column 2 can't be computed as a multiple of column 1, so  
+  it is linearly independent.  
+• Columns 3‑5 are linearly dependent.  
+    • C3 = 2C1 + 0C2  
+    • C4 = 1C1 + 1C2  
+    • C5 = 1C1 + 2C2  
 
-.. math::
-   \mathbf W' = \mathbf W + \mathbf B\mathbf A,
-
-so that runtime latency and memory footprint are identical to the base model.
-
-2.2  Parameter and memory complexity
-------------------------------------
-
-* **Trainable parameters per projection**
-
-  .. math:: N_{\text{train}} = 2dr.
-
-* **Relative fraction of full fine‑tune**
-
-  .. math:: \rho = \frac{2r}{d}.
-
-  With :math:`d=4096` and :math:`r=8` one has :math:`\rho\approx0.39\%`.
-
-* **Activation memory** is unchanged; adapter weights add
-  :math:`\mathcal O(dr)` bytes to the checkpoint (typically a few MB for the
-  entire model).
-
-2.3  Adapter placement
-----------------------
-
-LoRA is agnostic to layer type; any subset of dense projections can be
-adapted.  Empirically, adding adapters to the attention projections
-(Q, K, V, O) delivers the best *accuracy‑per‑parameter*, but MLP or embedding
-layers can be included when domain shift is severe.
-
-2.4  Rank‑selection heuristics
-------------------------------
-
-+---------------+----------------------------------------------+
-| **Rank *r***  | **Typical usage**                            |
-+===============+==============================================+
-| 4 – 8         | < 7 B backbones, light classification tasks  |
-+---------------+----------------------------------------------+
-| 8 – 16        | General instruction tuning up to 30 B        |
-+---------------+----------------------------------------------+
-| 16 – 64       | Reasoning‑heavy tasks or ≥ 70 B backbones     |
-+---------------+----------------------------------------------+
-
-Higher rank ⇒ more parameters ⇒ better adaptation (with diminishing returns).
-
-
-3  Quantised LoRA (QLoRA)
-=========================
-
-QLoRA stores the *frozen* backbone weights in 4‑bit NormalFloat (NF4) while
-keeping adapters in 16‑bit (or bfloat16).  This allows, for example, a 65 B
-model to be fine‑tuned on an A100‑40 GB.
-
-3.1  Key innovations
---------------------
-
-#. **NF4 codebook** – learned 4‑bit codebook optimal for approximately
-   Gaussian weight distributions.  **STILL NEED TO ADD CITATION**
-#. **Double quantisation** – 8‑bit secondary quantisation of block‑wise scale
-   factors (overhead ≈ 0.13 bit / param).
-#. **Paged optimisers** – GPU↔CPU paging of optimiser states to keep VRAM
-   constant with sequence length.
-
-3.2  Memory profile (training, batch = 1)
------------------------------------------
-
-.. list-table::
-   :header-rows: 1
-   :widths: 15 20 20 20
-
-   * - Model
-     - Full FT (16‑bit)
-     - LoRA (16‑bit base)
-     - **QLoRA (4‑bit base)**
-   * - 7 B
-     - 14 GB
-     - 9 GB
-     - **5 GB**
-   * - 13 B
-     - 28 GB
-     - 16 GB
-     - **10 GB**
-   * - 33 B
-     - 70 GB
-     - 40 GB
-     - **21 GB**
-   * - 65 B
-     - 140 GB
-     - 80 GB
-     - **41 GB**
-
-3.3  Implementation checklist
------------------------------
-
-* Quantise weights in 64‑value blocks; scale factors in 256‑value blocks.  
-* Store adapters in bfloat16; accumulate gradients in float32.  
-* After training, *merge* adapters into the 4‑bit backbone to remove
-  de‑quantisation overhead at inference.
-
-
-4  Federated LoRA
-=================
-
-Federated LoRA trains adapters across independent data silos and aggregates
-only the low‑rank updates, reducing both communication and privacy risk.
-
-4.1  Training protocol (FedAvg)
--------------------------------
+If we convert the formulas to vectors, we can represent them  
+as the following :
 
 .. code-block:: text
 
-   for round t = 1 … T:
-       each client k:
-           pull global backbone W_t
-           train local (A_k, B_k) on D_k
-           upload ΔW_k = B_k A_k
-       server:
-           ΔW̄ ← (1/K) Σ_k ΔW_k
-           W_{t+1} ← W_t + ΔW̄
-           broadcast W_{t+1}
+       [1]
+       [0]
+       [2]
+       [1]  C1  +  [0]
+                   [1]
+                   [0]
+                   [2]  C2   or equivalently
 
-With :math:`r=8`, a 70 B model produces ~10 MB per client per round.
+.. code-block:: text
 
-4.2  Privacy enhancements
--------------------------
+       [1 0]
+       [0 1]
+       [2 0]
+       [1 2]   or   [1 0 2 1 1
+                     0 1 0 1 2]
 
-* **Secure aggregation** (secret sharing or homomorphic encryption) hides
-  individual updates.  
-* **Differential privacy** adds Gaussian noise to each :math:`ΔW_k`.  
-* **Content‑addressed storage** (e.g.\ IPFS) provides tamper evidence.
+If we take the matrix multiplication of the linearly independent  
+columns and the representation above, it equals the original  
+matrix **W**.
 
-4.3  Example use case – inter‑bank fraud detection
---------------------------------------------------
-
-Three banks train domain‑specific adapters on their private logs.  Federated
-LoRA lifts macro‑AUROC by 4–6 % over the best single‑bank model while
-revealing no raw data.
+cont. on back
 
 
-5  Method‑selection matrix
-==========================
+Low‑rank decomposition example
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
-.. list-table::
-   :header-rows: 1
-   :widths: 25 20 20 20
+    [1  7  2  8  5
+     2 10  4 12 10
+     3 15 12 18 27
+     4 12 16 16 36]  ->  W  =  [1  7
+                                 2 10
+                                 3 15
+                                 4 12] [1 0 2 1 1
+                                         0 1 0 1 2]
 
-   * - Deployment constraint
-     - **LoRA**
-     - **QLoRA**
-     - **Federated LoRA**
-   * - GPU ≥ 80 GB
-     - ✓ (highest accuracy)
-     - (optional)
-     - (optional)
-   * - GPU 24 – 48 GB
-     - Models ≤ 13 B
-     - **Models ≤ 33 B**
-     - (optional)
-   * - Consumer GPU ≤ 16 GB
-     - Models ≤ 7 B
-     - **Models ≤ 13 B**
-     - —
-   * - Multi‑organisation, privacy
-     - —
-     - —
-     - **✓**
-   * - Lowest inference latency
-     - **✓** (merge)
-     - **✓** (merge)
-     - ✓ (after merge)
+    Dimensions(W)   = d x k = 4 x 5
+    Dimensions(A)   = d x r = 4 x 2   r = rank (rank = 2)
+    Dimensions(B)   = r x k = 2 x 5
+    Dimensions(A*B) = (d x r) * (r x k) = d x k = Dimensions(W)
+
+    Parameters(W)   = 4 x 5 = 20
+    Parameters(A)   = 4 x 2 =  8
+    Parameters(B)   = 2 x 5 = 10
+    Parameters(A+B) = 8 + 10 = 18
+
+∴ Less parameters are stored if we use the representation  
+  of the **A** and **B** matrices.
+
+IF r << min{d,k}, this would be used due to  
+having to store less parameters. This is called *low‑rank*.
+
+In the example, 2 << min{4,5} = 2 << 4.
 
 
-6  Conclusion
-=============
+2.2 1 Fine‑tuning Without Adapters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Say we have a pre‑trained model **M** with **500 million**  
+parameters. M has the below architecture.
 
-LoRA reduces trainable parameters to < 1 % with negligible loss in
-expressiveness.  QLoRA extends the idea to 4‑bit backbones, enabling
-single‑GPU fine‑tuning of models that formerly required a cluster.
-Federated LoRA adds a privacy‑preserving layer for cross‑organisation
-collaboration.  Together these techniques form a practical toolkit for
-cost‑effective adaptation of large language models.
+*Insert Model M Architecture Picture*
 
+Say we pre‑tuned M with two tasks. Task 1 is **Masked Language Modeling (MLM)**, where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is **Next Sentence Predicting (NSP)**, where the task is to predict if, given 2 sentences, whether sentence A comes before sentence B.
+
+Say we want to fine‑tune pre‑trained model M on a new task **Named Entity Recognition (NER)**, where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
+
+When we fine‑tune the model, all parameters are updated during back‑propagation. Back‑propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight.
+
+If we want to fine‑tune model M on another task **Financial Phrase Bank (FPB)**, where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to over‑fitting and the model forgetting pre‑training tasks.
+
+*Insert Back‑propagation Picture*
+
+
+2.2.2 Fine‑tuning With Adapters (Parameter Efficient Finetuning — PEFT)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Say instead, when we want to fine‑tune the pre‑trained model M we use **Parameter Efficient Finetuning (PEFT)**, where we add two adapter layers per transformer layer. The architecture of M now looks like the following.
+
+*Insert Model M Architecture With Adapters Picture*
+
+Now, when we fine‑tune M on NER, only the parameters of the adapter layer are updated, but the other weights/parameters are frozen, so during back‑propagation, the gradients of error pass through them, but those weights/parameters aren't updated. While we do have to replace the adapters and store the updated params separately for FPB, the number of parameters is now much smaller.
+
+
+3 Low‑Rank Adaptation (LoRA)
+-----------------------------
+Say instead of PEFT, we fine‑tune with **Low‑Rank Adaptation**. 
