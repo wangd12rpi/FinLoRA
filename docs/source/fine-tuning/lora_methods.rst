@@ -31,15 +31,15 @@ previous columns multiplied by an integer.
      3 & 15 & 12 & 18 & 27\\
      4 & 12 & 16 & 16 & 36
    \end{bmatrix}
-   \quad\text{Dimensions: }4 \times 5\text{ (rows × columns)}
+   \quad\text{Dimensions: }4 \times 5\text{ (rows x columns)}
 
 
 In this matrix there are **two** linearly independent columns, so
 :math:`\operatorname{rank}(W)=2`.
 
-* Column 1 is independent (nothing before it).  
-* Column 2 cannot be written as a multiple of Column 1, so it is also independent.  
-* Columns 3–5 are dependent:
+* Column 1 is independent (nothing before it).  
+* Column 2 cannot be written as a multiple of Column 1, so it is also independent.  
+* Columns 3-5 are dependent:
 
 .. math::
 
@@ -55,6 +55,7 @@ If we convert the formulas to vectors, we can represent them as:
    \;+\;
    \begin{bmatrix}0\\1\\0\\2\end{bmatrix} C_2
 
+or equivalently,
 
 .. math::
 
@@ -75,10 +76,10 @@ columns (C₁ and C₂) and either representation above, we recover the
 original matrix **W**.
 
 Low-rank decomposition example
+
 .. math::
 
-   W
-   \;=\;
+   W \;=\;
    \begin{bmatrix}
      1 &  7 &  2 &  8 &  5\\
      2 & 10 &  4 & 12 & 10\\
@@ -105,16 +106,19 @@ In the example:
 
 .. math::
 
-   \text{Dimensions}(W)   &= d \times k      &= 4 \times 5 \\
-   \text{Dimensions}(A)   &= d \times r      &= 4 \times 2, \quad r=\operatorname{rank}(W)=2 \\
-   \text{Dimensions}(B)   &= r \times k      &= 2 \times 5 \\
-   \text{Dimensions}(A\!\cdot\!B) &= (d \times r)\,\cdot\,(r \times k) &= d \times k &= \text{Dimensions}(W)
+   \begin{aligned}
+   \text{Dimensions}(W) &= d\times k &&= 4\times5 \\
+   \text{Dimensions}(A) &= d\times r &&= 4\times2,\; r=\operatorname{rank}(W)=2 \\
+   \text{Dimensions}(B) &= r\times k &&= 2\times5 \\
+   \text{Dimensions}(A\!\cdot\!B) &= (d\times r)\,\cdot\,(r\times k) &&= d\times k &&= \text{Dimensions}(W)
+   \end{aligned}
+
 
 .. math::
 
-   \text{Parameters}(W)   &= 4 \times 5 = 20 \\
-   \text{Parameters}(A)   &= 4 \times 2 =  8 \\
-   \text{Parameters}(B)   &= 2 \times 5 = 10 \\
+   \text{Parameters}(W) &= 4 \times 5 = 20 \\
+   \text{Parameters}(A) &= 4 \times 2 =  8 \\
+   \text{Parameters}(B) &= 2 \times 5 = 10 \\
    \text{Parameters}(A+B) &= 8 + 10 = 18
 
 ∴ Less parameters are stored if we use the representation of the **A** and **B** matrices.
