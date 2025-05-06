@@ -280,7 +280,7 @@ As in MoLE, X-LoRA's experts are LoRAs at each layer.
 
 X-LoRA uses two passes:
 1. In the first pass, it runs the input on the frozen model and the scaling head to compute the LoRA adapter-specific scaling vectors for each token at each layer.
-2. In the second pass, it runs the same input and gets output from combining the top-k (selected by the top k scaling values) LoRAs' outputs multiplied by the scaling vectors.
+2. In the second pass, it runs the same input and gets output from summing the top-k (selected by the largest k scaling factors) LoRA adpaters' outputs multiplied by the scaling factors.
 
 X-LoRA uses a load balancing technique like Mixtral to prevent any LoRA from being disproportionately used.
 
