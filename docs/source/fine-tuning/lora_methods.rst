@@ -241,7 +241,7 @@ DP-LoRA first uses a server to send the current global LoRA weights (the A and B
 
 Every client does the following:
 1) Get a minibatch of its private data
-2) Compute the gradient for only its local A and B weights clipped with an l2 norm (square root of the sum of the squares of elements in the vector)
+2) Compute the gradient for only its local A and B weights clipped with an ℓ₂ norm (square root of the sum of the squares of elements in the vector)
 3) Adds Gaussian noise to the gradients
 4) Updates the A and B matrices
 5) Sends the updated A and B matrices to the server.
@@ -332,7 +332,7 @@ In our paper, we focus on the X-LoRA approach.
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
 -----------------------------------------------
 LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.
-DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's l2 norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its l2 norm) matrix.
+DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's ℓ₂ norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its ℓ₂ norm) matrix.
 The magnitude vector m is of size 1 x k, where k is the number of columns. The direction matrix D is of size d x k, where d is the number of columns in a weight matrix.
 
 The decomposition can be written compactly as
@@ -346,7 +346,7 @@ The decomposition can be written compactly as
    \lVert W\rVert_{c}\,
    \frac{W}{\lVert W\rVert_{c}},
 
-where :math:`\lVert\cdot\rVert_{c}` denotes the column‑wise ℓ₂ norm
+where :math:`\lVert\cdot\rVert_{c}` denotes the column-wise ℓ₂ norm
 (i.e.\ the norm is taken independently for each column).
 
 Here is an example of the decomposition:
