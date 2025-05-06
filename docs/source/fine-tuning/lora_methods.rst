@@ -45,10 +45,10 @@ If we convert the formulas to vectors, we can represent them as:
 .. code-block:: text
    :class: matrix
 
-       [1]      [0]
-       [0]      [1]
-       [2]      [0]
-       [1] C₁ + [2] C₂
+       [1]      [0
+        0        1
+        2        0
+        1] C₁ +  2] C₂
 
 .. code-block:: text
    :class: matrix
