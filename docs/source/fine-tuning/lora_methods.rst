@@ -53,10 +53,10 @@ If we convert the formulas to vectors, we can represent them as:
 .. code-block:: text
    :class: matrix
 
-       [1 0]
-       [0 1]
-       [2 0]        or   [1 0 2 1 1
-       [1 2]              0 1 0 1 2]
+       [1 0
+        0 1
+        2 0         or   [1 0 2 1 1
+        1 2]              0 1 0 1 2]
 
 If we take the matrix multiplication of the two linearly independent  
 columns (C₁ and C₂) and either representation above, we recover the  
