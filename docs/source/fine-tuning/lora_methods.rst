@@ -27,8 +27,7 @@ previous columns multiplied by an integer.
     W = [1  7  2  8  5
          2 10  4 12 10
          3 15 12 18 27
-         4 12 16 16 36]   ---> Dimensions : 4 x 5
-                               rows         columns
+         4 12 16 16 36]   ---> Dimensions: 4 x 5 (rows x columns)
 
 In the above matrix, there are 2 linearly independent columns,  
 so the rank is 2.
@@ -37,59 +36,53 @@ so the rank is 2.
 • Column 2 can't be computed as a multiple of column 1, so  
   it is linearly independent.  
 • Columns 3‑5 are linearly dependent.  
-    • C3 = 2C1 + 0C2  
-    • C4 = 1C1 + 1C2  
-    • C5 = 1C1 + 2C2  
+    • C₃ = 2 C₁ + 0 C₂  
+    • C₄ = 1 C₁ + 1 C₂  
+    • C₅ = 1 C₁ + 2 C₂  
 
-If we convert the formulas to vectors, we can represent them  
-as the following :
-
-.. code-block:: text
-
-       [1]
-       [0]
-       [2]
-       [1]  C1  +  [0]
-                   [1]
-                   [0]
-                   [2]  C2   or equivalently
+If we convert the formulas to vectors, we can represent them as:
 
 .. code-block:: text
+   :class: matrix
+
+       [1]      [0]
+       [0]      [1]
+       [2]      [0]
+       [1] C₁ + [2] C₂
+
+.. code-block:: text
+   :class: matrix
 
        [1 0]
        [0 1]
-       [2 0]
-       [1 2]   or   [1 0 2 1 1
-                     0 1 0 1 2]
+       [2 0]        or   [1 0 2 1 1
+       [1 2]              0 1 0 1 2]
 
-If we take the matrix multiplication of the linearly independent  
-columns and the representation above, it equals the original  
-matrix **W**.
-
-cont. on back
-
+If we take the matrix multiplication of the two linearly independent  
+columns (C₁ and C₂) and either representation above, we recover the  
+original matrix **W**.
 
 Low‑rank decomposition example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
-    [1  7  2  8  5
-     2 10  4 12 10
-     3 15 12 18 27
-     4 12 16 16 36]  ->  W  =  [1  7
-                                 2 10
-                                 3 15
-                                 4 12] [1 0 2 1 1
-                                         0 1 0 1 2]
+    W = [1  7  2  8  5
+         2 10  4 12 10
+         3 15 12 18 27
+         4 12 16 16 36]
 
-    Dimensions(W)   = d x k = 4 x 5
-    Dimensions(A)   = d x r = 4 x 2   r = rank (rank = 2)
-    Dimensions(B)   = r x k = 2 x 5
+      = [1  7
+         2 10
+         3 15   [1 0 2 1 1
+         4 12]   0 1 0 1 2]
+
+    Dimensions(W) = d x k = 4 x 5
+    Dimensions(A) = d x r = 4 x 2   r = rank (rank = 2)
+    Dimensions(B) = r x k = 2 x 5
     Dimensions(A*B) = (d x r) * (r x k) = d x k = Dimensions(W)
 
-    Parameters(W)   = 4 x 5 = 20
-    Parameters(A)   = 4 x 2 =  8
-    Parameters(B)   = 2 x 5 = 10
+    Parameters(W) = 4 x 5 = 20
+    Parameters(A) = 4 x 2 =  8
+    Parameters(B) = 2 x 5 = 10
     Parameters(A+B) = 8 + 10 = 18
 
 ∴ Less parameters are stored if we use the representation  
