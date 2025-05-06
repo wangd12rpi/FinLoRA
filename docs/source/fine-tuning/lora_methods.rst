@@ -201,14 +201,14 @@ Federated learning solves this issue by fine-tuning a model on local data and ag
 
 Differentially Private Low-Rank Adaptation (DP-LoRA) is a method to use federated learning with LoRA. 
 
-DP-LoRA first uses a server to send the current global LoRA weights (the A and B vectors from earlier) to all clients.
+DP-LoRA first uses a server to send the current global LoRA weights (the A and B matrices from earlier) to all clients.
 
 Every client does the following:
 1) Get a minibatch of its private data
 2) Compute the gradient for only its local A and B weights clipped with an l2 norm (square root of the sum of the squares of elements in the vector)
 3) Adds Gaussian noise to the gradients
-4) Updates the A and B vectors
-5) Sends the updated A and B vectors to the server.
+4) Updates the A and B matrices
+5) Sends the updated A and B matrices to the server.
 
 By adding noise, DP-LoRA prevents the centralized model from inferring the private data later on. This would allow the banks in the credit risk example to work on a model together.
 
@@ -295,7 +295,107 @@ In our paper, we focus on the X-LoRA approach.
 
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
 -----------------------------------------------
+LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.
+DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's l2 norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its l2 norm) matrix.
+The magnitude vector m is of size 1 x k, where k is the number of columns. The direction matrix D is of size d x k, where d is the number of columns in a weight matrix.
 
+The decomposition can be written compactly as
+
+.. math::
+
+   W
+   \;=\;
+   \mathbf m\,\frac{V}{\lVert V\rVert_{c}}
+   \;=\;
+   \lVert W\rVert_{c}\,
+   \frac{W}{\lVert W\rVert_{c}},
+
+where :math:`\lVert\cdot\rVert_{c}` denotes the column‑wise ℓ₂ norm
+(i.e.\ the norm is taken independently for each column).
+
+Here is an example of the decomposition:
+
+.. math::
+
+   W \;=\;
+   \begin{bmatrix}
+    1 &  7 &  2 &  8 &  5\\
+    2 & 10 &  4 & 12 & 10\\
+    3 & 15 & 12 & 18 & 27\\
+    4 & 12 & 16 & 16 & 36
+   \end{bmatrix},
+   \qquad W \in \mathbb{R}^{4\times 5}.
+
+For column :math:`j`
+
+.. math::
+
+   \lVert \mathbf w_{j}\rVert_{2}
+   \;=\;
+   \sqrt{\sum_{i=1}^{4} W_{ij}^{\,2}}.
+
+These norms form a :math:`1\times 5` magnitude vector:
+
+.. math::
+
+   \mathbf m
+   \;=\;
+   \bigl[\,5.4772,\;22.7596,\;20.4939,\;28.0713,\;46.3681\bigr]
+
+The direction matrix is obtained by normalising each column of
+:math:`W`:
+
+.. math::
+
+   V_{ij}
+   \;=\;
+   \frac{W_{ij}}{\lVert \mathbf w_{j}\rVert_{2}},
+   \qquad \forall\,i,\,j.
+
+Thus,
+
+.. math::
+
+   V
+   \;=\;
+   \begin{bmatrix}
+    0.182574 & 0.307562 & 0.097590 & 0.284988 & 0.107833\\
+    0.365148 & 0.439375 & 0.195180 & 0.427482 & 0.215666\\
+    0.547723 & 0.659062 & 0.585540 & 0.641223 & 0.582297\\
+    0.730297 & 0.527250 & 0.780720 & 0.569976 & 0.776396
+   \end{bmatrix}
+
+Every column of :math:`V` now has unit length:
+
+.. math::
+
+   \lVert \mathbf v_{j}\rVert_{2} \;=\; 1,
+   \qquad \text{for all } j.
+
+
+These are fine-tuned seperately. General fine-tuning/direct fine-tuning is applied to the magnitude matrix, while the direction matrix is fine-tuned using LoRA.
+
+After the updates the recomposed weight matrix is
+
+.. math::
+
+   W'
+   \;=\;
+   \mathbf m\,
+   \frac{V+\Delta V}{\lVert V+\Delta V\rVert_{c}}
+   \;=\;
+   \mathbf m\,
+   \frac{W_0 + BA}{\lVert W_0 + BA\rVert_{c}}
+
+DoRA is illustrated below.
+
+.. figure:: ./images/DoRA.png
+   :width: 70%
+   :align: center
+   :alt: DoRA Illustration
+
+DoRA has the same inference cost as LoRA because the updated magnitude vector and direction matrix are merged back into the weight matrices of the query, keys, and values.
+However, DoRA can capture complex relationships more due to being able to fine-tune the magnitude and direction. It only takes just a few extra parameters than LoRA.
 
 References
 ----------
