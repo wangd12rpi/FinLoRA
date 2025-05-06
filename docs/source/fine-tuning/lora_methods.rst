@@ -175,6 +175,23 @@ added and inference time is unchanged.
 
 4 Quantized Low-Rank Adaptation (QLoRA)
 ---------------------------------------
+When fine-tuning with LoRA, LoRA requires a large amount of GPU Memory. To fix this, we can use Quantized Low-Rank Adaptation (QLoRA).
+QLoRA drastically reduces the memory usage and allows for fine-tuning on a single GPU.
+
+In QLoRA, we can quantize the weights of the adapter layers to reduce the number of parameters and the memory usage.
+Quantization is a technique that reduces the precision of the weights to reduce the number of bits used to store them.
+It consists of two parts: Rounding to the nearest integer and truncating to remove the decimal portion of a floating point number.
+QLoRA specifically uses 4-bit NormalFloat (NF4), an optimal data type for normally distributed weights, quantization. Pre-trained weights are usually normally distributed and centered around 0, which is why NF4 is ideal for quantization.
+
+Say we wanted to quantize from Float16 to Int4. Int4 has 4 bits, so we can represent 2^{4} = 16 different values, so we have 16 bins to represent all values. Inputs are usually normalized from -1 to 1.
+Very close together values, however, will be mapped to the same bin. This means that the precision is lost if we want to convert back to Float16. However, we can use blockwise quantization, where we divide the input range into blocks and quantize each block separately. QLoRA uses a 64 blocksize for better precision.
+
+Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution (remember, pre-trained weights are usually normally distributed and centered around 0). The spacing between bins is therefore closer together near 0 and further apart further away from 0.
+
+Each block in QLoRA has a quantization constant. QLoRA employs Double Quantization, where it quantizes the quantization constants themselves to further save space.
+
+The last part of QLoRA is Paged Optimizers, where QLoRA reduces GPU memory spikes by switching to CPU memory when the input is long and back to GPU memory after the input is read.
+
 
 5 LoRA Methods with Federated Learning
 ---------------------------------------
@@ -246,6 +263,13 @@ References
       title        = {{LoRA Explained!}},
       howpublished = {\url{https://www.youtube.com/watch?v=Bq9zqTJDsjg}},
       year         = {2024}
+    }
+
+    @misc{aibites2023qlora,
+      author       = {{AI Bites}},
+      title        = {{QLoRA paper explained (Efficient Finetuning of Quantized LLMs)}},
+      howpublished = {\url{https://www.youtube.com/watch?v=6l8GZDPbFn8}},
+      year         = {2023}
     }
 
     @misc{sharma2023peft,
