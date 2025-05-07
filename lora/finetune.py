@@ -58,6 +58,7 @@ AXOLOTL_YAML_TEMPLATE = {
     "dataset_prepared_path": None,  # Let Axolotl handle preparation
     "val_set_size": 0.02,  # Default validation split
     "output_dir": "./axolotl-output/placeholder-run",  # Placeholder
+    "peft_use_dora": False,
 
     "sequence_len": 4096,  # Max length of input sequence
     "sample_packing": False,
@@ -121,6 +122,9 @@ def generate_axolotl_yaml(run_config, run_name, template):
     yaml_config['num_epochs'] = run_config.get('num_epochs', template['num_epochs'])
     yaml_config['learning_rate'] = run_config.get('learning_rate', template['learning_rate'])
     yaml_config['lora_r'] = run_config.get('lora_r', template['lora_r'])
+
+    yaml_config['peft_use_dora:'] = run_config.get('peft_use_dora', template['peft_use_dora'])
+    print(f"\n\n*****USING DORA?********: {yaml_config['peft_use_dora']}", "\n\n******************")
 
     # Handle Quantization
     quant_bits = run_config.get('quant_bits')
