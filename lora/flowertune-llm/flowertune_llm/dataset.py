@@ -11,8 +11,9 @@ def formatting_prompts_func(example):
     output_texts = []
     # Constructing a standard Alpaca (https://github.com/tatsu-lab/stanford_alpaca#data-release) prompt
     # mssg = "Below is an instruction that describes a task. Write a response that appropriately completes the request."
-    for i in range(len(example["instruction"])):
-        text = f"{example['context'][i]}{example['target'][i]}"
+    for i in range(len(example["context"])):
+        # print(example)
+        text = f"{example['context'][i]}{example['response'][i]}"
         output_texts.append(text)
     return output_texts
 
@@ -45,7 +46,7 @@ def load_data(partition_id: int, num_partitions: int, dataset_name: str):
             partitioners={"train": partitioner},
         )
     client_trainset = FDS.load_partition(partition_id, "train")
-    client_trainset = client_trainset.rename_column("output", "response")
+    client_trainset = client_trainset.rename_column("target", "response")
 
     return client_trainset
 
