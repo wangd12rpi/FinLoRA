@@ -75,7 +75,7 @@ If we take the matrix multiplication of the two linearly independent
 columns (C₁ and C₂) and either representation above, we recover the  
 original matrix **W**.
 
-A Low-rank decomposition example is shown below.
+A low-rank (the rank is much smaller than the minimum of the dimensions of the matrix) decomposition example is shown below.
 
 .. math::
 
@@ -168,7 +168,7 @@ In the example, 2 << min(4,5) = 2 << 4.
 Say we have a pre-trained model **M** with **500 million** parameters. M has the below architecture.
 
 .. figure:: ./images/Model_M_Architecture.png
-   :width: 70%
+   :width: 60%
    :align: center
    :alt: Model M Architecture
 
@@ -202,7 +202,7 @@ Now, when we fine-tune M on NER, only the parameters of the adapter layer are up
 Say instead, we fine-tune with **Low-Rank Adaptation**. Model M is adapted as the following.
 
 .. figure:: ./images/LoRA.png
-   :width: 70%
+   :width: 60%
    :align: center
    :alt: LoRA Mechanism
 
@@ -211,9 +211,9 @@ Low-rank: r << min(d,k) = r << min(d,d) = r << min(d) = r << d
 For every Multi-head Attention layer in Model M, there are unique weight matrices
 for the
 
-* **Queries** (:math:`W_q`)
-* **Keys** (:math:`W_k`)
-* **Values** (:math:`W_v`)
+* **Queries** (:math:`W_Q`)
+* **Keys** (:math:`W_K`)
+* **Values** (:math:`W_V`)
 
 as shown below.
 
