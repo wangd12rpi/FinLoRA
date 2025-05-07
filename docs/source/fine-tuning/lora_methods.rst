@@ -469,91 +469,24 @@ References
 ----------
 .. code-block:: bash
 
-    @article{hu2022lora,
-      title={Lora: Low-rank adaptation of large language models.},
-      author={Hu, Edward J and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu and others},
-      journal={ICLR},
-      volume={1},
-      number={2},
-      pages={3},
-      year={2022}
-    }
+    Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., ... & Chen, W. (2022). Lora: Low-rank adaptation of large language models. ICLR, 1(2), 3.
 
-    @article{dettmers2023qlora,
-      title={Qlora: Efficient finetuning of quantized llms},
-      author={Dettmers, Tim and Pagnoni, Artidoro and Holtzman, Ari and Zettlemoyer, Luke},
-      journal={Advances in neural information processing systems},
-      volume={36},
-      pages={10088--10115},
-      year={2023}
-    }
+    Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). Qlora: Efficient finetuning of quantized llms. Advances in neural information processing systems, 36, 10088-10115.
 
-    @article{liu2025differentially,
-      title={Differentially private low-rank adaptation of large language model using federated learning},
-      author={Liu, Xiao-Yang and Zhu, Rongyi and Zha, Daochen and Gao, Jiechao and Zhong, Shan and White, Matt and Qiu, Meikang},
-      journal={ACM Transactions on Management Information Systems},
-      volume={16},
-      number={2},
-      pages={1--24},
-      year={2025},
-      publisher={ACM New York, NY}
-    }
+    Liu, X. Y., Zhu, R., Zha, D., Gao, J., Zhong, S., White, M., & Qiu, M. (2025). Differentially private low-rank adaptation of large language model using federated learning. ACM Transactions on Management Information Systems, 16(2), 1-24.
 
-    @article{jiang2024mixtral,
-      title={Mixtral of experts},
-      author={Jiang, Albert Q and Sablayrolles, Alexandre and Roux, Antoine and Mensch, Arthur and Savary, Blanche and Bamford, Chris and Chaplot, Devendra Singh and Casas, Diego de las and Hanna, Emma Bou and Bressand, Florian and others},
-      journal={arXiv preprint arXiv:2401.04088},
-      year={2024}
-    }
+    Jiang, A. Q., Sablayrolles, A., Roux, A., Mensch, A., Savary, B., Bamford, C., ... & Sayed, W. E. (2024). Mixtral of experts. arXiv preprint arXiv:2401.04088.
 
-    @article{wu2024mixture,
-      title={Mixture of lora experts},
-      author={Wu, Xun and Huang, Shaohan and Wei, Furu},
-      journal={arXiv preprint arXiv:2404.13628},
-      year={2024}
-    }
+    Wu, X., Huang, S., & Wei, F. (2024). Mixture of lora experts. arXiv preprint arXiv:2404.13628.
 
-    @article{buehler2024x,
-      title={X-LoRA: Mixture of low-rank adapter experts, a flexible framework for large language models with applications in protein mechanics and molecular design},
-      author={Buehler, Eric L and Buehler, Markus J},
-      journal={APL Machine Learning},
-      volume={2},
-      number={2},
-      year={2024},
-      publisher={AIP Publishing}
-    }
+    Buehler, E. L., & Buehler, M. J. (2024). X-LoRA: Mixture of low-rank adapter experts, a flexible framework for large language models with applications in protein mechanics and molecular design. APL Machine Learning, 2(2).
 
-    @inproceedings{liu2024dora,
-      title={Dora: Weight-decomposed low-rank adaptation},
-      author={Liu, Shih-Yang and Wang, Chien-Yi and Yin, Hongxu and Molchanov, Pavlo and Wang, Yu-Chiang Frank and Cheng, Kwang-Ting and Chen, Min-Hung},
-      booktitle={Forty-first International Conference on Machine Learning},
-      year={2024}
-    }
+    Liu, S. Y., Wang, C. Y., Yin, H., Molchanov, P., Wang, Y. C. F., Cheng, K. T., & Chen, M. H. (2024, July). Dora: Weight-decomposed low-rank adaptation. In Forty-first International Conference on Machine Learning.
 
-    @misc{codeemporium2024lora,
-      author       = {{CodeEmporium}},
-      title        = {{LoRA Explained!}},
-      howpublished = {\url{https://www.youtube.com/watch?v=Bq9zqTJDsjg}},
-      year         = {2024}
-    }
+    CodeEmporium. (2024). LoRA explained! [Video]. YouTube. https://www.youtube.com/watch?v=Bq9zqTJDsjg
 
-    @misc{aibites2023qlora,
-      author       = {{AI Bites}},
-      title        = {{QLoRA paper explained (Efficient Finetuning of Quantized LLMs)}},
-      howpublished = {\url{https://www.youtube.com/watch?v=6l8GZDPbFn8}},
-      year         = {2023}
-    }
+    AI Bites. (2023). QLoRA paper explained (Efficient finetuning of quantized LLMs) [Video]. YouTube. https://www.youtube.com/watch?v=6l8GZDPbFn8
 
-    @misc{sharma2023peft,
-      author       = {Sharma, Rajeev},
-      title        = {Parameter-Efficient Fine-Tuning (PEFT) of LLMs: A Practical Guide},
-      howpublished = {\url{https://markovate.com/blog/parameter-efficient-fine-tuning-peft-of-llms-a-practical-guide/}},
-      year         = {2023}
-    }
+    Sharma, R. (2023). Parameter-efficient fine-tuning (PEFT) of LLMs: A practical guide. Markovate. https://markovate.com/blog/parameter-efficient-fine-tuning-peft-of-llms-a-practical-guide/
 
-    @misc{doshi2021transformers,
-      author       = {Doshi, Ketan},
-      title        = {Transformers Explained Visually (Part 3): Multi-head Attention, deep dive},
-      howpublished = {\url{https://medium.com/data-science/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853}},
-      year         = {2021}
-    }
+    Doshi, K. (2021). Transformers explained visually (Part 3): Multi-head attention, deep dive. Medium. https://medium.com/data-science/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853
