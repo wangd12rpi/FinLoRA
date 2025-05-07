@@ -1,0 +1,65 @@
+base_model: NousResearch/Meta-Llama-3.1-8B-Instruct
+model_type: LlamaForCausalLM
+tokenizer_type: AutoTokenizer
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 4
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+load_in_8bit: true
+load_in_4bit: false
+adapter: lora
+lora_model_dir:
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - v_proj
+  - k_proj
+
+chat_template: llama3
+datasets:
+  - path: ../data/train/finer_train_batched.jsonl
+    type:
+      system_prompt: ""
+      field_system: system
+      field_instruction: context
+      field_output: target
+      format: "[INST] {instruction} [/INST]"
+      no_input_format: "[INST] {instruction} [/INST]"
+
+
+dataset_prepared_path:
+val_set_size: 0.02
+output_dir: ./outputs/lora-out
+
+sequence_len: 16384
+sample_packing: false
+pad_to_sequence_len: true
+
+wandb_project:
+wandb_entity:
+wandb_watch:
+wandb_name:
+wandb_log_model:
+
+bf16: auto
+tf32: false
+
+gradient_checkpointing: true
+resume_from_checkpoint:
+logging_steps: 1
+flash_attention: true
+
+deepspeed: deepspeed_configs/zero1.json
+
+warmup_steps: 10
+evals_per_epoch: 4
+saves_per_epoch: 1
+weight_decay: 0.0
+special_tokens:
+   pad_token: <|end_of_text|>
+
