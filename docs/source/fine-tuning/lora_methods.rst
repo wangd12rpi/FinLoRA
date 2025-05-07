@@ -102,6 +102,39 @@ Low-rank decomposition example
      0 & 1 & 0 & 1 & 2
    \end{bmatrix}}_{B}
 
+.. math::
+
+   =
+   \begin{bmatrix}
+     1\!\cdot\!1 + 7\!\cdot\!0 &
+     1\!\cdot\!0 + 7\!\cdot\!1 &
+     1\!\cdot\!2 + 7\!\cdot\!0 &
+     1\!\cdot\!1 + 7\!\cdot\!1 &
+     1\!\cdot\!1 + 7\!\cdot\!2 \\[4pt]
+     2\!\cdot\!1 + 10\!\cdot\!0 &
+     2\!\cdot\!0 + 10\!\cdot\!1 &
+     2\!\cdot\!2 + 10\!\cdot\!0 &
+     2\!\cdot\!1 + 10\!\cdot\!1 &
+     2\!\cdot\!1 + 10\!\cdot\!2 \\[4pt]
+     3\!\cdot\!1 + 15\!\cdot\!0 &
+     3\!\cdot\!0 + 15\!\cdot\!1 &
+     3\!\cdot\!2 + 15\!\cdot\!0 &
+     3\!\cdot\!1 + 15\!\cdot\!1 &
+     3\!\cdot\!1 + 15\!\cdot\!2 \\[4pt]
+     4\!\cdot\!1 + 12\!\cdot\!0 &
+     4\!\cdot\!0 + 12\!\cdot\!1 &
+     4\!\cdot\!2 + 12\!\cdot\!0 &
+     4\!\cdot\!1 + 12\!\cdot\!1 &
+     4\!\cdot\!1 + 12\!\cdot\!2
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+     1 &  7 &  2 &  8 &  5\\
+     2 & 10 &  4 & 12 & 10\\
+     3 & 15 & 12 & 18 & 27\\
+     4 & 12 & 16 & 16 & 36
+   \end{bmatrix}
+
 In the example:
 
 .. math::
@@ -146,10 +179,10 @@ If we want to fine-tune pre-trained model M on a new task **Named Entity Recogni
 
 When we fine-tune the model, all parameters are updated during back-propagation. Back-propagation is where we compare the error (difference between the predicted output and the actual output) and send the error backwards through the model, computing the gradient of error with respect to each weight. A pictorial representation is below.
 
-.. figure:: ./images/backpropogation.png
+.. figure:: ./images/backpropagation.png
    :width: 70%
    :align: center
-   :alt: Backpropogation Pictorial Representation
+   :alt: Backpropagation Pictorial Representation
 
 If we want to fine-tune model M on another task **Financial Phrase Bank (FPB)**, where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to over-fitting and the model forgetting pre-training tasks.
 
@@ -233,7 +266,7 @@ The last part of QLoRA is Paged Optimizers, where QLoRA reduces GPU memory spike
 5 LoRA Methods with Federated Learning
 ---------------------------------------
 In the financial domain, banks may have multiple departments who want to work together on a model to predict credit risk and whether a client will default on a loan. Each department may have a different dataset but they cannot share their data due to compliance reasons and privacy concerns.
-Federated learning solves this issue by fine-tuning a model on local data and aggregating updates during backpropogation to a centralized model via a server.
+Federated learning solves this issue by fine-tuning a model on local data and aggregating updates during backpropagation to a centralized model via a server.
 
 Differentially Private Low-Rank Adaptation (DP-LoRA) is a method to use federated learning with LoRA. 
 
@@ -285,7 +318,7 @@ The router network assigns weights to each expert and combines the outputs to cr
 
 In Mixtral 8x7B, there are 8 experts and a router network per layer. The router network picks the 2 most relevant experts to use for the input, and performs the previously mentioned process to get the final output.
 Only experts and their parameters are activated in sparse layers (feed-forward networks within transformer blocks), lowering computational costs.
-Mixtral 8x7B also uses load balancing where it prevents certain experts from being disproportionately used (leads to better performance). It does this by adding noise during the router netwrok selection process to make it more even. It also uses an additional loss to penalize skewed expert usage.
+Mixtral 8x7B also uses load balancing where it prevents certain experts from being disproportionately used (leads to better performance). It does this by adding noise during the router network selection process to make it more even. It also uses an additional loss to penalize skewed expert usage.
 
 6.2 Fine-tuning Mixture of Experts (MoE) with QLoRA
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -316,7 +349,7 @@ As in MoLE, X-LoRA's experts are LoRAs at each layer.
 
 X-LoRA uses two passes:
 1. In the first pass, it runs the input on the frozen model and the scaling head to compute the LoRA adapter-specific scaling vectors for each token at each layer.
-2. In the second pass, it runs the same input and gets output from summing the top-k (selected by the largest k scaling factors) LoRA adpaters' outputs multiplied by the scaling factors.
+2. In the second pass, it runs the same input and gets output from summing the top-k (selected by the largest k scaling factors) LoRA adapters' outputs multiplied by the scaling factors.
 
 X-LoRA uses a load balancing technique like Mixtral to prevent any LoRA from being disproportionately used.
 
