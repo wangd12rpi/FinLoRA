@@ -410,7 +410,7 @@ These norms form a :math:`1\times 5` magnitude vector:
    \;=\;
    \bigl[\,5.4772,\;22.7596,\;20.4939,\;28.0713,\;46.3681\bigr]
 
-The direction matrix is obtained by normalising each column of
+The direction matrix is obtained by normalizing each column of
 :math:`W`:
 
 .. math::
