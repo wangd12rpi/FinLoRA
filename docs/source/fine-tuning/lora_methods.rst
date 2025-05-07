@@ -139,13 +139,12 @@ In the example:
 
 .. math::
 
-   \begin{aligned}
-   \text{Dimensions}(W) &= d\times k &&= 4\times5 \\
-   \text{Dimensions}(A) &= d\times r &&= 4\times2,\; r=\operatorname{rank}(W)=2 \\
-   \text{Dimensions}(B) &= r\times k &&= 2\times5 \\
-   \text{Dimensions}(A\!\cdot\!B) &= (d\times r)\,\cdot\,(r\times k) &&= d\times k &&= \text{Dimensions}(W)
-   \end{aligned}
-
+   \begin{alignedat}{2}
+   \text{Dimensions}(W)          &= d\times k           &\;=\;& 4\times 5 \\
+   \text{Dimensions}(A)          &= d\times r           &\;=\;& 4\times 2,\; r=\operatorname{rank}(W)=2 \\
+   \text{Dimensions}(B)          &= r\times k           &\;=\;& 2\times 5 \\
+   \text{Dimensions}(A\!\cdot\!B)&= (d\times r)(r\times k) &\;=\;& d\times k \;=\; \text{Dimensions}(W)
+   \end{alignedat}
 
 .. math::
 
