@@ -199,7 +199,7 @@ In LoRA, we transform these weight matrices into **AB** products exactly as in S
    W_V^{(n)} = A_V^{(n)} \, B_V^{(n)}
 
 During fine-tuning, all parameters inside **A** and **B** for the queries,
-keys and values are updated; all other weights remain frozen.
+keys, and values are updated; all other weights remain frozen.
 
 .. math::
 
