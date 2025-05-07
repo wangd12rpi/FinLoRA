@@ -365,7 +365,7 @@ In our paper, we focus on the X-LoRA approach.
 -----------------------------------------------
 LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.
 DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's ℓ₂ norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its ℓ₂ norm) matrix.
-The magnitude vector m is of size 1 x k, where k is the number of columns. The direction matrix D is of size d x k, where d is the number of columns in a weight matrix.
+The magnitude vector m is of size 1 x k, where k is the number of columns. The direction matrix D is of size d x k, where d is the number of rows in a weight matrix.
 
 The decomposition can be written compactly as
 
