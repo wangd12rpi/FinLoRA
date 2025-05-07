@@ -363,9 +363,9 @@ In our paper, we focus on the X-LoRA approach.
 
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
 -----------------------------------------------
-LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.
-DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's ℓ₂ norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its ℓ₂ norm) matrix.
-The magnitude vector m is of size 1 x k, where k is the number of columns. The direction matrix D is of size d x k, where d is the number of rows in a weight matrix.
+LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.  
+DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's ℓ₂ norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its ℓ₂ norm) matrix.  
+The magnitude vector **m** is of size 1×k, where k is the number of columns. The direction matrix **D** is of size d×k, where d is the number of rows in a weight matrix.
 
 The decomposition can be written compactly as
 
@@ -373,12 +373,12 @@ The decomposition can be written compactly as
 
    W
    \;=\;
-   \mathbf m\,\frac{V}{\lVert V\rVert_{c}}
+   \mathbf m\,\frac{D}{\lVert D\rVert_{c}}
    \;=\;
    \lVert W\rVert_{c}\,
    \frac{W}{\lVert W\rVert_{c}},
 
-where :math:`\lVert\cdot\rVert_{c}` denotes the column-wise ℓ₂ norm
+where :math:`\lVert\cdot\rVert_{c}` denotes the column-wise ℓ₂ norm  
 (i.e.\ the norm is taken independently for each column).
 
 Here is an example of the decomposition:
@@ -410,12 +410,11 @@ These norms form a :math:`1\times 5` magnitude vector:
    \;=\;
    \bigl[\,5.4772,\;22.7596,\;20.4939,\;28.0713,\;46.3681\bigr]
 
-The direction matrix is obtained by normalizing each column of
-:math:`W`:
+The direction matrix is obtained by normalizing each column of :math:`W`:
 
 .. math::
 
-   V_{ij}
+   D_{ij}
    \;=\;
    \frac{W_{ij}}{\lVert \mathbf w_{j}\rVert_{2}},
    \qquad \forall\,i,\,j.
@@ -424,7 +423,7 @@ Thus,
 
 .. math::
 
-   V
+   D
    \;=\;
    \begin{bmatrix}
     0.182574 & 0.307562 & 0.097590 & 0.284988 & 0.107833\\
@@ -433,27 +432,26 @@ Thus,
     0.730297 & 0.527250 & 0.780720 & 0.569976 & 0.776396
    \end{bmatrix}
 
-Every column of :math:`V` now has unit length:
+Every column of :math:`D` now has unit length:
 
 .. math::
 
-   \lVert \mathbf v_{j}\rVert_{2} \;=\; 1,
+   \lVert \mathbf d_{j}\rVert_{2} \;=\; 1,
    \qquad \text{for all } j.
 
+These are fine-tuned separately. The magnitude vector **m** is fine-tuned directly, while the direction matrix **D** is fine-tuned using LoRA.
 
-These are fine-tuned seperately. General fine-tuning/direct fine-tuning is applied to the magnitude matrix, while the direction matrix is fine-tuned using LoRA.
-
-After the updates the recomposed weight matrix is
+After the updates, the recomposed weight matrix is
 
 .. math::
 
    W'
    \;=\;
    \mathbf m\,
-   \frac{V+\Delta V}{\lVert V+\Delta V\rVert_{c}}
+   \frac{D+\Delta D}{\lVert D+\Delta D\rVert_{c}}
    \;=\;
    \mathbf m\,
-   \frac{W_0 + BA}{\lVert W_0 + BA\rVert_{c}}
+   \frac{W_0 + B\,A}{\lVert W_0 + B\,A\rVert_{c}}
 
 DoRA is illustrated below.
 
@@ -462,8 +460,8 @@ DoRA is illustrated below.
    :align: center
    :alt: DoRA Illustration
 
-DoRA has the same inference cost as LoRA because the updated magnitude vector and direction matrix are merged back into the weight matrices of the query, keys, and values.
-However, DoRA can capture complex relationships more due to being able to fine-tune the magnitude and direction. It only takes just a few extra parameters than LoRA.
+DoRA has the same inference cost as LoRA because the updated magnitude vector and direction matrix are merged back into the weight matrices of the query, keys, and values.  
+However, DoRA can capture more complex relationships thanks to separate fine-tuning of magnitude and direction, with only a few extra parameters compared to LoRA.
 
 References
 ----------
