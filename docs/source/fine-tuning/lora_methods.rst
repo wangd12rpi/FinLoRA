@@ -190,7 +190,7 @@ as shown below.
    :align: center
    :alt: Multi-head Attention Weight Matrices
 
-In LoRA, we transform these weight matrices into **AB** products exactly as in Section 2.1.1
+In LoRA, we transform these weight matrices into **AB** products exactly as in Section 2.1.
 
 .. math::
 
