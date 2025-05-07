@@ -7,7 +7,7 @@ tags:
 datasets:
 - /workspace/FinLoRA/data/train/finer_train_batched.jsonl
 model-index:
-- name: workspace/FinLoRA/finetune/axolotl-output/finer_llama_3_1_8B_8bits_r8
+- name: workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8B_8bits_r8
   results: []
 ---
 
@@ -50,7 +50,7 @@ datasets:
     no_input_format: '[INST] {instruction} [/INST]'
 dataset_prepared_path: null
 val_set_size: 0.02
-output_dir: /workspace/FinLoRA/finetune/axolotl-output/finer_llama_3_1_8B_8bits_r8
+output_dir: /workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8B_8bits_r8
 sequence_len: 4096
 sample_packing: false
 pad_to_sequence_len: false
