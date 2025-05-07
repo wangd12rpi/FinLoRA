@@ -75,7 +75,7 @@ If we take the matrix multiplication of the two linearly independent
 columns (C₁ and C₂) and either representation above, we recover the  
 original matrix **W**.
 
-Low-rank decomposition example
+A Low-rank decomposition example is shown below.
 
 .. math::
 
