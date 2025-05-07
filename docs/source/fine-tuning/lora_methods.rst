@@ -8,7 +8,7 @@ Low-Rank Adaptation Methods for Large Language Models
 
 1. What is LoRA?
 ----------------
-LoRA is a method to efficiently update the parameters  
+LoRA is a technique to efficiently update the parameters  
 of pre-trained language models when fine-tuning on new tasks.
 
 
