@@ -102,6 +102,39 @@ Low-rank decomposition example
      0 & 1 & 0 & 1 & 2
    \end{bmatrix}}_{B}
 
+.. math::
+
+   =
+   \begin{bmatrix}
+     1\!\cdot\!1 + 7\!\cdot\!0 &
+     1\!\cdot\!0 + 7\!\cdot\!1 &
+     1\!\cdot\!2 + 7\!\cdot\!0 &
+     1\!\cdot\!1 + 7\!\cdot\!1 &
+     1\!\cdot\!1 + 7\!\cdot\!2 \\[4pt]
+     2\!\cdot\!1 + 10\!\cdot\!0 &
+     2\!\cdot\!0 + 10\!\cdot\!1 &
+     2\!\cdot\!2 + 10\!\cdot\!0 &
+     2\!\cdot\!1 + 10\!\cdot\!1 &
+     2\!\cdot\!1 + 10\!\cdot\!2 \\[4pt]
+     3\!\cdot\!1 + 15\!\cdot\!0 &
+     3\!\cdot\!0 + 15\!\cdot\!1 &
+     3\!\cdot\!2 + 15\!\cdot\!0 &
+     3\!\cdot\!1 + 15\!\cdot\!1 &
+     3\!\cdot\!1 + 15\!\cdot\!2 \\[4pt]
+     4\!\cdot\!1 + 12\!\cdot\!0 &
+     4\!\cdot\!0 + 12\!\cdot\!1 &
+     4\!\cdot\!2 + 12\!\cdot\!0 &
+     4\!\cdot\!1 + 12\!\cdot\!1 &
+     4\!\cdot\!1 + 12\!\cdot\!2
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+     1 &  7 &  2 &  8 &  5\\
+     2 & 10 &  4 & 12 & 10\\
+     3 & 15 & 12 & 18 & 27\\
+     4 & 12 & 16 & 16 & 36
+   \end{bmatrix}
+
 In the example:
 
 .. math::
