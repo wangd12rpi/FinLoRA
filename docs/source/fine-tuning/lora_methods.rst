@@ -362,10 +362,10 @@ X-LoRA's architecture is shown below.
 In our paper, we focus on the X-LoRA approach.
 
 7 Weight-Decomposed Low-Rank Adaptation (DoRA)
------------------------------------------------
+------------------------------------------------
 LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships.  
 DoRA solves this issue of capturing data complexity. DoRA decomposes the weight matrices into a magnitude (the length of the columns in a weight matrix; computing by taking each column's ℓ₂ norm) vector and a direction (the direction of the columns in a weight matrix; computed by dividing each column by its ℓ₂ norm) matrix.  
-The magnitude vector **m** is of size 1×k, where k is the number of columns. The direction matrix **D** is of size d×k, where d is the number of rows in a weight matrix.
+The magnitude vector **m** is of size 1×k, where k is the number of columns. The direction matrix **V** is of size d×k, where d is the number of rows in a weight matrix.
 
 The decomposition can be written compactly as
 
@@ -373,7 +373,7 @@ The decomposition can be written compactly as
 
    W
    \;=\;
-   \mathbf m\,\frac{D}{\lVert D\rVert_{c}}
+   \mathbf m\,\frac{V}{\lVert V\rVert_{c}}
    \;=\;
    \lVert W\rVert_{c}\,
    \frac{W}{\lVert W\rVert_{c}},
@@ -414,7 +414,7 @@ The direction matrix is obtained by normalizing each column of :math:`W`:
 
 .. math::
 
-   D_{ij}
+   V_{ij}
    \;=\;
    \frac{W_{ij}}{\lVert \mathbf w_{j}\rVert_{2}},
    \qquad \forall\,i,\,j.
@@ -423,7 +423,7 @@ Thus,
 
 .. math::
 
-   D
+   V
    \;=\;
    \begin{bmatrix}
     0.182574 & 0.307562 & 0.097590 & 0.284988 & 0.107833\\
@@ -432,14 +432,14 @@ Thus,
     0.730297 & 0.527250 & 0.780720 & 0.569976 & 0.776396
    \end{bmatrix}
 
-Every column of :math:`D` now has unit length:
+Every column of :math:`V` now has unit length:
 
 .. math::
 
-   \lVert \mathbf d_{j}\rVert_{2} \;=\; 1,
+   \lVert \mathbf v_{j}\rVert_{2} \;=\; 1,
    \qquad \text{for all } j.
 
-These are fine-tuned separately. The magnitude vector **m** is fine-tuned directly, while the direction matrix **D** is fine-tuned using LoRA.
+These are fine-tuned separately. The magnitude vector **m** is fine-tuned directly, while the direction matrix **V** is fine-tuned using LoRA.
 
 After the updates, the recomposed weight matrix is
 
@@ -448,7 +448,7 @@ After the updates, the recomposed weight matrix is
    W'
    \;=\;
    \mathbf m\,
-   \frac{D+\Delta D}{\lVert D+\Delta D\rVert_{c}}
+   \frac{V+\Delta V}{\lVert V+\Delta V\rVert_{c}}
    \;=\;
    \mathbf m\,
    \frac{W_0 + B\,A}{\lVert W_0 + B\,A\rVert_{c}}
