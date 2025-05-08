@@ -28,24 +28,72 @@ def find_context_xml(xml_f_name):
 
         for context_element in root.iter():
             if "context" in context_element.tag:
-                # print(context_element)
-                ele = ET.tostring(context_element, encoding='unicode', method='text')
-                ele = ele.replace('ns0:', "").replace("ns1:", "").replace("  ", "").replace("\n", "")
-                ele = re.sub(r"</.*?>", "</>", ele)
-                ele = re.sub(r'<identifier.*?</identifier>', '', ele,
-                                      flags=re.DOTALL)
-                ele = re.sub(r'xmlns.*?".*?"', '', ele,)
+                context_id = context_element.attrib["id"]
 
-                print(ele)
+                if context_id is None:
+                    continue
 
-                matching_elements.append(ele)
+                current_text = f"context_id: {context_id}"
 
+                # --- Segment and Explicit Member (first one) ---
+                dim_info_str = None
+                # Path is relative to the current context_element
+                segment_elem = context_element.find("ns0:entity/ns0:segment")
 
-        xml_filtered = "".join(matching_elements)
-        xml_filtered = (xml_filtered.replace(" ", "").replace("xmlns:us-", "")
-                        .replace("<entity>", "").replace("</entity>", "")
-                        .replace("<segment>", "").replace("</segment>", "")
-                        )
+                print(ET.tostring(segment_elem))
+                if segment_elem is not None:
+                    first_explicit_member = None
+                    for child in segment_elem:
+                        # The tag name 'xbrldi:explicitMember' is used literally, as ElementTree
+                        # will treat it as such if namespace prefixes are not resolved during parsing.
+                        if child.tag == 'xbrldi:explicitMember':
+                            first_explicit_member = child
+                            break  # Interested in the first one only
+
+                    if first_explicit_member is not None:
+                        dimension_attr = first_explicit_member.get("dimension")
+                        member_text_content = first_explicit_member.text
+
+                        member_text = member_text_content.strip() if member_text_content else None
+
+                        # The example format "dimension: [attr], [text]" implies both are needed.
+                        if dimension_attr and member_text:
+                            dim_info_str = f"dimension: {dimension_attr}, {member_text}"
+                        # If only one part is present, we could choose to represent it,
+                        # but sticking to the example's paired format for this part.
+
+                if dim_info_str:
+                    current_text += f", {dim_info_str}"
+
+                # --- Period Information ---
+                period_info_str = None
+                period_elem = context_element.find("./period")  # Path relative to context_element
+                if period_elem is not None:
+                    instant_elem = period_elem.find("./instant")
+                    if instant_elem is not None and instant_elem.text:
+                        period_info_str = f"period: instant:{instant_elem.text.strip()}"
+                    else:
+                        start_date_elem = period_elem.find("./startDate")
+                        end_date_elem = period_elem.find("./endDate")
+
+                        start_date_text = start_date_elem.text.strip() if start_date_elem is not None and start_date_elem.text else None
+                        end_date_text = end_date_elem.text.strip() if end_date_elem is not None and end_date_elem.text else None
+
+                        if start_date_text and end_date_text:
+                            period_info_str = f"period: {start_date_text} to {end_date_text}"
+                        elif start_date_text:  # Only start date is present
+                            period_info_str = f"period: startDate:{start_date_text}"
+                        elif end_date_text:  # Only end date is present
+                            period_info_str = f"period: endDate:{end_date_text}"
+
+                if period_info_str:
+                    current_text += f". {period_info_str}"  # Note the period before "period:"
+                print(current_text)
+                matching_elements.append(current_text)
+                break
+
+        xml_filtered = "\n".join(matching_elements)
+
         return xml_filtered
 
     except FileNotFoundError:
