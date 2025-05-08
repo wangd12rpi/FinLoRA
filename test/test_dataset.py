@@ -122,11 +122,12 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     total_steps = instructions.shape[0] // batch_size
     out_text_list = []
 
-    task_pbar = tqdm(range(total_steps))
+    task_pbar = tqdm(range(total_steps + 1))
 
     for i in task_pbar:
         tmp_context = context[i * batch_size: min(len(context), (i + 1) * batch_size)]
-
+        if not tmp_context:
+            break
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
         out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
