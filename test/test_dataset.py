@@ -1,6 +1,7 @@
 import time
 import warnings
 import sklearn
+from sklearn.metrics import f1_score, accuracy_score
 import inference
 
 warnings.filterwarnings("ignore")
@@ -54,18 +55,39 @@ max_new_token_dict_for_base_models = {
 }
 
 
-def evaluate_accuracy(out, target):
+def evaluate_accuracy(out, target, task_name=""):
     correct_count = 0
     response = []
-    for x, y in zip(out, target):
-        if y.lower() in x.lower():
+    
+    # Normalize outputs and targets - strip whitespace and lowercase
+    normalized_out = [x.strip().lower() for x in out]
+    normalized_target = [y.strip().lower() for y in target]
+    
+    for x, y in zip(normalized_out, normalized_target):
+        if y in x:
             correct_count += 1
             response.append(y)
         else:
             response.append(x)
 
     accuracy = correct_count / len(out)
-    return accuracy, response
+    
+    # Calculate F1 score with task-specific handling
+    try:
+        if task_name in ["fpb", "tfns"]:
+            # For classification tasks, use weighted average and handle zero division
+            f1 = f1_score(normalized_target, response, average="weighted", zero_division=0)
+        elif len(set(normalized_target)) <= 1:
+            # If there's only one class in target, F1 calculation will fail
+            f1 = 1.0 if accuracy == 1.0 else 0.0
+        else:
+            # For other tasks, still try weighted F1 but with zero division handling
+            f1 = f1_score(normalized_target, response, average="weighted", zero_division=0)
+    except Exception as e:
+        f1 = -1
+        print(f"Error calculating F1 score for {task_name}: {e}")
+    
+    return accuracy, response, f1
 
 
 def process_batched(out_text_list, target_list):
@@ -129,30 +151,29 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         if not tmp_context:
             break
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
-
+        
+        batch_start_time = time.time()
         out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
                                        tokenizer=tokenizer)
-        # print(out_text)
+        batch_duration = time.time() - batch_start_time
+        
         out_text_list += out_text
-
-        # time.sleep(0.1)
+        
+        # Update progress bar with time per example
+        examples_in_batch = len(tmp_context)
+        time_per_example = batch_duration / examples_in_batch if examples_in_batch > 0 else 0
+        task_pbar.set_description(f"Processing {data_name}: {time_per_example:.2f}s per example")
 
     # instructions["target"] = instructions["target"]
 
     if "finer" in data_name or "fnxl" in data_name:
         out_text_list, target_list = process_batched(out_text_list, target_list)
 
-    acc, response = evaluate_accuracy(out_text_list, target_list)
-
-    try:
-        f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
-    except:
-        f1 = -1
-        print(f"Error calculating F1 score for {data_name}")
+    acc, response, f1 = evaluate_accuracy(out_text_list, target_list, data_name)
 
     per_question_time = (time.time() - task_start_time) / sample_size
 
-    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per quesiton: {per_question_time:.2f} min")
+    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per quesiton: {per_question_time:.2f} s")
 
     results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
@@ -162,7 +183,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         f.write(f"Task: {data_name}\n")
         f.write(f"Accuracy: {acc * 100:.2f}%\n")
         f.write(f"F1 Score: {f1:.3f}\n")
-        f.write(f"Per question time: {per_question_time:.2f} minutes\n")
+        f.write(f"Per question time: {per_question_time:.2f} seconds\n")
         f.write(f"Model: {args.base_model}\n")
         f.write(f"PEFT Model: {args.peft_model}\n")
         f.write(f"Sample Ratio: {args.sample_ratio}\n")
