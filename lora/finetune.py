@@ -112,7 +112,7 @@ def load_config(json_path):
 def generate_axolotl_yaml(run_config, run_name, template):
     """Generates the specific Axolotl YAML config dictionary for a run."""
     yaml_config = template.copy()  # Start with the template
-
+    print("*****CONFIG******\n", yaml_config, "\n", "*" * 10)
     # --- Override template values with JSON config ---
     yaml_config['base_model'] = run_config.get('base_model', template['base_model'])
     yaml_config['gradient_accumulation_steps'] = run_config.get('gradient_accumulation_steps',
@@ -123,7 +123,7 @@ def generate_axolotl_yaml(run_config, run_name, template):
     yaml_config['learning_rate'] = run_config.get('learning_rate', template['learning_rate'])
     yaml_config['lora_r'] = run_config.get('lora_r', template['lora_r'])
 
-    yaml_config['peft_use_dora:'] = run_config.get('peft_use_dora', template['peft_use_dora'])
+    yaml_config['peft_use_dora'] = run_config.get('peft_use_dora', template['peft_use_dora'])
     print(f"\n\n*****USING DORA?********: {yaml_config['peft_use_dora']}", "\n\n******************")
 
     # Handle Quantization
