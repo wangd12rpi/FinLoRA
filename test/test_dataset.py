@@ -61,33 +61,55 @@ def evaluate_accuracy(out, target, target_type_list):
     correct_count = 0
     response = []
 
-    target_type_list_lower = [t.lower() for t in target_type_list]
+    target_type_list_lower = [str(t).lower() for t in target_type_list]
+
+    if len(out) != len(target):
+        raise ValueError("Input lists 'out' and 'target' must have the same length.")
 
     for x, y in zip(out, target):
-        x_lower = x.lower()
-        y_lower = y.lower()
+        # Ensure inputs are strings and convert to lowercase
+        x_str = str(x)
+        y_str = str(y)
+        x_lower = x_str.lower()
+        y_lower = y_str.lower()
 
-        found_labels_in_x_count = 0
-        is_correct_target_among_found = False
+        found_labels_info = []
 
-        for valid_label_lower in target_type_list_lower:
-            if valid_label_lower in x_lower:
-                found_labels_in_x_count += 1
-                if valid_label_lower == y_lower:
-                    is_correct_target_among_found = True
+        # Find the first occurrence of each valid label in the output x
+        for valid_label in target_type_list_lower:
+            try:
+                # string.find() returns -1 if not found, or the starting index
+                index = x_lower.find(valid_label)
+                if index != -1:
+                    found_labels_info.append({'label': valid_label, 'index': index})
+            except AttributeError:
+                print(f"Warning: Attribute error during find for x='{x_str}', label='{valid_label}'")
+                continue
 
-        if found_labels_in_x_count >= 2:
-            response.append(x)
-        elif found_labels_in_x_count == 1:
-            if is_correct_target_among_found:
-                correct_count += 1
-                response.append(y)
+        is_current_prediction_correct = False
+
+        if not found_labels_info:
+            is_current_prediction_correct = False
+        else:
+            found_labels_info.sort(key=lambda item: item['index'])
+
+            # The first label in the sorted list is the one that appeared earliest.
+            first_occurred_label = found_labels_info[0]['label']
+
+            # Check if this first occurred label matches the target label y_lower.
+            if first_occurred_label == y_lower:
+                is_current_prediction_correct = True
             else:
-                response.append(x)
-        else:  # found_labels_in_x_count == 0
-            response.append(x)
+                is_current_prediction_correct = False
 
-    accuracy = 0
+        # Update correct count and the response list
+        if is_current_prediction_correct:
+            correct_count += 1
+            response.append(y)  # Append the original target label (y)
+        else:
+            response.append(x)  # Append the original LLM output (x)
+
+    accuracy = 0.0
     if len(out) > 0:
         accuracy = correct_count / len(out)
 
