@@ -45,7 +45,7 @@
   },
   "xbrl_extract_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
-    "dataset_path": "../data/train/xbrl_extract_train_batched.jsonl",
+    "dataset_path": "../data/train/xbrl_extract_train.jsonl",
     "lora_r": 8,
     "quant_bits": 8,
     "learning_rate": 0.0001,
@@ -53,6 +53,28 @@
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
     "peft_use_dora": true
+  },
+  "xbrl_extract_llama_3_1_8b_8bits_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_extract_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "peft_use_dora": false
+  },
+  "xbrl_extract_llama_3_1_8b_4bits_r4": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_extract_train.jsonl",
+    "lora_r": 4,
+    "quant_bits": 4,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "peft_use_dora": false
   },
   "finer_llama_3_1_8b_8bits_r8": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",

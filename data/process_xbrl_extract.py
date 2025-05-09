@@ -64,7 +64,7 @@ def gen_xbrl(cat):
             xml_content = find_elements_by_context_ref(doc_path, context_id)
 
             prompt = entry["instruction"] + "\nXML File: " + xml_content + "\n" + entry["input"]
-            processed_data.append({"context": prompt, "target": entry["output"]})
+            processed_data.append({"context": prompt, "target": str(entry["output"])})
 
         if split == "test":
             with open(f"test/xbrl_extract_{cat}_test.jsonl", "w") as f:
