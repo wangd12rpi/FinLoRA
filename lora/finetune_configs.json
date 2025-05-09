@@ -61,7 +61,7 @@
     "quant_bits": 8,
     "learning_rate": 0.0001,
     "num_epochs": 4,
-    "batch_size": 4,
+    "batch_size": 1,
     "gradient_accumulation_steps": 2,
     "peft_use_rslora": true
   },
@@ -149,7 +149,7 @@
     "quant_bits": 8,
     "learning_rate": 0.0001,
     "num_epochs": 4,
-    "batch_size": 4,
+    "batch_size": 1,
     "gradient_accumulation_steps": 2,
     "peft_use_dora": true
   },
@@ -193,7 +193,7 @@
     "quant_bits": 8,
     "learning_rate": 0.0001,
     "num_epochs": 4,
-    "batch_size": 4,
+    "batch_size": 1,
     "gradient_accumulation_steps": 2
   },
   "formula_llama_3_1_8b_8bits_r8": {
@@ -243,7 +243,7 @@
     "quant_bits": 4,
     "learning_rate": 0.0001,
     "num_epochs": 4,
-    "batch_size": 4,
+    "batch_size": 1,
     "gradient_accumulation_steps": 2
   },
   "formula_llama_3_1_8b_4bits_r4": {
