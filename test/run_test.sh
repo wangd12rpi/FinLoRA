@@ -7,12 +7,12 @@
 #---- ner ----
 
 python test.py \
---dataset headline \
+--dataset financebench,xbrl_term,formula \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
---sample_ratio .1 \
---base_model projects/1023064188719/locations/us-central1/endpoints/576343104559251456 \
+--sample_ratio 1 \
+--base_model gemini-2.0-flash-lite-001 \
 #--base_model meta-llama/Llama-3.1-8B \
 #--peft_model ../finetuned_models/finer_llama_3_1_8b_8bits_r8
 
@@ -26,3 +26,23 @@ python test.py \
 # ner projects/1023064188719/locations/us-central1/endpoints/5585682896334618624
 # headline projects/1023064188719/locations/us-central1/endpoints/576343104559251456
 # finer projects/1023064188719/locations/us-central1/endpoints/7929384289915895808
+
+
+#dataset_path = {
+#    "xbrl_tags_extract": "../data/test/xbrl_extract_tags_test.jsonl",
+#    "xbrl_value_extract": "../data/test/xbrl_extract_value_test.jsonl",
+#    "xbrl_formula_extract": "../data/test/xbrl_extract_formula_test.jsonl",
+#    "xbrl_formula_calc_extract": "../data/test/xbrl_extract_formula_calculations_test.jsonl",
+#    "xbrl_finer": "../data/test/finer_test_batched.jsonl",
+#    "xbrl_fnxl": "../data/test/fnxl_test_batched.jsonl",
+#    "fpb": "../data/test/fpb_test.jsonl",
+#    "fiqa": "../data/test/fiqa_test.jsonl",
+#    "tfns": "../data/test/tfns_test.jsonl",
+#    "nwgi": "../data/test/nwgi_test.jsonl",
+#    "headline": "../data/test/headline_test.jsonl",
+#    "ner": "../data/test/ner_test.jsonl",
+#    "financebench": "../data/test/financebench_test.jsonl",
+#    "xbrl_term": "../data/test/xbrl_term_test.jsonl",
+#    "formula": "../data/test/formula_test.jsonl",
+#
+#}

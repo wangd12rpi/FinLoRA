@@ -3,7 +3,7 @@ import time
 import warnings
 import sklearn
 import torch
-
+import evaluate
 import inference
 
 warnings.filterwarnings("ignore")
@@ -26,6 +26,8 @@ dataset_path = {
     "ner": "../data/test/ner_test.jsonl",
     "financebench": "../data/test/financebench_test.jsonl",
     "xbrl_term": "../data/test/xbrl_term_test.jsonl",
+    "formula": "../data/test/formula_test.jsonl",
+
 }
 
 max_new_token_dict = {
@@ -43,7 +45,9 @@ max_new_token_dict = {
     "ner": 10,
     "financebench": 50,
     "xbrl_term": 50,
+    "formula": 50
 }
+
 
 # max_new_token_dict_for_base_models = {
 #     "xbrl_tags_extract": 60,
@@ -170,7 +174,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     context = instructions['context'].tolist()
     target_list = instructions["target"].tolist()
     target_list = [str(x) for x in target_list]
-    
+
     total_steps = instructions.shape[0] // batch_size
     out_text_list = []
 
@@ -182,8 +186,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
             break
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
-        out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
-                                       tokenizer=tokenizer,delimiter="Answer:")
+        out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30),
+                                       model=model,
+                                       tokenizer=tokenizer, delimiter="Answer:")
         # print(out_text)
         out_text_list += out_text
 
@@ -197,10 +202,18 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     del model, tokenizer
     gc.collect()
     torch.cuda.empty_cache()
+    per_question_time = (time.time() - task_start_time) / sample_size
 
     if data_name == "financebench" or data_name == "xbrl_term":
-        # TODO: factscore
+        frugal_metric = evaluate.load("bertscore")
+        results = frugal_metric.compute(predictions=out_text_list, references=target_list, lang="en",)
+        precision = sum(results["precision"]) / len(results["precision"])
+        recall = sum(results["recall"]) / len(results["recall"])
+        f1 = sum(results["f1"]) / len(results["f1"])
+        print(
+            f"\n✓ {data_name}: precision: {precision:.2f}, recall: {recall:.2f}, f1: {f1:.2f}, Time per question: {per_question_time:.2f}, Batch size: {batch_size}")
         return None
+
     else:
         all_target_type_for_classification = list(set(target_list))
         acc, response = evaluate_accuracy(out_text_list, target_list, all_target_type_for_classification)
@@ -210,10 +223,8 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         except:
             f1 = -1
             print(f"Error calculating F1 score for {data_name}")
-
-        per_question_time = (time.time() - task_start_time) / sample_size
-
-        print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
+        print(
+            f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
 
         results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
@@ -228,7 +239,6 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
             f.write(f"PEFT Model: {args.peft_model}\n")
             f.write(f"Sample Ratio: {args.sample_ratio}\n")
             f.write(f"Temperature: {args.temperature}\n")
-
 
         return results
 #
