@@ -7,7 +7,7 @@ tags:
 datasets:
 - /workspace/FinLoRA/data/train/ner_train.jsonl
 model-index:
-- name: workspace/FinLoRA/lora/axolotl-output/ner_llama_3_1_8B_8bits_r8_dora
+- name: workspace/FinLoRA/lora/axolotl-output/ner_llama_3_1_8b_8bits_r8_dora
   results: []
 ---
 
@@ -50,7 +50,7 @@ datasets:
     no_input_format: '[INST] {instruction} [/INST]'
 dataset_prepared_path: null
 val_set_size: 0.02
-output_dir: /workspace/FinLoRA/lora/axolotl-output/ner_llama_3_1_8B_8bits_r8_dora
+output_dir: /workspace/FinLoRA/lora/axolotl-output/ner_llama_3_1_8b_8bits_r8_dora
 peft_use_dora: true
 sequence_len: 4096
 sample_packing: false
@@ -58,7 +58,7 @@ pad_to_sequence_len: false
 wandb_project: finlora_models
 wandb_entity: null
 wandb_watch: gradients
-wandb_name: ner_llama_3_1_8B_8bits_r8_dora
+wandb_name: ner_llama_3_1_8b_8bits_r8_dora
 wandb_log_model: 'false'
 bf16: auto
 tf32: false

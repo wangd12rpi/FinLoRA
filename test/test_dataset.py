@@ -1,6 +1,9 @@
+import gc
 import time
 import warnings
 import sklearn
+import torch
+
 import inference
 
 warnings.filterwarnings("ignore")
@@ -38,33 +41,56 @@ max_new_token_dict = {
     "ner": 10,
 }
 
-max_new_token_dict_for_base_models = {
-    "xbrl_tags_extract": 60,
-    "xbrl_value_extract": 60,
-    "xbrl_formula_extract": 60,
-    "xbrl_formula_calc_extract": 60,
-    "xbrl_finer": 100,
-    "xbrl_fnxl": 100,
-    "fpb": 60,
-    "fiqa": 60,
-    "tfns": 60,
-    "nwgi": 60,
-    "headline": 60,
-    "ner": 60,
-}
+# max_new_token_dict_for_base_models = {
+#     "xbrl_tags_extract": 60,
+#     "xbrl_value_extract": 60,
+#     "xbrl_formula_extract": 60,
+#     "xbrl_formula_calc_extract": 60,
+#     "xbrl_finer": 100,
+#     "xbrl_fnxl": 100,
+#     "fpb": 20,
+#     "fiqa": 20,
+#     "tfns": 20,
+#     "nwgi": 20,
+#     "headline": 20,
+#     "ner": 20,
+# }
 
 
-def evaluate_accuracy(out, target):
+def evaluate_accuracy(out, target, target_type_list):
     correct_count = 0
     response = []
+
+    target_type_list_lower = [t.lower() for t in target_type_list]
+
     for x, y in zip(out, target):
-        if y.lower() in x.lower():
-            correct_count += 1
-            response.append(y)
-        else:
+        x_lower = x.lower()
+        y_lower = y.lower()
+
+        found_labels_in_x_count = 0
+        is_correct_target_among_found = False
+
+        for valid_label_lower in target_type_list_lower:
+            if valid_label_lower in x_lower:
+                found_labels_in_x_count += 1
+                if valid_label_lower == y_lower:
+                    is_correct_target_among_found = True
+
+        if found_labels_in_x_count >= 2:
+            response.append(x)
+        elif found_labels_in_x_count == 1:
+            if is_correct_target_among_found:
+                correct_count += 1
+                response.append(y)
+            else:
+                response.append(x)
+        else:  # found_labels_in_x_count == 0
             response.append(x)
 
-    accuracy = correct_count / len(out)
+    accuracy = 0
+    if len(out) > 0:
+        accuracy = correct_count / len(out)
+
     return accuracy, response
 
 
@@ -142,7 +168,8 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     if "finer" in data_name or "fnxl" in data_name:
         out_text_list, target_list = process_batched(out_text_list, target_list)
 
-    acc, response = evaluate_accuracy(out_text_list, target_list)
+    all_target_type_for_classification = list(set(target_list))
+    acc, response = evaluate_accuracy(out_text_list, target_list, all_target_type_for_classification)
 
     try:
         f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
@@ -152,7 +179,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
 
     per_question_time = (time.time() - task_start_time) / sample_size
 
-    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per quesiton: {per_question_time:.2f} min")
+    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
 
     results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
@@ -167,6 +194,10 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         f.write(f"PEFT Model: {args.peft_model}\n")
         f.write(f"Sample Ratio: {args.sample_ratio}\n")
         f.write(f"Temperature: {args.temperature}\n")
+
+    del model, tokenizer
+    gc.collect()
+    torch.cuda.empty_cache()
 
     return results
 #
