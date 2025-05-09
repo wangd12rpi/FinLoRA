@@ -27,7 +27,7 @@ dataset_path = {
 }
 
 max_new_token_dict = {
-    "xbrl_tags_extract": 10,
+    "xbrl_tags_extract": 20,
     "xbrl_value_extract": 20,
     "xbrl_formula_extract": 30,
     "xbrl_formula_calc_extract": 30,
@@ -179,7 +179,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
 
         out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
-                                       tokenizer=tokenizer)
+                                       tokenizer=tokenizer,delimiter="Answer:")
         # print(out_text)
         out_text_list += out_text
 
