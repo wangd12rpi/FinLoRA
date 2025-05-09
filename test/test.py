@@ -32,6 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("--source", required=True, type=str)
     parser.add_argument("--if_print", required=False, type=bool, default=False)
     parser.add_argument("--sample_ratio", required=False, type=float, default=1.0)
+    parser.add_argument("--together_api_key", required=False, type=str, help="API key for Together AI")
 
     args = parser.parse_args()
 
