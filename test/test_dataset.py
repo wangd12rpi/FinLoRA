@@ -24,6 +24,8 @@ dataset_path = {
     "nwgi": "../data/test/nwgi_test.jsonl",
     "headline": "../data/test/headline_test.jsonl",
     "ner": "../data/test/ner_test.jsonl",
+    "financebench": "../data/test/financebench_test.jsonl",
+    "xbrl_term": "../data/test/xbrl_term_test.jsonl",
 }
 
 max_new_token_dict = {
@@ -39,6 +41,8 @@ max_new_token_dict = {
     "nwgi": 10,
     "headline": 10,
     "ner": 10,
+    "financebench": 50,
+    "xbrl_term": 50,
 }
 
 # max_new_token_dict_for_base_models = {
@@ -190,38 +194,43 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     if "finer" in data_name or "fnxl" in data_name:
         out_text_list, target_list = process_batched(out_text_list, target_list)
 
-    all_target_type_for_classification = list(set(target_list))
-    acc, response = evaluate_accuracy(out_text_list, target_list, all_target_type_for_classification)
-
-    try:
-        f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
-    except:
-        f1 = -1
-        print(f"Error calculating F1 score for {data_name}")
-
-    per_question_time = (time.time() - task_start_time) / sample_size
-
-    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
-
-    results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
-
-    fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
-    # Save results to file
-    with open(f"results/{fname}", "w+") as f:
-        f.write(f"Task: {data_name}\n")
-        f.write(f"Accuracy: {acc * 100:.2f}%\n")
-        f.write(f"F1 Score: {f1:.3f}\n")
-        f.write(f"Per question time: {per_question_time:.2f} minutes\n")
-        f.write(f"Model: {args.base_model}\n")
-        f.write(f"PEFT Model: {args.peft_model}\n")
-        f.write(f"Sample Ratio: {args.sample_ratio}\n")
-        f.write(f"Temperature: {args.temperature}\n")
-
     del model, tokenizer
     gc.collect()
     torch.cuda.empty_cache()
 
-    return results
+    if data_name == "financebench" or data_name == "xbrl_term":
+        # TODO: factscore
+        return None
+    else:
+        all_target_type_for_classification = list(set(target_list))
+        acc, response = evaluate_accuracy(out_text_list, target_list, all_target_type_for_classification)
+
+        try:
+            f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
+        except:
+            f1 = -1
+            print(f"Error calculating F1 score for {data_name}")
+
+        per_question_time = (time.time() - task_start_time) / sample_size
+
+        print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
+
+        results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
+
+        fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
+        # Save results to file
+        with open(f"results/{fname}", "w+") as f:
+            f.write(f"Task: {data_name}\n")
+            f.write(f"Accuracy: {acc * 100:.2f}%\n")
+            f.write(f"F1 Score: {f1:.3f}\n")
+            f.write(f"Per question time: {per_question_time:.2f} minutes\n")
+            f.write(f"Model: {args.base_model}\n")
+            f.write(f"PEFT Model: {args.peft_model}\n")
+            f.write(f"Sample Ratio: {args.sample_ratio}\n")
+            f.write(f"Temperature: {args.temperature}\n")
+
+
+        return results
 #
 #
 # if __name__ == '__main__':
