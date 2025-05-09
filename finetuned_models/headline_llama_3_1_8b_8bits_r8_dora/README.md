@@ -5,9 +5,9 @@ base_model: meta-llama/Llama-3.1-8B-Instruct
 tags:
 - generated_from_trainer
 datasets:
-- /workspace/FinLoRA/data/train/finlora_sentiment_train.jsonl
+- /workspace/FinLoRA/data/train/headline_train.jsonl
 model-index:
-- name: workspace/FinLoRA/lora/axolotl-output/senti_llama_3_1_8B_8bits_r8_dora
+- name: workspace/FinLoRA/lora/axolotl-output/headline_llama_3_1_8b_8bits_r8_dora
   results: []
 ---
 
@@ -40,7 +40,7 @@ lora_target_modules:
 - v_proj
 - k_proj
 datasets:
-- path: /workspace/FinLoRA/data/train/finlora_sentiment_train.jsonl
+- path: /workspace/FinLoRA/data/train/headline_train.jsonl
   type:
     system_prompt: ''
     field_system: system
@@ -50,7 +50,7 @@ datasets:
     no_input_format: '[INST] {instruction} [/INST]'
 dataset_prepared_path: null
 val_set_size: 0.02
-output_dir: /workspace/FinLoRA/lora/axolotl-output/senti_llama_3_1_8B_8bits_r8_dora
+output_dir: /workspace/FinLoRA/lora/axolotl-output/headline_llama_3_1_8b_8bits_r8_dora
 peft_use_dora: true
 sequence_len: 4096
 sample_packing: false
@@ -58,7 +58,7 @@ pad_to_sequence_len: false
 wandb_project: finlora_models
 wandb_entity: null
 wandb_watch: gradients
-wandb_name: senti_llama_3_1_8B_8bits_r8_dora
+wandb_name: headline_llama_3_1_8b_8bits_r8_dora
 wandb_log_model: 'false'
 bf16: auto
 tf32: false
@@ -79,11 +79,11 @@ chat_template: llama3
 
 </details><br>
 
-# workspace/FinLoRA/lora/axolotl-output/senti_llama_3_1_8B_8bits_r8_dora
+# workspace/FinLoRA/lora/axolotl-output/headline_llama_3_1_8B_8bits_r8_dora
 
-This model is a fine-tuned version of [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) on the /workspace/FinLoRA/data/train/finlora_sentiment_train.jsonl dataset.
+This model is a fine-tuned version of [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) on the /workspace/FinLoRA/data/train/headline_train.jsonl dataset.
 It achieves the following results on the evaluation set:
-- Loss: 0.2111
+- Loss: 0.0469
 
 ## Model description
 
@@ -120,22 +120,22 @@ The following hyperparameters were used during training:
 
 | Training Loss | Epoch  | Step | Validation Loss |
 |:-------------:|:------:|:----:|:---------------:|
-| No log        | 0.0009 | 1    | 3.5692          |
-| No log        | 0.2501 | 279  | 0.2230          |
-| 0.3199        | 0.5002 | 558  | 0.2184          |
-| 0.3199        | 0.7503 | 837  | 0.2165          |
-| 0.1394        | 1.0    | 1116 | 0.2170          |
-| 0.1394        | 1.2501 | 1395 | 0.2199          |
-| 0.1131        | 1.5002 | 1674 | 0.2147          |
-| 0.1131        | 1.7503 | 1953 | 0.2127          |
-| 0.1025        | 2.0    | 2232 | 0.2116          |
-| 0.0891        | 2.2501 | 2511 | 0.2160          |
-| 0.0891        | 2.5002 | 2790 | 0.2112          |
-| 0.0821        | 2.7503 | 3069 | 0.2111          |
-| 0.0821        | 3.0    | 3348 | 0.2084          |
-| 0.0768        | 3.2501 | 3627 | 0.2164          |
-| 0.0768        | 3.5002 | 3906 | 0.2119          |
-| 0.0681        | 3.7503 | 4185 | 0.2111          |
+| No log        | 0.0008 | 1    | 7.2540          |
+| No log        | 0.2503 | 315  | 0.0536          |
+| 0.2177        | 0.5006 | 630  | 0.0576          |
+| 0.2177        | 0.7509 | 945  | 0.0422          |
+| 0.0452        | 1.0008 | 1260 | 0.0463          |
+| 0.039         | 1.2511 | 1575 | 0.0439          |
+| 0.039         | 1.5014 | 1890 | 0.0469          |
+| 0.0359        | 1.7517 | 2205 | 0.0415          |
+| 0.0324        | 2.0016 | 2520 | 0.0392          |
+| 0.0324        | 2.2519 | 2835 | 0.0451          |
+| 0.0273        | 2.5022 | 3150 | 0.0426          |
+| 0.0273        | 2.7525 | 3465 | 0.0415          |
+| 0.0279        | 3.0024 | 3780 | 0.0414          |
+| 0.0231        | 3.2527 | 4095 | 0.0430          |
+| 0.0231        | 3.5030 | 4410 | 0.0465          |
+| 0.0187        | 3.7533 | 4725 | 0.0469          |
 
 
 ### Framework versions
