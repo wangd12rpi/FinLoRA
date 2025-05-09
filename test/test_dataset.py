@@ -1,7 +1,9 @@
+import gc
 import time
 import warnings
 import sklearn
-from sklearn.metrics import f1_score, accuracy_score
+import torch
+
 import inference
 
 warnings.filterwarnings("ignore")
@@ -22,10 +24,12 @@ dataset_path = {
     "nwgi": "../data/test/nwgi_test.jsonl",
     "headline": "../data/test/headline_test.jsonl",
     "ner": "../data/test/ner_test.jsonl",
+    "financebench": "../data/test/financebench_test.jsonl",
+    "xbrl_term": "../data/test/xbrl_term_test.jsonl",
 }
 
 max_new_token_dict = {
-    "xbrl_tags_extract": 10,
+    "xbrl_tags_extract": 20,
     "xbrl_value_extract": 20,
     "xbrl_formula_extract": 30,
     "xbrl_formula_calc_extract": 30,
@@ -37,57 +41,83 @@ max_new_token_dict = {
     "nwgi": 10,
     "headline": 10,
     "ner": 10,
+    "financebench": 50,
+    "xbrl_term": 50,
 }
 
-max_new_token_dict_for_base_models = {
-    "xbrl_tags_extract": 60,
-    "xbrl_value_extract": 60,
-    "xbrl_formula_extract": 60,
-    "xbrl_formula_calc_extract": 60,
-    "xbrl_finer": 100,
-    "xbrl_fnxl": 100,
-    "fpb": 60,
-    "fiqa": 60,
-    "tfns": 60,
-    "nwgi": 60,
-    "headline": 60,
-    "ner": 60,
-}
+# max_new_token_dict_for_base_models = {
+#     "xbrl_tags_extract": 60,
+#     "xbrl_value_extract": 60,
+#     "xbrl_formula_extract": 60,
+#     "xbrl_formula_calc_extract": 60,
+#     "xbrl_finer": 100,
+#     "xbrl_fnxl": 100,
+#     "fpb": 20,
+#     "fiqa": 20,
+#     "tfns": 20,
+#     "nwgi": 20,
+#     "headline": 20,
+#     "ner": 20,
+# }
 
 
-def evaluate_accuracy(out, target, task_name=""):
+def evaluate_accuracy(out, target, target_type_list):
     correct_count = 0
     response = []
-    
-    # Normalize outputs and targets - strip whitespace and lowercase
-    normalized_out = [x.strip().lower() for x in out]
-    normalized_target = [y.strip().lower() for y in target]
-    
-    for x, y in zip(normalized_out, normalized_target):
-        if y in x:
-            correct_count += 1
-            response.append(y)
-        else:
-            response.append(x)
 
-    accuracy = correct_count / len(out)
-    
-    # Calculate F1 score with task-specific handling
-    try:
-        if task_name in ["fpb", "tfns"]:
-            # For classification tasks, use weighted average and handle zero division
-            f1 = f1_score(normalized_target, response, average="weighted", zero_division=0)
-        elif len(set(normalized_target)) <= 1:
-            # If there's only one class in target, F1 calculation will fail
-            f1 = 1.0 if accuracy == 1.0 else 0.0
+    target_type_list_lower = [str(t).lower() for t in target_type_list]
+
+    if len(out) != len(target):
+        raise ValueError("Input lists 'out' and 'target' must have the same length.")
+
+    for x, y in zip(out, target):
+        # Ensure inputs are strings and convert to lowercase
+        x_str = str(x)
+        y_str = str(y)
+        x_lower = x_str.lower()
+        y_lower = y_str.lower()
+
+        found_labels_info = []
+
+        # Find the first occurrence of each valid label in the output x
+        for valid_label in target_type_list_lower:
+            try:
+                # string.find() returns -1 if not found, or the starting index
+                index = x_lower.find(valid_label)
+                if index != -1:
+                    found_labels_info.append({'label': valid_label, 'index': index})
+            except AttributeError:
+                print(f"Warning: Attribute error during find for x='{x_str}', label='{valid_label}'")
+                continue
+
+        is_current_prediction_correct = False
+
+        if not found_labels_info:
+            is_current_prediction_correct = False
         else:
-            # For other tasks, still try weighted F1 but with zero division handling
-            f1 = f1_score(normalized_target, response, average="weighted", zero_division=0)
-    except Exception as e:
-        f1 = -1
-        print(f"Error calculating F1 score for {task_name}: {e}")
-    
-    return accuracy, response, f1
+            found_labels_info.sort(key=lambda item: item['index'])
+
+            # The first label in the sorted list is the one that appeared earliest.
+            first_occurred_label = found_labels_info[0]['label']
+
+            # Check if this first occurred label matches the target label y_lower.
+            if first_occurred_label == y_lower:
+                is_current_prediction_correct = True
+            else:
+                is_current_prediction_correct = False
+
+        # Update correct count and the response list
+        if is_current_prediction_correct:
+            correct_count += 1
+            response.append(y)  # Append the original target label (y)
+        else:
+            response.append(x)  # Append the original LLM output (x)
+
+    accuracy = 0.0
+    if len(out) > 0:
+        accuracy = correct_count / len(out)
+
+    return accuracy, response
 
 
 def process_batched(out_text_list, target_list):
@@ -151,45 +181,56 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         if not tmp_context:
             break
         tmp_target = instructions['target'].tolist()[i * batch_size: min(len(context), (i + 1) * batch_size)]
-        
-        batch_start_time = time.time()
+
         out_text = inference.inference(args, tmp_context, max_new_token=max_new_token_dict.get(data_name, 30), model=model,
-                                       tokenizer=tokenizer)
-        batch_duration = time.time() - batch_start_time
-        
+                                       tokenizer=tokenizer,delimiter="Answer:")
+        # print(out_text)
         out_text_list += out_text
-        
-        # Update progress bar with time per example
-        examples_in_batch = len(tmp_context)
-        time_per_example = batch_duration / examples_in_batch if examples_in_batch > 0 else 0
-        task_pbar.set_description(f"Processing {data_name}: {time_per_example:.2f}s per example")
+
+        # time.sleep(0.1)
 
     # instructions["target"] = instructions["target"]
 
     if "finer" in data_name or "fnxl" in data_name:
         out_text_list, target_list = process_batched(out_text_list, target_list)
 
-    acc, response, f1 = evaluate_accuracy(out_text_list, target_list, data_name)
+    del model, tokenizer
+    gc.collect()
+    torch.cuda.empty_cache()
 
-    per_question_time = (time.time() - task_start_time) / sample_size
+    if data_name == "financebench" or data_name == "xbrl_term":
+        # TODO: factscore
+        return None
+    else:
+        all_target_type_for_classification = list(set(target_list))
+        acc, response = evaluate_accuracy(out_text_list, target_list, all_target_type_for_classification)
 
-    print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per quesiton: {per_question_time:.2f} s")
+        try:
+            f1 = sklearn.metrics.f1_score(target_list, response, average='weighted')
+        except:
+            f1 = -1
+            print(f"Error calculating F1 score for {data_name}")
 
-    results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
+        per_question_time = (time.time() - task_start_time) / sample_size
 
-    fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
-    # Save results to file
-    with open(f"results/{fname}", "w+") as f:
-        f.write(f"Task: {data_name}\n")
-        f.write(f"Accuracy: {acc * 100:.2f}%\n")
-        f.write(f"F1 Score: {f1:.3f}\n")
-        f.write(f"Per question time: {per_question_time:.2f} seconds\n")
-        f.write(f"Model: {args.base_model}\n")
-        f.write(f"PEFT Model: {args.peft_model}\n")
-        f.write(f"Sample Ratio: {args.sample_ratio}\n")
-        f.write(f"Temperature: {args.temperature}\n")
+        print(f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
 
-    return results
+        results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
+
+        fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
+        # Save results to file
+        with open(f"results/{fname}", "w+") as f:
+            f.write(f"Task: {data_name}\n")
+            f.write(f"Accuracy: {acc * 100:.2f}%\n")
+            f.write(f"F1 Score: {f1:.3f}\n")
+            f.write(f"Per question time: {per_question_time:.2f} minutes\n")
+            f.write(f"Model: {args.base_model}\n")
+            f.write(f"PEFT Model: {args.peft_model}\n")
+            f.write(f"Sample Ratio: {args.sample_ratio}\n")
+            f.write(f"Temperature: {args.temperature}\n")
+
+
+        return results
 #
 #
 # if __name__ == '__main__':

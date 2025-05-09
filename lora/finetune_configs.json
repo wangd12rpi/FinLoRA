@@ -1,5 +1,5 @@
 {
-  "senti_llama_3_1_8B_8bits_r8_dora": {
+  "sentiment_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
     "lora_r": 8,
@@ -10,7 +10,7 @@
     "gradient_accumulation_steps": 2,
     "peft_use_dora": true
   },
-  "headline_llama_3_1_8B_8bits_r8_dora": {
+  "headline_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/headline_train.jsonl",
     "lora_r": 8,
@@ -21,7 +21,7 @@
     "gradient_accumulation_steps": 2,
     "peft_use_dora": true
   },
-  "ner_llama_3_1_8B_8bits_r8_dora": {
+  "ner_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/ner_train.jsonl",
     "lora_r": 8,
@@ -32,7 +32,7 @@
     "gradient_accumulation_steps": 2,
     "peft_use_dora": true
   },
-  "finer_llama_3_1_8B_8bits_r8_dora": {
+  "finer_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finer_train_batched.jsonl",
     "lora_r": 8,
@@ -43,7 +43,7 @@
     "gradient_accumulation_steps": 8,
     "peft_use_dora": true
   },
-  "xbrl_extract_llama_3_1_8B_8bits_r8_dora": {
+  "xbrl_extract_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/xbrl_extract_train_batched.jsonl",
     "lora_r": 8,
@@ -54,7 +54,7 @@
     "gradient_accumulation_steps": 8,
     "peft_use_dora": true
   },
-  "finer_llama_3_1_8B_8bits_r8": {
+  "finer_llama_3_1_8b_8bits_r8": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finer_train_batched.jsonl",
     "lora_r": 8,
@@ -64,7 +64,7 @@
     "batch_size": 1,
     "gradient_accumulation_steps": 8
   },
-  "finer_llama_3_1_8B_4bits_r4": {
+  "finer_llama_3_1_8b_4bits_r4": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finer_train_batched.jsonl",
     "lora_r": 4,
@@ -74,7 +74,7 @@
     "batch_size": 1,
     "gradient_accumulation_steps": 8
   },
-  "senti_llama_3_1_8B_4bits_r4": {
+  "sentiment_llama_3_1_8b_4bits_r4": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
     "lora_r": 4,

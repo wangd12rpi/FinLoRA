@@ -1,13 +1,13 @@
 ---
 library_name: peft
 license: llama3.1
-base_model: NousResearch/Meta-Llama-3.1-8B-Instruct
+base_model: meta-llama/Llama-3.1-8B-Instruct
 tags:
 - generated_from_trainer
 datasets:
 - /workspace/FinLoRA/data/train/finer_train_batched.jsonl
 model-index:
-- name: workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8B_8bits_r8
+- name: workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8b_8bits_r8_dora
   results: []
 ---
 
@@ -19,7 +19,7 @@ should probably proofread and complete it, then remove this comment. -->
 
 axolotl version: `0.9.0`
 ```yaml
-base_model: NousResearch/Meta-Llama-3.1-8B-Instruct
+base_model: meta-llama/Llama-3.1-8B-Instruct
 model_type: LlamaForCausalLM
 tokenizer_type: AutoTokenizer
 gradient_accumulation_steps: 8
@@ -50,14 +50,15 @@ datasets:
     no_input_format: '[INST] {instruction} [/INST]'
 dataset_prepared_path: null
 val_set_size: 0.02
-output_dir: /workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8B_8bits_r8
+output_dir: /workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8b_8bits_r8_dora
+peft_use_dora: true
 sequence_len: 4096
 sample_packing: false
 pad_to_sequence_len: false
 wandb_project: finlora_models
 wandb_entity: null
 wandb_watch: gradients
-wandb_name: finer_llama_3_1_8B_8bits_r8
+wandb_name: finer_llama_3_1_8b_8bits_r8_dora
 wandb_log_model: 'false'
 bf16: auto
 tf32: false
@@ -78,11 +79,11 @@ chat_template: llama3
 
 </details><br>
 
-# workspace/FinLoRA/finetune/axolotl-output/finer_llama_3_1_8B_8bits_r8
+# workspace/FinLoRA/lora/axolotl-output/finer_llama_3_1_8B_8bits_r8_dora
 
-This model is a fine-tuned version of [NousResearch/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/NousResearch/Meta-Llama-3.1-8B-Instruct) on the /workspace/FinLoRA/data/train/finer_train_batched.jsonl dataset.
+This model is a fine-tuned version of [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) on the /workspace/FinLoRA/data/train/finer_train_batched.jsonl dataset.
 It achieves the following results on the evaluation set:
-- Loss: 0.0331
+- Loss: 0.0349
 
 ## Model description
 
@@ -106,10 +107,10 @@ The following hyperparameters were used during training:
 - eval_batch_size: 1
 - seed: 42
 - distributed_type: multi-GPU
-- num_devices: 2
+- num_devices: 4
 - gradient_accumulation_steps: 8
-- total_train_batch_size: 16
-- total_eval_batch_size: 2
+- total_train_batch_size: 32
+- total_eval_batch_size: 4
 - optimizer: Use OptimizerNames.ADAMW_BNB with betas=(0.9,0.999) and epsilon=1e-08 and optimizer_args=No additional optimizer arguments
 - lr_scheduler_type: cosine
 - lr_scheduler_warmup_steps: 10
@@ -119,23 +120,22 @@ The following hyperparameters were used during training:
 
 | Training Loss | Epoch  | Step | Validation Loss |
 |:-------------:|:------:|:----:|:---------------:|
-| No log        | 0.0016 | 1    | 0.5433          |
-| No log        | 0.2497 | 153  | 0.0520          |
-| No log        | 0.4995 | 306  | 0.0459          |
-| No log        | 0.7492 | 459  | 0.0406          |
-| 0.0693        | 0.9990 | 612  | 0.0386          |
-| 0.0693        | 1.2497 | 765  | 0.0396          |
-| 0.0693        | 1.4995 | 918  | 0.0363          |
-| 0.036         | 1.7492 | 1071 | 0.0351          |
-| 0.036         | 1.9990 | 1224 | 0.0348          |
-| 0.036         | 2.2497 | 1377 | 0.0360          |
-| 0.0302        | 2.4995 | 1530 | 0.0321          |
-| 0.0302        | 2.7492 | 1683 | 0.0347          |
-| 0.0302        | 2.9990 | 1836 | 0.0324          |
-| 0.0302        | 3.2497 | 1989 | 0.0328          |
-| 0.0242        | 3.4995 | 2142 | 0.0334          |
-| 0.0242        | 3.7492 | 2295 | 0.0332          |
-| 0.0242        | 3.9990 | 2448 | 0.0331          |
+| No log        | 0.0033 | 1    | 0.5407          |
+| No log        | 0.2513 | 77   | 0.0557          |
+| No log        | 0.5027 | 154  | 0.0474          |
+| No log        | 0.7540 | 231  | 0.0439          |
+| No log        | 1.0065 | 308  | 0.0398          |
+| No log        | 1.2579 | 385  | 0.0408          |
+| No log        | 1.5092 | 462  | 0.0387          |
+| 0.0619        | 1.7605 | 539  | 0.0388          |
+| 0.0619        | 2.0131 | 616  | 0.0379          |
+| 0.0619        | 2.2644 | 693  | 0.0372          |
+| 0.0619        | 2.5157 | 770  | 0.0353          |
+| 0.0619        | 2.7670 | 847  | 0.0358          |
+| 0.0619        | 3.0196 | 924  | 0.0351          |
+| 0.0306        | 3.2709 | 1001 | 0.0346          |
+| 0.0306        | 3.5222 | 1078 | 0.0349          |
+| 0.0306        | 3.7736 | 1155 | 0.0349          |
 
 
 ### Framework versions
