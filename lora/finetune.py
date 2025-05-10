@@ -59,6 +59,7 @@ AXOLOTL_YAML_TEMPLATE = {
     "val_set_size": 0.02,  # Default validation split
     "output_dir": "./axolotl-output/placeholder-run",  # Placeholder
     "peft_use_dora": False,
+    "peft_use_rslora": False,
 
     "sequence_len": 4096,  # Max length of input sequence
     "sample_packing": False,
@@ -124,7 +125,9 @@ def generate_axolotl_yaml(run_config, run_name, template):
     yaml_config['lora_r'] = run_config.get('lora_r', template['lora_r'])
 
     yaml_config['peft_use_dora'] = run_config.get('peft_use_dora', template['peft_use_dora'])
+    yaml_config['peft_use_rslora'] = run_config.get('peft_use_rslora', template['peft_use_rslora'])
     print(f"\n\n*****USING DORA?********: {yaml_config['peft_use_dora']}", "\n\n******************")
+    print(f"\n\n*****USING rsLoRA?********: {yaml_config['peft_use_rslora']}", "\n\n******************")
 
     # Handle Quantization
     quant_bits = run_config.get('quant_bits')
