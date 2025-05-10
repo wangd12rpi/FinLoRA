@@ -1,43 +1,30 @@
-import torch
-import argparse
-
-# from convfinqa import test_convfinqa
+#!/usr/bin/env python
+import torch, argparse, sys
+sys.path.append("../")
 from test_dataset import test_fin_tasks
 
-import sys
-
-sys.path.append('../')
-
-
-def main(args):
+def main(a):
     with torch.no_grad():
-        for data in args.dataset.split(','):
-            print("testing:", data)
-            test_fin_tasks(args, data_name=data)
-
-    print('Evaluation Ends.')
-
+        for d in a.dataset.split(','):
+            print("testing:", d)
+            test_fin_tasks(a, data_name=d)
+    print("Evaluation Ends.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", required=True, type=str)
-    parser.add_argument("--base_model", required=True, type=str)
-    parser.add_argument("--peft_model", required=False, default="", type=str)
-    parser.add_argument("--max_length", default=512, type=int)
-    parser.add_argument("--batch_size", default=8, type=int, help="The train batch size per device")
-    parser.add_argument("--instruct_template", default='default')
-    parser.add_argument("--from_remote", default=False, type=bool)
-    parser.add_argument("--quant_bits", default=8, type=int)
-    parser.add_argument("--temperature", default=0.0, type=float, help="Temperature for text generation")
-    parser.add_argument("--source", required=True, type=str)
-    parser.add_argument("--if_print", required=False, type=bool, default=False)
-    parser.add_argument("--sample_ratio", required=False, type=float, default=1.0)
-    parser.add_argument("--together_api_key", required=False, type=str, help="API key for Together AI")
-
-    args = parser.parse_args()
-
-    print(args.base_model)
-    print(args.peft_model)
-    print("Sample Ratio", args.sample_ratio)
-
-    main(args)
+    p = argparse.ArgumentParser()
+    p.add_argument("--dataset", required=True)
+    p.add_argument("--base_model", default="")
+    p.add_argument("--peft_model", default="")
+    p.add_argument("--max_length", type=int, default=512)
+    p.add_argument("--batch_size", type=int, default=8)
+    p.add_argument("--instruct_template", default="default")
+    p.add_argument("--from_remote", action="store_true")
+    p.add_argument("--quant_bits", type=int, default=8)
+    p.add_argument("--temperature", type=float, default=0.0)
+    p.add_argument("--source", required=True,
+                   choices=["hf", "openai", "together", "anthropic"])
+    p.add_argument("--if_print", action="store_true")
+    p.add_argument("--sample_ratio", type=float, default=1.0)
+    p.add_argument("--model_name", default="")
+    p.add_argument("--together_api_key", default="")
+    main(p.parse_args())
