@@ -224,7 +224,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
             f1 = -1
             print(f"Error calculating F1 score for {data_name}")
         print(
-            f"\n✓ {data_name}: Accuracy: {acc * 100:.2f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
+            f"\n✓ {data_name}: Accuracy: {acc * 100:.3f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
 
         results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
 
