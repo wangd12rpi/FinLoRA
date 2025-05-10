@@ -1,5 +1,5 @@
 export HF_TOKEN=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
-pip install  tqdm tensorboard dotenv fireworks-ai google-genai
+pip install  tqdm tensorboard dotenv fireworks-ai google-genai dotenv tqdm datasets bert-score scikit-learn evaluate
 #pip install cupy-cuda12x
 #git clone https://github.com/YangletLiu/FinLoRA
 # pip install typing_extensions==4.14.0 --upgrade
