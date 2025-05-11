@@ -67,7 +67,7 @@ def load_local_model(args):
     return model, tokenizer
 
 
-def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=None,
+def inference(args, inputs, max_new_token=60, delimiter="\n", model=None,
               tokenizer=None):
 
     config = dotenv.dotenv_values("../.env")
