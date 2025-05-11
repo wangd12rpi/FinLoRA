@@ -16,6 +16,7 @@ from google import genai
 from google.genai import types
 import base64
 from openai import OpenAI
+import os
 
 warnings.filterwarnings("ignore")
 
@@ -77,7 +78,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         headers = {"Authorization": f"Bearer {together_api_key}", "Content-Type": "application/json"}
         url = "https://api.together.xyz/v1/chat/completions"
         model_name = args.base_model
-        for x in inputs:
+        for x in tqdm(inputs, desc="Together API calls"):
             payload = {"model": model_name, "max_tokens": max_new_token,
                        "messages": [{"role": "user", "content": x}],
                        "temperature": temperature}
@@ -91,7 +92,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
 
     elif args.source == "fireworks":
         answer = []
-        for x in inputs:
+        for x in tqdm(inputs, desc="Fireworks API calls"):
             client = Fireworks(api_key=config.get("FIREWORKS_KEY"))
             response = client.chat.completions.create(
                 model=args.base_model,
@@ -109,7 +110,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
             location="us-central1",
         )
         answer = []
-        for x in inputs:
+        for x in tqdm(inputs, desc="Google API calls"):
             generate_content_config = types.GenerateContentConfig(
                 temperature=args.temperature,
                 top_p=0.95,
@@ -129,7 +130,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
     elif args.source == 'openai':
         answer = []
         client = OpenAI()
-        for x in inputs:
+        for x in tqdm(inputs, desc="OpenAI API calls"):
             response = client.chat.completions.create(
                 model=args.base_model,
                 messages=[{"role": "user", "content": x}],
@@ -144,9 +145,9 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         key = os.getenv("DEEPSEEK_API_KEY")
         client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
         answer = []
-        for x in inputs:
+        for x in tqdm(inputs, desc="DeepSeek API calls"):
             response = client.chat.completions.create(
-                model=args.base_model,
+                model=args.model_name if hasattr(args, 'model_name') and args.model_name else "deepseek-chat",
                 messages=[{"role": "user", "content": x}],
                 max_tokens=max_new_token,
                 temperature=temperature,
