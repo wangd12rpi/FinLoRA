@@ -67,7 +67,7 @@ def load_local_model(args):
     return model, tokenizer
 
 
-def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=None,
+def inference(args, inputs, max_new_token=60, delimiter="\n", model=None,
               tokenizer=None):
 
     config = dotenv.dotenv_values("../.env")
@@ -79,7 +79,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         headers = {"Authorization": f"Bearer {together_api_key}", "Content-Type": "application/json"}
         url = "https://api.together.xyz/v1/chat/completions"
         model_name = args.model_name if hasattr(args, 'model_name') and args.model_name else args.base_model
-        for x in tqdm(inputs, desc="Together API calls"):
+        for x in inputs:
             payload = {"model": model_name, "max_tokens": max_new_token,
                        "messages": [{"role": "user", "content": x}],
                        "temperature": temperature}
@@ -93,7 +93,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
 
     elif args.source == "fireworks":
         answer = []
-        for x in tqdm(inputs, desc="Fireworks API calls"):
+        for x in inputs:
             client = Fireworks(api_key=config.get("FIREWORKS_KEY"))
             response = client.chat.completions.create(
                 model=args.base_model,
@@ -111,7 +111,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
             location="us-central1",
         )
         answer = []
-        for x in tqdm(inputs, desc="Google API calls"):
+        for x in inputs:
             generate_content_config = types.GenerateContentConfig(
                 temperature=args.temperature,
                 top_p=0.95,
@@ -131,7 +131,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
     elif args.source == 'openai':
         answer = []
         client = OpenAI()
-        for x in tqdm(inputs, desc="OpenAI API calls"):
+        for x in inputs:
             response = client.chat.completions.create(
                 model=args.model_name if hasattr(args, 'model_name') and args.model_name else "gpt-3.5-turbo",
                 messages=[{"role": "user", "content": x}],
@@ -146,7 +146,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         key = os.getenv("ANTHROPIC_API_KEY")
         client = anthropic.Anthropic(api_key=key)
         answer = []
-        for x in tqdm(inputs, desc="Claude API calls"):
+        for x in inputs:
             response = client.messages.create(
                 model=args.model_name if hasattr(args, 'model_name') and args.model_name else "claude-3-sonnet-20240229",
                 max_tokens=max_new_token,
@@ -160,7 +160,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         key = os.getenv("DEEPSEEK_API_KEY")
         client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
         answer = []
-        for x in tqdm(inputs, desc="DeepSeek API calls"):
+        for x in inputs:
             response = client.chat.completions.create(
                 model=args.model_name if hasattr(args, 'model_name') and args.model_name else "deepseek-chat",
                 messages=[{"role": "user", "content": x}],
