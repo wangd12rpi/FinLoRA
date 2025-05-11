@@ -222,6 +222,7 @@ def process_formula_data_xlsx():
             print(f"Successfully saved {len(data)} records to {file_path_out} ({data_type_name})")
         except IOError as e:
             print(f"Error saving {data_type_name} to {file_path_out}: {e}")
+
     file_path = "preprocessed/formula.xlsx"
     try:
         df = pd.read_excel(file_path)
@@ -244,6 +245,8 @@ def process_formula_data_xlsx():
     print(f"Starting processing of {len(df)} rows for formula data...")
     for index, row in df.iterrows():
         formula_name = row.get('Formula Name')
+        formula = row.get('Formula')
+        explain = row.get('Explanation')
         if pd.isna(formula_name):
             print(f"Warning: Skipping row {index + 1} due to missing 'Formula Name'.")
             continue
@@ -267,7 +270,7 @@ def process_formula_data_xlsx():
                 # print(f"Info: Skipping Q/A pair {i} for formula '{formula_name}' due to missing question or answer.")
                 continue
 
-            context = f"Use formula {formula_name} to answer this question: {str(question_text[3:])} with a numerical answer and with no explanations or other text. Answer:"
+            context = f"Use formula {formula_name} to answer the question. Answer with a numerical answer with 2 decimal places and with no explanations or other text. Formula: {formula}, Explanation: {explain}. Question: {str(question_text[3:])}. Answer:"
             target = str(answer_text)
 
             record = {"context": context, "target": target}
@@ -287,8 +290,6 @@ def process_formula_data_xlsx():
     _save_to_jsonl(train_data, "train/formula_train.jsonl", "formula train")
     _save_to_jsonl(test_data, "test/formula_test.jsonl", "formula test")
     print("Formula data processing complete.")
-
-
 
 
 if __name__ == '__main__':

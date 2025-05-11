@@ -19,3 +19,4 @@ train/ft_models/
 data/train/xbrl_extract_raw.json
 
 docs/build
+/data/train/gemini/
