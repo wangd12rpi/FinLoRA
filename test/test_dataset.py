@@ -133,8 +133,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     per_question_time = (time.time() - task_start_time) / sample_size
 
     if data_name == "financebench" or data_name == "xbrl_term":
-        frugal_metric = evaluate.load("bertscore")
-        results = frugal_metric.compute(predictions=out_text_list, references=target_list, lang="en",)
+        metric = evaluate.load("bertscore")
+        # print(out_text_list, target_list)
+        results = metric.compute(predictions=out_text_list, references=target_list, model_type="ProsusAI/finbert")
         precision = sum(results["precision"]) / len(results["precision"])
         recall = sum(results["recall"]) / len(results["recall"])
         f1 = sum(results["f1"]) / len(results["f1"])
@@ -158,5 +159,47 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
             f1 = sklearn.metrics.f1_score(targets, resp, average='weighted')
         except Exception:
             f1 = -1
+
+            print(f"Error calculating F1 score for {data_name}")
+        print(
+            f"\n✓ {data_name}: Accuracy: {acc * 100:.3f}%, F1: {f1:.3f}, Time per question: {per_question_time:.2f} s, Batch size: {batch_size}")
+
+        results = {"task": data_name, "acc": acc, "f1": f1, "time": per_question_time}
+
+        fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
+        # Save results to file
+        with open(f"results/{fname}", "w+") as f:
+            f.write(f"Task: {data_name}\n")
+            f.write(f"Accuracy: {acc * 100:.2f}%\n")
+            f.write(f"F1 Score: {f1:.3f}\n")
+            f.write(f"Per question time: {per_question_time:.2f} minutes\n")
+            f.write(f"Model: {args.base_model}\n")
+            f.write(f"PEFT Model: {args.peft_model}\n")
+            f.write(f"Sample Ratio: {args.sample_ratio}\n")
+            f.write(f"Temperature: {args.temperature}\n")
+
+        return results
+#
+#
+# if __name__ == '__main__':
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument("--dataset", default="all", type=str,
+#                         help="XBRL tasks to test, comma-separated. Use 'all' for all tasks.")
+#     parser.add_argument("--base_model", default="together/deepseek-v3", type=str, help="Model to test")
+#     parser.add_argument("--peft_model", required=False, default="", type=str)
+#     parser.add_argument("--max_length", default=4096, type=int)
+#     parser.add_argument("--batch_size", default=1, type=int)
+#     parser.add_argument("--quant_bits", default=8, type=int)
+#     parser.add_argument("--sample_ratio", default=0.01, type=float, help="Ratio of data to sample for testing")
+#     parser.add_argument("--together_api_key", required=True, type=str, help="API key for Together AI")
+#     parser.add_argument("--temperature", default=0.0, type=float, help="Temperature for text generation")
+#
+#     args = parser.parse_args()
+#
+#     # Run XBRL tasks test
+#     results = test_xbrl_tasks(args, dataset_names=args.dataset, sample_ratio=args.sample_ratio)
+
+
         print(f"✓ {data_name}: Acc={acc*100:.3f}%, F1={f1:.3f}")
         return {"task": data_name, "acc": acc, "f1": f1}
+
