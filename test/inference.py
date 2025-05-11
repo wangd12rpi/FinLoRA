@@ -42,11 +42,12 @@ def load_local_model(args):
 
     model.model_parallel = True
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name,
-                                              torch_dtype=torch.bfloat16,
-                                              trust_remote_code=True,
-                                              device_map="auto"
-                                              )
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name,
+        torch_dtype=torch.bfloat16,
+        trust_remote_code=True,
+        device_map="auto"
+    )
 
     tokenizer.padding_side = "left"
     if args.base_model == 'qwen':
@@ -71,22 +72,15 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
     temperature = args.temperature if hasattr(args, 'temperature') else 0.0
 
     if args.source == "together":
-        together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get(
-            "TOGETHER_API_KEY")
+        together_api_key = args.together_api_key if hasattr(args, 'together_api_key') else config.get("TOGETHER_API_KEY")
         answer = []
-        headers = {
-            "Authorization": f"Bearer {together_api_key}",
-            "Content-Type": "application/json"
-        }
+        headers = {"Authorization": f"Bearer {together_api_key}", "Content-Type": "application/json"}
         url = "https://api.together.xyz/v1/chat/completions"
         model_name = args.base_model
         for x in inputs:
-            payload = {
-                "model": model_name,
-                "max_tokens": max_new_token,
-                "messages": [{"role": "user", "content": x}],
-                "temperature": temperature
-            }
+            payload = {"model": model_name, "max_tokens": max_new_token,
+                       "messages": [{"role": "user", "content": x}],
+                       "temperature": temperature}
             response = requests.post(url, headers=headers, json=payload)
             if response.status_code == 200:
                 answer.append(response.json()["choices"][0]["message"]["content"])
@@ -98,7 +92,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
     elif args.source == "fireworks":
         answer = []
         for x in inputs:
-            client = Fireworks(api_key=config["FIREWORKS_KEY"])
+            client = Fireworks(api_key=config.get("FIREWORKS_KEY"))
             response = client.chat.completions.create(
                 model=args.base_model,
                 max_tokens=max_new_token,
@@ -132,6 +126,20 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
             print(answer)
         return answer
 
+    elif args.source == 'openai':
+        answer = []
+        client = OpenAI()
+        for x in inputs:
+            response = client.chat.completions.create(
+                model=args.base_model,
+                messages=[{"role": "user", "content": x}],
+                max_tokens=max_new_token,
+                temperature=temperature,
+                stream=False
+            )
+            answer.append(response.choices[0].message.content)
+        return answer
+
     elif args.source == 'deepseek':
         key = os.getenv("DEEPSEEK_API_KEY")
         client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
@@ -139,10 +147,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         for x in inputs:
             response = client.chat.completions.create(
                 model=args.base_model,
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant"},
-                    {"role": "user",   "content": x}
-                ],
+                messages=[{"role": "user", "content": x}],
                 max_tokens=max_new_token,
                 temperature=temperature,
                 stream=False
