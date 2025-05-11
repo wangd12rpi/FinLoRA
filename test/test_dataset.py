@@ -211,7 +211,7 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
         recall = sum(results["recall"]) / len(results["recall"])
         f1 = sum(results["f1"]) / len(results["f1"])
         print(
-            f"\n✓ {data_name}: precision: {precision:.2f}, recall: {recall:.2f}, f1: {f1:.2f}, Time per question: {per_question_time:.2f}, Batch size: {batch_size}")
+            f"\n✓ {data_name}: precision: {precision:.3f}, recall: {recall:.3f}, f1: {f1:.3f}, Time per question: {per_question_time:.2f}, Batch size: {batch_size}")
         return None
 
     else:
