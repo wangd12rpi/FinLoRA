@@ -5,29 +5,33 @@ import sklearn
 import torch
 import evaluate
 import inference
+import os
 
 warnings.filterwarnings("ignore")
 
 from tqdm import tqdm
 import pandas as pd
 
-dataset_path = {
-    "xbrl_tags_extract": "../data/test/xbrl_extract_tags_test.jsonl",
-    "xbrl_value_extract": "../data/test/xbrl_extract_value_test.jsonl",
-    "xbrl_formula_extract": "../data/test/xbrl_extract_formula_test.jsonl",
-    "xbrl_formula_calc_extract": "../data/test/xbrl_extract_formula_calculations_test.jsonl",
-    "xbrl_finer": "../data/test/finer_test_batched.jsonl",
-    "xbrl_fnxl": "../data/test/fnxl_test_batched.jsonl",
-    "fpb": "../data/test/fpb_test.jsonl",
-    "fiqa": "../data/test/fiqa_test.jsonl",
-    "tfns": "../data/test/tfns_test.jsonl",
-    "nwgi": "../data/test/nwgi_test.jsonl",
-    "headline": "../data/test/headline_test.jsonl",
-    "ner": "../data/test/ner_test.jsonl",
-    "financebench": "../data/test/financebench_test.jsonl",
-    "xbrl_term": "../data/test/xbrl_term_test.jsonl",
-    "formula": "../data/test/formula_test.jsonl",
+BASE_DIR = os.path.dirname(__file__)                     # /FinLoRA/test
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, os.pardir))
+DATA_DIR = os.path.join(PROJECT_ROOT, "data", "test")   # /FinLoRA/data/test
 
+dataset_path = {
+    "xbrl_tags_extract":         os.path.join(DATA_DIR, "xbrl_extract_tags_test.jsonl"),
+    "xbrl_value_extract":        os.path.join(DATA_DIR, "xbrl_extract_value_test.jsonl"),
+    "xbrl_formula_extract":      os.path.join(DATA_DIR, "xbrl_extract_formula_test.jsonl"),
+    "xbrl_formula_calc_extract": os.path.join(DATA_DIR, "xbrl_extract_formula_calculations_test.jsonl"),
+    "xbrl_finer":                os.path.join(DATA_DIR, "finer_test_batched.jsonl"),
+    "xbrl_fnxl":                 os.path.join(DATA_DIR, "fnxl_test_batched.jsonl"),
+    "fpb":                       os.path.join(DATA_DIR, "fpb_test.jsonl"),
+    "fiqa":                      os.path.join(DATA_DIR, "fiqa_test.jsonl"),
+    "tfns":                      os.path.join(DATA_DIR, "tfns_test.jsonl"),
+    "nwgi":                      os.path.join(DATA_DIR, "nwgi_test.jsonl"),
+    "headline":                  os.path.join(DATA_DIR, "headline_test.jsonl"),
+    "ner":                       os.path.join(DATA_DIR, "ner_test.jsonl"),
+    "financebench":              os.path.join(DATA_DIR, "financebench_test.jsonl"),
+    "xbrl_term":                 os.path.join(DATA_DIR, "xbrl_term_test.jsonl"),
+    "formula":                   os.path.join(DATA_DIR, "formula_test.jsonl"),
 }
 
 max_new_token_dict = {
