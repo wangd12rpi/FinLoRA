@@ -2,17 +2,15 @@
 # export TOKENIZERS_PARALLELISM=0
 
 
-
-
 #---- ner ----
 
 python test.py \
---dataset financebench,xbrl_term,formula \
+--dataset xbrl_term \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
---sample_ratio 1 \
---base_model gemini-2.0-flash-lite-001 \
+--sample_ratio .1 \
+--base_model projects/1023064188719/locations/us-central1/endpoints/578348613768314880 \
 #--base_model meta-llama/Llama-3.1-8B \
 #--peft_model ../finetuned_models/finer_llama_3_1_8b_8bits_r8
 
@@ -26,6 +24,11 @@ python test.py \
 # ner projects/1023064188719/locations/us-central1/endpoints/5585682896334618624
 # headline projects/1023064188719/locations/us-central1/endpoints/576343104559251456
 # finer projects/1023064188719/locations/us-central1/endpoints/7929384289915895808
+# xbrl_extract: projects/1023064188719/locations/us-central1/endpoints/8681450243314679808
+
+# financebench projects/1023064188719/locations/us-central1/endpoints/6279905742019362816
+# xbrl_term projects/1023064188719/locations/us-central1/endpoints/578348613768314880
+# formula projects/1023064188719/locations/us-central1/endpoints/8072338393712820224
 
 
 #dataset_path = {

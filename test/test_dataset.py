@@ -205,8 +205,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     per_question_time = (time.time() - task_start_time) / sample_size
 
     if data_name == "financebench" or data_name == "xbrl_term":
-        frugal_metric = evaluate.load("bertscore")
-        results = frugal_metric.compute(predictions=out_text_list, references=target_list, lang="en",)
+        metric = evaluate.load("bertscore")
+        # print(out_text_list, target_list)
+        results = metric.compute(predictions=out_text_list, references=target_list, model_type="ProsusAI/finbert")
         precision = sum(results["precision"]) / len(results["precision"])
         recall = sum(results["recall"]) / len(results["recall"])
         f1 = sum(results["f1"]) / len(results["f1"])
@@ -260,3 +261,4 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
 #
 #     # Run XBRL tasks test
 #     results = test_xbrl_tasks(args, dataset_names=args.dataset, sample_ratio=args.sample_ratio)
+
