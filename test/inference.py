@@ -17,6 +17,7 @@ from google.genai import types
 import base64
 from openai import OpenAI
 import os
+import anthropic  # Add Anthropic import
 
 warnings.filterwarnings("ignore")
 
@@ -77,7 +78,7 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         answer = []
         headers = {"Authorization": f"Bearer {together_api_key}", "Content-Type": "application/json"}
         url = "https://api.together.xyz/v1/chat/completions"
-        model_name = args.base_model
+        model_name = args.model_name if hasattr(args, 'model_name') and args.model_name else args.base_model
         for x in tqdm(inputs, desc="Together API calls"):
             payload = {"model": model_name, "max_tokens": max_new_token,
                        "messages": [{"role": "user", "content": x}],
@@ -132,13 +133,27 @@ def inference(args: {}, inputs: [str], max_new_token=60, delimiter="\n", model=N
         client = OpenAI()
         for x in tqdm(inputs, desc="OpenAI API calls"):
             response = client.chat.completions.create(
-                model=args.base_model,
+                model=args.model_name if hasattr(args, 'model_name') and args.model_name else "gpt-3.5-turbo",
                 messages=[{"role": "user", "content": x}],
                 max_tokens=max_new_token,
                 temperature=temperature,
                 stream=False
             )
             answer.append(response.choices[0].message.content)
+        return answer
+
+    elif args.source == 'anthropic':
+        key = os.getenv("ANTHROPIC_API_KEY")
+        client = anthropic.Anthropic(api_key=key)
+        answer = []
+        for x in tqdm(inputs, desc="Claude API calls"):
+            response = client.messages.create(
+                model=args.model_name if hasattr(args, 'model_name') and args.model_name else "claude-3-sonnet-20240229",
+                max_tokens=max_new_token,
+                messages=[{"role": "user", "content": x}],
+                temperature=temperature
+            )
+            answer.append(response.content[0].text)
         return answer
 
     elif args.source == 'deepseek':
