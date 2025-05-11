@@ -11,7 +11,7 @@ SAMPLE_RATIO=1.0
 
 # --- Repo layout -------------------------------------------------------------
 REPO_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-TEST_PY="${REPO_ROOT}/test/test.py"          # adjust if test.py lives elsewhere
+TEST_PY="${REPO_ROOT}/test.py"          # adjust if test.py lives elsewhere
 MODEL_DIR="${REPO_ROOT}/finetuned_models"   # parent of all adapter folders
 LOG_DIR="${REPO_ROOT}/test"
 mkdir -p "$LOG_DIR"
