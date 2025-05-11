@@ -1,0 +1,81 @@
+{
+  "sentiment_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2
+  },
+
+  "headline_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/headline_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2
+  },
+
+  "ner_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/ner_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2
+  },
+
+  "finer_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/finer_train_batched.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8
+  },
+
+  "xbrl_extract_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_extract_train_batched.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8
+  },
+
+  "financebench_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/financebench_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 2
+  },
+
+  "formula_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/formula_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 2
+  },
+
+  "xbrl_term_llama_3_1_8b_fp16_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_term_train.jsonl",
+    "lora_r": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 2
+  }
+}
