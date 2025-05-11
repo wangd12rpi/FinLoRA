@@ -238,7 +238,9 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
 
         fname = f"{data_name}_{args.base_model}_{args.peft_model}_results.txt".replace("/", "-")
         # Save results to file
-        with open(f"results/{fname}", "w+") as f:
+        results_dir = os.path.join(os.path.dirname(__file__), "results")
+        os.makedirs(results_dir, exist_ok=True)
+        with open(os.path.join(results_dir, fname), "w+") as f:
             f.write(f"Task: {data_name}\n")
             f.write(f"Accuracy: {acc * 100:.2f}%\n")
             f.write(f"F1 Score: {f1:.3f}\n")
