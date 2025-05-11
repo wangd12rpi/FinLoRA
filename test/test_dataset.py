@@ -130,6 +130,17 @@ def test_fin_tasks(args, data_name="xbrl_finer", prompt_fun=None):
     del model, tokenizer
     gc.collect()
     torch.cuda.empty_cache()
+    per_question_time = (time.time() - task_start_time) / sample_size
+
+    if data_name == "financebench" or data_name == "xbrl_term":
+        frugal_metric = evaluate.load("bertscore")
+        results = frugal_metric.compute(predictions=out_text_list, references=target_list, lang="en",)
+        precision = sum(results["precision"]) / len(results["precision"])
+        recall = sum(results["recall"]) / len(results["recall"])
+        f1 = sum(results["f1"]) / len(results["f1"])
+        print(
+            f"\n✓ {data_name}: precision: {precision:.3f}, recall: {recall:.3f}, f1: {f1:.3f}, Time per question: {per_question_time:.2f}, Batch size: {batch_size}")
+        return None
 
     # Evaluate
     if data_name in ("financebench", "xbrl_term"):
