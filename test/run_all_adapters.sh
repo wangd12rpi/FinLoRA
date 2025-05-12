@@ -2,7 +2,7 @@
 
 BASE_MODEL="meta-llama/Llama-3.1-8B-Instruct"
 BATCH_SIZE=1
-TEMPERATURE=1.0
+TEMPERATURE=0.0
 SAMPLE_RATIO=1.0
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
