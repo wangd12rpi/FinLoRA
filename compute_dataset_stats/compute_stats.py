@@ -49,11 +49,16 @@ def analyze_prompt_collection(dataset_name, prompt_collection):
         word_count_current_value = len(word_list_value)
         total_word_count_value += word_count_current_value
         matched_word_count_current_value = 0
-        for single_word in word_list_value:
-            for term_word in xbrl_terms_list:
-                if words_are_similar(single_word, term_word):
-                    matched_word_count_current_value += 1
-                    break
+        prompt_lower = prompt_text_value.lower()
+        for term_word in xbrl_terms_list:
+            if ' ' in term_word:
+                if re.search(r'\b' + re.escape(term_word) + r'\b', prompt_lower):
+                    matched_word_count_current_value += len(term_word.split())
+            else:
+                for single_word in word_list_value:
+                    if words_are_similar(single_word, term_word):
+                        matched_word_count_current_value += 1
+                        break
         total_matched_word_count_value += matched_word_count_current_value
         if word_count_current_value > 0:
             fractional_match_sum_value += matched_word_count_current_value / word_count_current_value
