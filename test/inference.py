@@ -114,7 +114,7 @@ def inference(args, inputs, max_new_token=60, delimiter="\n", model=None,
         for x in inputs:
             generate_content_config = types.GenerateContentConfig(
                 temperature=args.temperature,
-                top_p=0.95,
+                top_p=1,
                 max_output_tokens=max_new_token,
                 response_modalities=["TEXT"],
             )
@@ -179,7 +179,7 @@ def inference(args, inputs, max_new_token=60, delimiter="\n", model=None,
         for k in tokens.keys():
             tokens[k] = tokens[k].cuda()
         res = model.generate(**tokens, max_new_tokens=max_new_token, eos_token_id=tokenizer.eos_token_id,
-                             temperature=0.8)
+                             temperature=0)
         res_sentences = [tokenizer.decode(i, skip_special_tokens=True) for i in res]
         out_text = ["".join(o.split(delimiter)[-1]).strip() for o in res_sentences]
         args.if_print and print(out_text)

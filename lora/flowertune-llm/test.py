@@ -21,7 +21,7 @@ base_model = model.peft_config["default"].base_model_name_or_path
 tokenizer = AutoTokenizer.from_pretrained(base_model)
 
 # Generate answers
-temperature = 0.7
+temperature = 0.0
 choices = []
 conv = get_conv_template(args.template)
 
