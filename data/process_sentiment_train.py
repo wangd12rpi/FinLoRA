@@ -119,25 +119,25 @@ if __name__ == '__main__':
     ner_train, ner_test = ner['train'], ner['test']
     headline_train, headline_test = headline['train'], headline['test']
 
-    fpb_train = datasets.concatenate_datasets([fpb_train] * 6)
-    fiqa_train = datasets.concatenate_datasets([fiqa_train] * 21)
-    tfns_train = datasets.concatenate_datasets([tfns_train] * 2)
+    # fpb_train = datasets.concatenate_datasets([fpb_train] * 6)
+    # fiqa_train = datasets.concatenate_datasets([fiqa_train] * 21)
+    # tfns_train = datasets.concatenate_datasets([tfns_train] * 2)
 
     print(fpb_train)
     print(fiqa_train)
-    print(nwgi_train)
     print(tfns_train)
-    sentiment_train_dataset = datasets.concatenate_datasets([fpb_train, fiqa_train, tfns_train, nwgi_train])
-    print("final", sentiment_train_dataset)
-
-    process_save_data(sentiment_train_dataset, "finlora_sentiment_train", split='train')
-    process_save_data(headline_train, "headline_train", split='train')
-    process_save_data(ner_train, "ner_train", split='train')
-
-    process_save_data(fpb_test, "fpb_test", split='test')
-    process_save_data(fiqa_test, "fiqa_test", split='test')
-    process_save_data(nwgi_test, "nwgi_test", split='test')
-    process_save_data(tfns_test, "tfns_test", split='test')
-    process_save_data(headline_test, "headline_test", split='test')
-    process_save_data(ner_test, "ner_test", split='test')
-
+    print(nwgi_train)
+    # sentiment_train_dataset = datasets.concatenate_datasets([fpb_train, fiqa_train, tfns_train, nwgi_train])
+    # print("final", sentiment_train_dataset)
+    #
+    # process_save_data(sentiment_train_dataset, "finlora_sentiment_train", split='train')
+    # process_save_data(headline_train, "headline_train", split='train')
+    # process_save_data(ner_train, "ner_train", split='train')
+    #
+    # process_save_data(fpb_test, "fpb_test", split='test')
+    # process_save_data(fiqa_test, "fiqa_test", split='test')
+    # process_save_data(nwgi_test, "nwgi_test", split='test')
+    # process_save_data(tfns_test, "tfns_test", split='test')
+    # process_save_data(headline_test, "headline_test", split='test')
+    # process_save_data(ner_test, "ner_test", split='test')
+    #

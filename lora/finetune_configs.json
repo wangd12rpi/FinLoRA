@@ -96,6 +96,7 @@
     "num_epochs": 4,
     "batch_size": 8,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "headline_llama_3_1_8b_8bits_r8_dora": {
@@ -107,6 +108,7 @@
     "num_epochs": 4,
     "batch_size": 8,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "ner_llama_3_1_8b_8bits_r8_dora": {
@@ -118,6 +120,7 @@
     "num_epochs": 4,
     "batch_size": 8,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "finer_llama_3_1_8b_8bits_r8_dora": {
@@ -129,6 +132,7 @@
     "num_epochs": 4,
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "xbrl_extract_llama_3_1_8b_8bits_r8_dora": {
@@ -140,6 +144,7 @@
     "num_epochs": 1,
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "financebench_llama_3_1_8b_8bits_r8_dora": {
@@ -151,6 +156,7 @@
     "num_epochs": 4,
     "batch_size": 1,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
 
@@ -163,6 +169,7 @@
     "num_epochs": 1,
     "batch_size": 4,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "xbrl_term_llama_3_1_8b_8bits_r8_dora": {
@@ -174,6 +181,7 @@
     "num_epochs": 1,
     "batch_size": 4,
     "gradient_accumulation_steps": 2,
+    "lora_alpha": 32,
     "peft_use_dora": true
   },
   "xbrl_extract_llama_3_1_8b_8bits_r8": {
@@ -185,7 +193,6 @@
     "num_epochs": 1,
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
-    "peft_use_dora": false
   },
   "xbrl_extract_llama_3_1_8b_4bits_r4": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
@@ -196,7 +203,6 @@
     "num_epochs": 1,
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
-    "peft_use_dora": false
   },
   "finer_llama_3_1_8b_8bits_r8": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
