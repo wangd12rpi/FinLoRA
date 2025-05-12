@@ -30,6 +30,10 @@ dataset_files = {
 }
 
 results_list = []
+output_path = 'prompt_statistics.txt'
+header_fields = ['dataset', 'average_prompt_tokens', 'total_prompt_tokens', 'average_term_frequency', 'overall_term_ratio']
+with open(output_path, 'w') as out_file:
+    out_file.write('\t'.join(header_fields) + '\n')
 
 def analyze_prompt_collection(dataset_name, prompt_collection):
     prompt_count_value = 0
@@ -63,7 +67,11 @@ def analyze_prompt_collection(dataset_name, prompt_collection):
         overall_term_ratio_value = total_matched_word_count_value / total_word_count_value
     else:
         overall_term_ratio_value = 0
-    results_list.append((dataset_name, average_token_length_value, total_token_count_value, average_term_frequency_value, overall_term_ratio_value))
+    row = (dataset_name, average_token_length_value, total_token_count_value, average_term_frequency_value, overall_term_ratio_value)
+    results_list.append(row)
+    with open(output_path, 'a') as out_file:
+        out_file.write('\t'.join(str(field) for field in row) + '\n')
+        out_file.flush()
 
 gpqa_dataframe = pd.read_csv(dataset_files['gpqa_main'])
 gpqa_prompt_list = gpqa_dataframe['Question'].astype(str).tolist()
@@ -100,12 +108,3 @@ for jsonl_file_path in glob.glob(os.path.join(test_folder_directory, '*.jsonl'))
             test_record_dictionary = json.loads(jsonl_line_content)
             test_prompt_list.append(test_record_dictionary['context'])
     analyze_prompt_collection(dataset_name_string, test_prompt_list)
-
-output_line_list = []
-header_fields = ['dataset', 'average_prompt_tokens', 'total_prompt_tokens', 'average_term_frequency', 'overall_term_ratio']
-output_line_list.append('\t'.join(header_fields))
-for result_tuple in results_list:
-    output_line_list.append('\t'.join(str(field) for field in result_tuple))
-
-with open('prompt_statistics.txt', 'w') as output_file_handle:
-    output_file_handle.write('\n'.join(output_line_list))
