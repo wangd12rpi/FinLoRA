@@ -7,7 +7,7 @@
   "eva_config": null,
   "exclude_modules": null,
   "fan_in_fan_out": null,
-  "inference_mode": false,
+  "inference_mode": true,
   "init_lora_weights": true,
   "layer_replication": null,
   "layers_pattern": null,
@@ -24,9 +24,9 @@
   "rank_pattern": {},
   "revision": null,
   "target_modules": [
+    "q_proj",
     "k_proj",
-    "v_proj",
-    "q_proj"
+    "v_proj"
   ],
   "task_type": "CAUSAL_LM",
   "trainable_token_indices": null,
