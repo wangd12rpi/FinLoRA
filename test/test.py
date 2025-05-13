@@ -27,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument("--temperature",  type=float, default=0.0)
     parser.add_argument(
         "--source", required=True,
-        choices=["hf", "openai", "together", "anthropic", "deepseek"]
+        choices=["hf", "openai", "together", "anthropic", "deepseek", "google"]
     )
     parser.add_argument("--if_print",     action="store_true")
     parser.add_argument("--sample_ratio", type=float, default=1.0)

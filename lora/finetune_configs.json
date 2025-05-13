@@ -87,7 +87,9 @@
     "gradient_accumulation_steps": 2,
     "peft_use_rslora": true
   },
-  "sentiment_llama_3_1_8b_8bits_r8_dora": {
+
+
+  "sentiment_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
     "lora_r": 8,
@@ -99,7 +101,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "headline_llama_3_1_8b_8bits_r8_dora": {
+  "headline_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/headline_train.jsonl",
     "lora_r": 8,
@@ -111,7 +113,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "ner_llama_3_1_8b_8bits_r8_dora": {
+  "ner_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/ner_train.jsonl",
     "lora_r": 8,
@@ -123,7 +125,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "finer_llama_3_1_8b_8bits_r8_dora": {
+  "finer_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finer_train_batched.jsonl",
     "lora_r": 8,
@@ -135,7 +137,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "xbrl_extract_llama_3_1_8b_8bits_r8_dora": {
+  "xbrl_extract_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/xbrl_extract_train.jsonl",
     "lora_r": 8,
@@ -147,7 +149,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "financebench_llama_3_1_8b_8bits_r8_dora": {
+  "financebench_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/financebench_train.jsonl",
     "lora_r": 8,
@@ -159,8 +161,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-
-  "formula_llama_3_1_8b_8bits_r8_dora": {
+  "formula_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/formula_train.jsonl",
     "lora_r": 8,
@@ -172,7 +173,7 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "xbrl_term_llama_3_1_8b_8bits_r8_dora": {
+  "xbrl_term_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/xbrl_term_train.jsonl",
     "lora_r": 8,
@@ -184,7 +185,54 @@
     "lora_alpha": 32,
     "peft_use_dora": true
   },
-  "xbrl_extract_llama_3_1_8b_8bits_r8": {
+
+
+
+  "sentiment_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+  "headline_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/headline_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+  "ner_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/ner_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+  "finer_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/finer_train_batched.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "peft_use_dora": true
+  },
+  "xbrl_extract_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/xbrl_extract_train.jsonl",
     "lora_r": 8,
@@ -193,6 +241,52 @@
     "num_epochs": 1,
     "batch_size": 1,
     "gradient_accumulation_steps": 8,
+    "peft_use_dora": true
+  },
+  "financebench_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/financebench_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 4,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+  "formula_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/formula_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+  "xbrl_term_llama_3_1_8b_8bits_r8_dora": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_term_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "peft_use_dora": true
+  },
+
+
+  "xbrl_extract_llama_3_1_8b_8bits_r8": {
+    "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "dataset_path": "../data/train/xbrl_extract_train.jsonl",
+    "lora_r": 8,
+    "quant_bits": 8,
+    "learning_rate": 0.0001,
+    "num_epochs": 1,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8
   },
   "xbrl_extract_llama_3_1_8b_4bits_r4": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
