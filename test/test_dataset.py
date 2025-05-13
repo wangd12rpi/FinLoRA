@@ -34,6 +34,10 @@ dataset_path = {
     "financebench":              os.path.join(DATA_DIR, "financebench_test.jsonl"),
     "xbrl_term":                 os.path.join(DATA_DIR, "xbrl_term_test.jsonl"),
     "formula":                   os.path.join(DATA_DIR, "formula_test.jsonl"),
+    "cfa_level1":                os.path.join(DATA_DIR, "cfa_level1_test.jsonl"),
+    "cfa_level2":                os.path.join(DATA_DIR, "cfa_level2_test.jsonl"),
+    "cfa_level3":                os.path.join(DATA_DIR, "cfa_level3_test.jsonl"),
+    "cpa_reg":                   os.path.join(DATA_DIR, "cpa_reg_test.jsonl"),
 }
 
 

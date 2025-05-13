@@ -17,7 +17,7 @@ from google.genai import types
 import base64
 from openai import OpenAI
 import os
-import anthropic  # Add Anthropic import
+import anthropic
 
 warnings.filterwarnings("ignore")
 
