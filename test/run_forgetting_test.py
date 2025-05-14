@@ -6,7 +6,7 @@ measure catastrophic forgetting
 from pathlib import Path
 from typing import List, Dict
 
-import torch, pandas as pd
+import re, torch, pandas as pd
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 from deepeval.models.base_model import DeepEvalBaseLLM
@@ -30,26 +30,41 @@ WANTED = {f"{p}{s}" for p in FIN_TASKS for s in LORA_SUFFIXES}
 
 # wrap HF model for DeepEval
 class HFLLM(DeepEvalBaseLLM):
+    class _Dummy:  # lightweight object holding `.answer`
+        def __init__(self, ans: str):
+            self.answer = ans
+
+    LETTER_RE = re.compile(r"\b([A-E])\b")
+
     def __init__(self, model, tokenizer, name):
         self._model = model
         self._tokenizer = tokenizer
         self._name = name
+        if self._tokenizer.pad_token is None:
+            self._tokenizer.pad_token = self._tokenizer.eos_token
 
     def load_model(self):
         return self._model
 
-    def generate(self, prompt: str) -> str:
+    def _extract_letter(self, text: str) -> str:
+        m = self.LETTER_RE.search(text.upper())
+        return m.group(1) if m else text.strip()[:1].upper()
+
+    def generate(self, prompt: str, **_) -> str:
         inputs = self._tokenizer([prompt], return_tensors="pt").to(TEST_DEVICE)
         gen_ids = self._model.generate(**inputs, max_new_tokens=10)
-        return self._tokenizer.decode(gen_ids[0], skip_special_tokens=True)
+        decoded = self._tokenizer.decode(gen_ids[0], skip_special_tokens=True)
+        return self._extract_letter(decoded)
 
-    async def a_generate(self, prompt: str) -> str:
+    async def a_generate(self, prompt: str, **_) -> str:
         return self.generate(prompt)
 
-    def batch_generate(self, prompts: List[str]) -> List[str]:
+    def batch_generate(self, prompts: List[str], **kwargs) -> List[List["HFLLM._Dummy"]]:
         inputs = self._tokenizer(prompts, return_tensors="pt", padding=True).to(TEST_DEVICE)
         gen_ids = self._model.generate(**inputs, max_new_tokens=10)
-        return [self._tokenizer.decode(g, skip_special_tokens=True) for g in gen_ids]
+        decoded = [self._tokenizer.decode(g, skip_special_tokens=True) for g in gen_ids]
+        letters = [self._extract_letter(t) for t in decoded]
+        return [[self._Dummy(ltr)] for ltr in letters]
 
     def get_model_name(self):
         return self._name
