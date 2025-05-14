@@ -15,15 +15,16 @@ BASE_MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct"
 TEST_DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 CSV_PATH = Path("mmlu_results.csv")
 
+# "finer", "formula", "headline", "ner", "xbrl_term"
 FIN_TASKS = [
-    "financebench", "finer", "formula", "headline", "ner",
-    "sentiment", "xbrl_extract", "xbrl_term", "regulations",
+    "sentiment", "finer", "xbrl_extract"
+    "financebench", "regulations",
 ]
 LORA_SUFFIXES = [
-    "_llama_3_1_8b_8bits_r8_rslora",
-    "_llama_3_1_8b_8bits_r8_dora",
     "_llama_3_1_8b_8bits_r8",
     "_llama_3_1_8b_4bits_r4",
+    "_llama_3_1_8b_8bits_r8_dora",
+    "_llama_3_1_8b_8bits_r8_rslora",
 ]
 WANTED = {f"{p}{s}" for p in FIN_TASKS for s in LORA_SUFFIXES}
 
