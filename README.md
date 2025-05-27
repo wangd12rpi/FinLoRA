@@ -1,4 +1,6 @@
-# FinLoRA: Finetuning Quantized Llama3 and DeepSeek's V3/R1 Models into Financial Large Language Models Using Low-Rank Adaptation on GPUs
+# FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
+
+FinLoRA: Finetuning Quantized Llama3 and DeepSeek's V3/R1 Models into Financial Large Language Models Using Low-Rank Adaptation on GPUs
 
 ## Motivation
 
