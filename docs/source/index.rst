@@ -41,4 +41,5 @@ FinLoRA Documentation
    :maxdepth: 3
    :caption: Benchmark Results
 
+   benchmark_results/angles
    benchmark_results/results
