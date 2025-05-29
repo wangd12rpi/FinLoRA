@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Financial Tasks &mdash; FinLoRA Documentation 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=ca35e0e8" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="XBRL Data Reporting" href="xbrl_reporting_tasks.html" />
+    <link rel="prev" title="Overview" href="../intro/overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            FinLoRA Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tasks</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">General Financial Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tasks-details">Tasks Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#financial-phrase-bank-fpb-sentiment-analysis-fpb"><strong>Financial Phrase Bank (FPB)</strong> (Sentiment Analysis) <span>[fpb]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fiqa-sa-sentiment-analysis-fiqa"><strong>FiQA SA</strong> (Sentiment Analysis) <span>[fiqa]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#twitter-financial-news-sentiment-tfns-sentiment-analysis-tfns"><strong>Twitter Financial News Sentiment (TFNS)</strong> (Sentiment Analysis) <span>[tfns]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#news-with-gpt-nwgi-sentiment-analysis"><strong>News with GPT (NWGI)</strong> (Sentiment Analysis)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#financial-headline-analysis-headline-analysis-headline-tasks"><strong>Financial Headline Analysis</strong> (Headline Analysis) <span>[headline-tasks]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#named-entity-recognition-ner-named-entity-recognition-ner-tasks"><strong>Named Entity Recognition (NER)</strong> (Named Entity Recognition) <span>[ner-tasks]</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#citations">Citations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xbrl_reporting_tasks.html">XBRL Data Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xbrl_analysis_tasks.html">XBRL Data Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">LoRA Methods</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lora_methods/lora_methods.html">LoRA Foundations and Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Fine-Tuning Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Benchmark Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../benchmark_results/results.html">Benchmark Results</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FinLoRA Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">General Financial Tasks</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/Open-Finance-Lab/FinLoRA/blob/main/docs/source/tasks/general_financial_tasks.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="general-financial-tasks">
+<h1>General Financial Tasks<a class="headerlink" href="#general-financial-tasks" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>We aim to enhance and benchmark our model with three main general capabilities: sentiment analysis, headline analysis, and name entity recognition.</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Question/training sets for general financial tasks.</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Question sets</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>#Train</p></th>
+<th class="head"><p>#Test</p></th>
+<th class="head"><p>Metrics</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Financial Phrase Bank (FPB)</p></td>
+<td><p>Sentiment Analysis</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/TheFinAI/en-fpb">huggingface</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Financial Question Answering (FiQA SA)</p></td>
+<td><p>Sentiment Analysis</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification">huggingface</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Twitter Financial News Sentiment (TFNS)</p></td>
+<td><p>Sentiment Analysis</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment">huggingface</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>News with GPT (NWGI)</p></td>
+<td><p>Sentiment Analysis</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/TheFinAI/NWGI_test">huggingface</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Headline</p></td>
+<td><p>Headline Analysis</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/FinGPT/fingpt-headline-cls">huggingface</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Named Entity Recognition (NER)</p></td>
+<td><p>Named Entity Recognition</p></td>
+<td></td>
+<td></td>
+<td><p>Accuracy, F1</p></td>
+<td><p><a class="reference external" href="https://huggingface.co/datasets/FinGPT/fingpt-ner-cls">huggingface</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tasks-details">
+<h2>Tasks Details<a class="headerlink" href="#tasks-details" title="Link to this heading"></a></h2>
+<p>This section provides examples for various general financial datasets commonly used in NLP tasks.</p>
+<section id="financial-phrase-bank-fpb-sentiment-analysis-fpb">
+<h3><strong>Financial Phrase Bank (FPB)</strong> (Sentiment Analysis) <a class="reference internal" href="#fpb" id="id1"><span>[fpb]</span></a><a class="headerlink" href="#financial-phrase-bank-fpb-sentiment-analysis-fpb" title="Link to this heading"></a></h3>
+<p>Financial Phrase Bank (FPB) contains sentences extracted from financial news and reports. These sentences are annotated with sentiment labels “positive”, “negative”, and “neutral”. We manually created the train/test split.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Pharmaceuticals group Orion Corp reported a fall in its third-quarter earnings that were hit by larger expenditures on R&amp;D and marketing. Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>negative</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fiqa-sa-sentiment-analysis-fiqa">
+<h3><strong>FiQA SA</strong> (Sentiment Analysis) <a class="reference internal" href="#fiqa" id="id2"><span>[fiqa]</span></a><a class="headerlink" href="#fiqa-sa-sentiment-analysis-fiqa" title="Link to this heading"></a></h3>
+<p>Financial question-answering sentiment analysis (FiQA SA) is another sentiment analysis dataset with the same labels as FPB from microblog headlines and financial news.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>Instruction: What is the sentiment of this news? Please choose an answer from {negative/neutral/positive}. Input: Johnson Matthey raises prospect of investor payout Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>positive</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="twitter-financial-news-sentiment-tfns-sentiment-analysis-tfns">
+<h3><strong>Twitter Financial News Sentiment (TFNS)</strong> (Sentiment Analysis) <a class="reference internal" href="#tfns" id="id3"><span>[tfns]</span></a><a class="headerlink" href="#twitter-financial-news-sentiment-tfns-sentiment-analysis-tfns" title="Link to this heading"></a></h3>
+<p>Twitter financial news sentiment (TFNS) comprises annotated tweets related to financial news labeled with the same sentiment categories as FPB.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>What is the sentiment of this tweet? Please choose an answer from {negative/neutral/positive}.Input: $BYND - JPMorgan reels in expectations on Beyond Meat <a class="reference external" href="https://t.co/bd0xbFGjkT">https://t.co/bd0xbFGjkT</a> Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>negative</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="news-with-gpt-nwgi-sentiment-analysis">
+<h3><strong>News with GPT (NWGI)</strong> (Sentiment Analysis)<a class="headerlink" href="#news-with-gpt-nwgi-sentiment-analysis" title="Link to this heading"></a></h3>
+<p>News with GPT instruction (NWGI) comprises samples with seven labels ranging from strong negative to strong positive.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>Instruction: What is the sentiment of this news? Please choose an answer from {strong negative/moderately negative/mildly negative/neutral/mildly positive/moderately positive/strong positive}. Input: Amid a soft performance for the major equity indices on Tuesday, Nvidia (NASDAQ: NVDA ) posted a particularly glaring loss. Shares continued to fall in sympathy with fellow semiconductor specialist Micron Technology (NASDAQ: MU ) following its disappointing earnings results last week. Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>moderately negative</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="financial-headline-analysis-headline-analysis-headline-tasks">
+<h3><strong>Financial Headline Analysis</strong> (Headline Analysis) <a class="reference internal" href="#headline-tasks" id="id4"><span>[headline-tasks]</span></a><a class="headerlink" href="#financial-headline-analysis-headline-analysis-headline-tasks" title="Link to this heading"></a></h3>
+<p>The Headline dataset classifies headlines based on various questions into two classes: “yes” and
+“no”.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>Instruction: Does the news headline talk about price? Please choose an answer from {Yes/No}. Input: Gold futures edge up after two-session decline Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="named-entity-recognition-ner-named-entity-recognition-ner-tasks">
+<h3><strong>Named Entity Recognition (NER)</strong> (Named Entity Recognition) <a class="reference internal" href="#ner-tasks" id="id5"><span>[ner-tasks]</span></a><a class="headerlink" href="#named-entity-recognition-ner-named-entity-recognition-ner-tasks" title="Link to this heading"></a></h3>
+<p>The NER dataset annotates one entity per sentence, categorized into one of three classes: “location”, “person”, and “organization”.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 90.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p><strong>Input</strong></p></th>
+<td><p>Instruction: What is the entity type of ‘40 William St’ in the input sentence. Options: person, location, organization Input: This LOAN AND SECURITY AGREEMENT dated January 27 , 1999 , between SILICON VALLEY BANK (” Bank “), a California - chartered bank with its principal place of business at 3003 Tasman Drive , Santa Clara , California 95054 with a loan production office located at 40 William St ., Ste . Answer:</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Output</strong></p></th>
+<td><p>location</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="citations">
+<h2>Citations<a class="headerlink" href="#citations" title="Link to this heading"></a></h2>
+<div role="list" class="citation-list">
+<div class="citation" id="fpb" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">fpb</a><span class="fn-bracket">]</span></span>
+<p>Malo, P., H. Lu, M. Ahlgren, S. Rönnqvist, and P. Nyberg. (2014). <em>FinancialPhraseBank-v1.0</em>. Available at SSRN: <a class="reference external" href="https://ssrn.com/abstract=2512146">https://ssrn.com/abstract=2512146</a> or <a class="reference external" href="http://dx.doi.org/10.2139/ssrn.2512146">http://dx.doi.org/10.2139/ssrn.2512146</a></p>
+</div>
+<div class="citation" id="fiqa" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">fiqa</a><span class="fn-bracket">]</span></span>
+<p>Sinha, A., Joglekar, M., &amp; Murphy, F. (2018). <em>FiQA: Financial Opinion Mining and Question Answering</em>. arXiv preprint arXiv:1809.09431.</p>
+</div>
+<div class="citation" id="tfns" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">tfns</a><span class="fn-bracket">]</span></span>
+<p>Araci, D. (2019). <em>FinBERT: Financial Sentiment Analysis with Pre-trained Language Models</em>. arXiv preprint arXiv:1908.10063.</p>
+</div>
+<div class="citation" id="headline-tasks" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">headline-tasks</a><span class="fn-bracket">]</span></span>
+<p>Sinha, A., &amp; Khandait, P. (2020). <em>Headline-Enhanced Financial Embedding</em>. In Proceedings of the 2nd Workshop on Economics and Natural Language Processing (pp. 66-74).</p>
+</div>
+<div class="citation" id="ner-tasks" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">ner-tasks</a><span class="fn-bracket">]</span></span>
+<p>Salinas Alvarado, D., Rönnqvist, S., &amp; Niklaus, J. (2015). <em>Domain-Specific Named Entity Recognition: A Case Study in Finance</em>. In Proceedings of the 1st Workshop on Vector Space Modeling for Natural Language Processing (pp. 110-115).</p>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../intro/overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="xbrl_reporting_tasks.html" class="btn btn-neutral float-right" title="XBRL Data Reporting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, FinLoRA.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
