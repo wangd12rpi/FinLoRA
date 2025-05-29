@@ -1,0 +1,17 @@
+.custom-img {
+    margin-bottom: 20px !important;
+}
+
+.wy-nav-content {
+    max-width: 1000px !important;
+}
+
+.toctree-wrapper ul ul{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: normal;
+}
