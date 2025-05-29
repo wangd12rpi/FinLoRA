@@ -10,12 +10,12 @@ bert-score
 scikit-learn
 mixlora
 deepeval
-evaluate>=0.4.3
 packaging
 setuptools
 wheel
 ninja
 axolotl[deepspeed]
+evaluate>=0.4.3
 nbsphinx==0.9.6
 nbsphinx-link==1.3.1
 sphinx-autobuild==2024.10.3
