@@ -215,7 +215,7 @@ C_5 = C_1 + 2C_2.\]</div>
 <p>In this subsection, we introduce the five LoRA methods we use in our paper. We choose LoRA <a class="footnote-reference brackets" href="#id6" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and QLoRA <a class="footnote-reference brackets" href="#id7" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> due to their standard use in fine-tuning. We choose DoRA <a class="footnote-reference brackets" href="#id8" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> and rsLoRA <a class="footnote-reference brackets" href="#id9" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> due to their performance enhancements: DoRA proposes fine-grained updates for achieving accuracy through LoRA, and rsLoRA proposes a scaling factor to achieve gradient stability. Lastly, we choose LoRA with federated learning for its practical ability to allow financial institutions to collaborate in fine-tuning models while using private, confidential data.</p>
 <section id="low-rank-adaptation-lora">
 <h3><a class="toc-backref" href="#id17" role="doc-backlink">Low-Rank Adaptation (LoRA)</a><a class="headerlink" href="#low-rank-adaptation-lora" title="Link to this heading"></a></h3>
-<p>LoRA adds a scaled low-rank update <span class="math notranslate nohighlight">\(\Delta \bm{W} = \gamma_r\bm{B}\bm{A}\)</span>—where <span class="math notranslate nohighlight">\(\gamma_r\)</span> is a scaling factor (<span class="math notranslate nohighlight">\(\gamma_r=\frac{\alpha}{r}\)</span> with <span class="math notranslate nohighlight">\(\alpha\)</span> &gt; 0 and rank <span class="math notranslate nohighlight">\(r\)</span> &gt; 0), <span class="math notranslate nohighlight">\(\bm{B} \in \mathbb{R}^{d \times r}\)</span>, and <span class="math notranslate nohighlight">\(\bm{A} \in \mathbb{R}^{r \times k}\)</span>—to the frozen pre-trained weight matrix <span class="math notranslate nohighlight">\(\bm{W}_0 \in \mathbb{R}^{d \times k}\)</span>.</p>
+<p>LoRA adds a scaled low-rank update <span class="math notranslate nohighlight">\(\Delta \boldsymbol{W} = \gamma_r\boldsymbol{B}\boldsymbol{A}\)</span>—where <span class="math notranslate nohighlight">\(\gamma_r\)</span> is a scaling factor (<span class="math notranslate nohighlight">\(\gamma_r=\frac{\alpha}{r}\)</span> with <span class="math notranslate nohighlight">\(\alpha\)</span> &gt; 0 and rank <span class="math notranslate nohighlight">\(r\)</span> &gt; 0), <span class="math notranslate nohighlight">\(\boldsymbol{B} \in \mathbb{R}^{d \times r}\)</span>, and <span class="math notranslate nohighlight">\(\boldsymbol{A} \in \mathbb{R}^{r \times k}\)</span>—to the frozen pre-trained weight matrix <span class="math notranslate nohighlight">\(\boldsymbol{W}_0 \in \mathbb{R}^{d \times k}\)</span>.</p>
 <p>For each multi-head attention layer, we have query, key, and value weight matrices, which we can factorize as follows:</p>
 <div class="math notranslate nohighlight">
 \[W_Q^{(n)} = B_Q^{(n)}A_Q^{(n)},\quad
@@ -239,58 +239,58 @@ QLoRA drastically reduces memory usage and lets you fine-tune on a single GPU.</
 <p>Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution. The spacing between bins is therefore closer together near 0 and further apart further away from 0.</p>
 <p>Each block in QLoRA has a quantization constant. QLoRA employs double quantization, where it quantizes the quantization constants themselves to further save space.</p>
 <p>The last part of QLoRA is paged optimizers. Paged optimizers reduce GPU memory spikes by switching pages to CPU memory when GPU RAM becomes full when processing long sequences, and the pages are not needed for the current computation of the forward/backward pass.</p>
-<p>The forward pass for QLoRA is <span class="math notranslate nohighlight">\(\bm{y} = p_{16}(\bm{W}_0^{\text{NF4}}) \bm{x} + \gamma_r \bm{B} \bm{A} \bm{x}\)</span>.</p>
+<p>The forward pass for QLoRA is <span class="math notranslate nohighlight">\(\boldsymbol{y} = p_{16}(\boldsymbol{W}_0^{\text{NF4}}) \boldsymbol{x} + \gamma_r \boldsymbol{B} \boldsymbol{A} \boldsymbol{x}\)</span>.</p>
 </section>
 <section id="weight-decomposed-low-rank-adaptation-dora">
 <h3><a class="toc-backref" href="#id19" role="doc-backlink">Weight-Decomposed Low-Rank Adaptation (DoRA)</a><a class="headerlink" href="#weight-decomposed-low-rank-adaptation-dora" title="Link to this heading"></a></h3>
 <p>LoRA makes simple changes to the model weights, so it sometimes doesn’t capture the full complexity of the data and its relationships. DoRA solves this issue of capturing data complexity.</p>
 <p>DoRA decomposes the weight matrix into a <em>magnitude vector</em> and a <em>direction matrix</em>.
 The magnitude vector consists of the lengths of the columns in the weight matrix and is computed by taking each column’s <span class="math notranslate nohighlight">\(\ell_2\)</span> norm.
-The direction matrix <span class="math notranslate nohighlight">\(\bm V\)</span> is the collection of the original columns. Its unit-column form <span class="math notranslate nohighlight">\(\widehat{\bm V}=\bm V/\lVert\bm V\rVert_c\)</span> is obtained by dividing each column by its <span class="math notranslate nohighlight">\(\ell_2\)</span> norm.</p>
-<p>The magnitude vector <span class="math notranslate nohighlight">\(\bm{m}\)</span> is of size <span class="math notranslate nohighlight">\(1 \times k\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is the number of columns. The direction matrix <span class="math notranslate nohighlight">\(\bm{V}\)</span> is of size <span class="math notranslate nohighlight">\(d \times k\)</span>, where <span class="math notranslate nohighlight">\(d\)</span> is the number of rows in a weight matrix.</p>
+The direction matrix <span class="math notranslate nohighlight">\(\boldsymbol V\)</span> is the collection of the original columns. Its unit-column form <span class="math notranslate nohighlight">\(\widehat{\boldsymbol V}=\boldsymbol V/\lVert\boldsymbol V\rVert_c\)</span> is obtained by dividing each column by its <span class="math notranslate nohighlight">\(\ell_2\)</span> norm.</p>
+<p>The magnitude vector <span class="math notranslate nohighlight">\(\boldsymbol{m}\)</span> is of size <span class="math notranslate nohighlight">\(1 \times k\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is the number of columns. The direction matrix <span class="math notranslate nohighlight">\(\boldsymbol{V}\)</span> is of size <span class="math notranslate nohighlight">\(d \times k\)</span>, where <span class="math notranslate nohighlight">\(d\)</span> is the number of rows in a weight matrix.</p>
 <p>The decomposition can be written as:</p>
 <div class="math notranslate nohighlight">
-\[\bm{W}_0 \;=\; \bm{m}\,\frac{\bm{V}}{\lVert \bm{V} \rVert_c}\;=\;\lVert \bm{W}_0 \rVert_c\,\frac{\bm{W}_0}{\lVert \bm{W}_0 \rVert_c},\]</div>
-<p>where <span class="math notranslate nohighlight">\(\lVert \cdot \rVert_c\)</span> denotes the column-wise <span class="math notranslate nohighlight">\(\ell_2\)</span> norm (i.e., the norm is taken independently for each column) and <span class="math notranslate nohighlight">\(\bm{W}_0\)</span> is the frozen pretrained weight.</p>
+\[\boldsymbol{W}_0 \;=\; \boldsymbol{m}\,\frac{\boldsymbol{V}}{\lVert \boldsymbol{V} \rVert_c}\;=\;\lVert \boldsymbol{W}_0 \rVert_c\,\frac{\boldsymbol{W}_0}{\lVert \boldsymbol{W}_0 \rVert_c},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lVert \cdot \rVert_c\)</span> denotes the column-wise <span class="math notranslate nohighlight">\(\ell_2\)</span> norm (i.e., the norm is taken independently for each column) and <span class="math notranslate nohighlight">\(\boldsymbol{W}_0\)</span> is the frozen pretrained weight.</p>
 <p>Here is an example of the decomposition:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\bm{W}_0 =
+\[\begin{split}\boldsymbol{W}_0 =
 \begin{bmatrix}
 1 &amp; 7 &amp; 2 &amp; 8 &amp; 5 \\
 2 &amp; 10 &amp; 4 &amp; 12 &amp; 10 \\
 3 &amp; 15 &amp; 12 &amp; 18 &amp; 27 \\
 4 &amp; 12 &amp; 16 &amp; 16 &amp; 36
 \end{bmatrix}, \qquad
-\bm{W}_0 \in \mathbb{R}^{4 \times 5}.\end{split}\]</div>
+\boldsymbol{W}_0 \in \mathbb{R}^{4 \times 5}.\end{split}\]</div>
 <p>For column <span class="math notranslate nohighlight">\(j\)</span></p>
 <div class="math notranslate nohighlight">
-\[\lVert \bm{w}_j \rVert_2 = \sqrt{\sum_{i=1}^{4} W_{ij}^2}.\]</div>
+\[\lVert \boldsymbol{w}_j \rVert_2 = \sqrt{\sum_{i=1}^{4} W_{ij}^2}.\]</div>
 <p>These norms form a <span class="math notranslate nohighlight">\(1 \times 5\)</span> magnitude vector:</p>
 <div class="math notranslate nohighlight">
-\[\bm{m} = \left[ 5.4772,\; 22.7596,\; 20.4939,\; 28.0713,\; 46.3681 \right].\]</div>
+\[\boldsymbol{m} = \left[ 5.4772,\; 22.7596,\; 20.4939,\; 28.0713,\; 46.3681 \right].\]</div>
 <p>The unit-column direction matrix is</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\widehat{\bm{V}} =
+\[\begin{split}\widehat{\boldsymbol{V}} =
 \begin{bmatrix}
 0.182574 &amp; 0.307562 &amp; 0.097590 &amp; 0.284988 &amp; 0.107833 \\
 0.365148 &amp; 0.439375 &amp; 0.195180 &amp; 0.427482 &amp; 0.215666 \\
 0.547723 &amp; 0.659062 &amp; 0.585540 &amp; 0.641223 &amp; 0.582297 \\
 0.730297 &amp; 0.527250 &amp; 0.780720 &amp; 0.569976 &amp; 0.776396
 \end{bmatrix}.\end{split}\]</div>
-<p>Every column of <span class="math notranslate nohighlight">\(\widehat{\bm{V}}\)</span> now has unit length:</p>
+<p>Every column of <span class="math notranslate nohighlight">\(\widehat{\boldsymbol{V}}\)</span> now has unit length:</p>
 <div class="math notranslate nohighlight">
-\[\lVert \bm{v}_j \rVert_2 = 1, \qquad \text{for all } j.\]</div>
-<p>These are updated separately. The magnitude vector <span class="math notranslate nohighlight">\(\bm{m}\)</span> is trained directly, while the direction matrix <span class="math notranslate nohighlight">\(\bm{V}\)</span> is fine-tuned using LoRA: <span class="math notranslate nohighlight">\(\Delta\bm{V} = \bm{B}\bm{A}\)</span> with <span class="math notranslate nohighlight">\(\bm{B}\!\in\!\mathbb{R}^{d\times r}\)</span> and <span class="math notranslate nohighlight">\(\bm{A}\!\in\!\mathbb{R}^{r\times k}\)</span>.</p>
+\[\lVert \boldsymbol{v}_j \rVert_2 = 1, \qquad \text{for all } j.\]</div>
+<p>These are updated separately. The magnitude vector <span class="math notranslate nohighlight">\(\boldsymbol{m}\)</span> is trained directly, while the direction matrix <span class="math notranslate nohighlight">\(\boldsymbol{V}\)</span> is fine-tuned using LoRA: <span class="math notranslate nohighlight">\(\Delta\boldsymbol{V} = \boldsymbol{B}\boldsymbol{A}\)</span> with <span class="math notranslate nohighlight">\(\boldsymbol{B}\!\in\!\mathbb{R}^{d\times r}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{A}\!\in\!\mathbb{R}^{r\times k}\)</span>.</p>
 <p>After the updates, the new weight matrix is</p>
 <div class="math notranslate nohighlight">
-\[\bm{W}' = \bm{m}\,\frac{\bm{V} + \Delta \bm{V}}{\lVert \bm{V} + \Delta \bm{V} \rVert_c}
-     = \bm{m}\,\frac{\bm{W}_0 + \bm{B}\bm{A}}{\lVert \bm{W}_0 + \bm{B}\bm{A} \rVert_c}.\]</div>
+\[\boldsymbol{W}' = \boldsymbol{m}\,\frac{\boldsymbol{V} + \Delta \boldsymbol{V}}{\lVert \boldsymbol{V} + \Delta \boldsymbol{V} \rVert_c}
+     = \boldsymbol{m}\,\frac{\boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A}}{\lVert \boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A} \rVert_c}.\]</div>
 </section>
 <section id="rank-stabilized-lora-rslora">
 <h3><a class="toc-backref" href="#id20" role="doc-backlink">Rank-Stabilized LoRA (rsLoRA)</a><a class="headerlink" href="#rank-stabilized-lora-rslora" title="Link to this heading"></a></h3>
-<p>LoRA scales the weight matrix update <span class="math notranslate nohighlight">\(\bm {BA}\)</span> by <span class="math notranslate nohighlight">\(\nicefrac{\alpha}{r}\)</span>, which can cause gradients to explode or diminish as the rank <span class="math notranslate nohighlight">\(r\)</span> increases. In contrast, rsLoRA uses a scaling factor <span class="math notranslate nohighlight">\(\nicefrac{\alpha}{\sqrt{r}}\)</span>:</p>
+<p>LoRA scales the weight matrix update <span class="math notranslate nohighlight">\(\boldsymbol{BA}\)</span> by <span class="math notranslate nohighlight">\(\frac{\alpha}{r}\)</span>, which can cause gradients to explode or diminish as the rank <span class="math notranslate nohighlight">\(r\)</span> increases. In contrast, rsLoRA uses a scaling factor <span class="math notranslate nohighlight">\(\frac{\alpha}{\sqrt{r}}\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[\bm W'=\bm W_0+\frac{\alpha}{\sqrt{r}}\bm B\bm A.\]</div>
+\[\boldsymbol W'=\boldsymbol W_0+\frac{\alpha}{\sqrt{r}}\boldsymbol B\boldsymbol A.\]</div>
 <p>This scaling results in gradient-scale stability at higher ranks, enabling the rank to be higher to capture more details in long-context tasks like XBRL extraction. rsLoRA also results in lower perplexity—the model assigns higher probabilities to correct words—than LoRA at higher ranks.</p>
 </section>
 <section id="lora-with-federated-learning">
