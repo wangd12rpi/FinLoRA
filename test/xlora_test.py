@@ -17,12 +17,12 @@ TASK_TO_TESTDATA = {
 }
 
 TASK_TO_ADAPTER = {
-    "finer": "finetuned_models/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
-    "ner": "finetuned_models/fingpt_ner_cls_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
-    "headline": "finetuned_models/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
-    "fiqa": "finetuned_models/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
-    "fpb": "finetuned_models/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
-    "tfns": "finetuned_models/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "finer": "lora_models/8bits-r8/finer_train_batched.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "ner": "lora_models/8bits-r8/fingpt_ner_cls_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "headline": "lora_models/8bits-r8/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "fiqa": "lora_models/8bits-r8/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "fpb": "lora_models/8bits-r8/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
+    "tfns": "lora_models/8bits-r8/fingpt_headline_train.jsonl-meta-llama-Llama-3.1-8B-Instruct-8bits-r8",
 }
 
 
