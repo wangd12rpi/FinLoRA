@@ -81,7 +81,7 @@ def main():
                 return (t_idx, LORA_SUFFIXES.index(n[len(task):]))
         return (len(FIN_TASKS), 0)
     adapter_dirs = sorted(
-        [p for p in finetuned_root.iterdir() if p.is_dir() and p.name in WANTED],
+        [p for p in finetuned_root.rglob("*") if p.is_dir() and p.name in WANTED],
         key=sort_key
     )
     missing = WANTED - {p.name for p in adapter_dirs}
