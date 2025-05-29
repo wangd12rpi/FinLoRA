@@ -8,7 +8,7 @@ TEMPERATURE=0.0
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 TEST_PY="${REPO_ROOT}/test/test.py"
-MODEL_DIR="${REPO_ROOT}/finetuned_models"
+MODEL_DIR="${REPO_ROOT}/lora_models"
 LOG_DIR="${SCRIPT_DIR}"
 mkdir -p "$LOG_DIR"
 
