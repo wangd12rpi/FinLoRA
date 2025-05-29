@@ -27,11 +27,18 @@ FinLoRA Documentation
 
 .. toctree::
    :maxdepth: 3
-   :caption: Finetuning
+   :caption: LoRA Methods
 
-   fine-tuning/lora_methods
-   fine-tuning/tutorial
-   fine-tuning/results
+   lora_methods/lora_methods
 
+.. toctree::
+   :maxdepth: 3
+   :caption: Tutorials
 
+   tutorials/tutorials
 
+.. toctree::
+   :maxdepth: 3
+   :caption: Benchmark Results
+
+   benchmark_results/results

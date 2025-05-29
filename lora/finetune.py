@@ -42,7 +42,7 @@ AXOLOTL_YAML_TEMPLATE = {
         {
             "path": "../data/train/placeholder_dataset.jsonl",  # Placeholder
             "type": {
-                # --- Instruction Fine-tuning Format ---
+                # --- Instruction Fine-Tuning Format ---
                 # Adjust field_system, field_instruction, field_output, and format
                 # based on your dataset's structure and how you want prompts formatted.
                 "system_prompt": "",  # Optional system prompt

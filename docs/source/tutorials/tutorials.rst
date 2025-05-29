@@ -1,15 +1,15 @@
 ==================================================================
-Fine-tuning Tutorials
+Fine-Tuning Tutorials
 ==================================================================
 
 This document outlines the Low-Rank Adaptation (LoRA) fine-tuning process employed to enhance pre-trained language models for specific financial Natural Language Processing (NLP) capabilities. We fine-tuned models separately for three core tasks: Sentiment Analysis, Headline Analysis, and Named Entity Recognition.
 
-.. table:: Fine-tuning Datasets per Capability
+.. table:: Fine-Tuning Datasets per Capability
    :align: left
    :widths: 30 70
 
    +--------------------------+------------------------------------------------------+
-   | Capability               | Datasets Used for Fine-tuning                        |
+   | Capability               | Datasets Used for Fine-Tuning                        |
    +==========================+======================================================+
    | Sentiment Analysis       | Financial PhraseBank (FPB), FiQA SA,                 |
    |                          | Twitter Financial News Sentiment (TFNS),             |
@@ -98,13 +98,13 @@ Similar to Headline Analysis, the data preparation for the Named Entity Recognit
 3.  **Formatting:** Data was formatted into the required structure, typically involving an ``instruction`` asking for the entity type of a specific phrase within the ``input`` sentence, and the ``output`` being the correct entity label (e.g., "location", "person", "organization").
 
 
-Setup Finetuning Environment
+Setup Fine-Tuning Environment
 ----------------
 
-Configure Finetuning Hyper-parameters
+Configure Fine-Tuning Hyper-parameters
 ----------------
 
-Start Finetuning Process
+Start Fine-Tuning Process
 -------------------
 
 Run and Deploy Finetuned Models
