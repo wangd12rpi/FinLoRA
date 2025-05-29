@@ -63,6 +63,7 @@ html_context = {
 latex_elements = {
     'preamble': r'''
     \usepackage{amsmath}
+    \usepackage{bm}
     \usepackage{braket}
     \usepackage{algorithm}
     \usepackage{algorithmic}
