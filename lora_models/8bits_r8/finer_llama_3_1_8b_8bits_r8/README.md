@@ -78,7 +78,7 @@ chat_template: llama3
 
 </details><br>
 
-# workspace/FinLoRA/finetune/axolotl-output/finer_llama_3_1_8B_8bits_r8
+# workspace/FinLoRA/fine-tune/axolotl-output/finer_llama_3_1_8B_8bits_r8
 
 This model is a fine-tuned version of [NousResearch/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/NousResearch/Meta-Llama-3.1-8B-Instruct) on the /workspace/FinLoRA/data/train/finer_train_batched.jsonl dataset.
 It achieves the following results on the evaluation set:

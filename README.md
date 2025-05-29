@@ -1,6 +1,6 @@
 # FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
 
-FinLoRA: Finetuning Quantized Llama3 and DeepSeek's V3/R1 Models into Financial Large Language Models Using Low-Rank Adaptation on GPUs
+FinLoRA: Fine-Tuning Quantized Llama3 and DeepSeek's V3/R1 Models into Financial Large Language Models Using Low-Rank Adaptation on GPUs
 
 ## Motivation
 
@@ -92,7 +92,7 @@ FinLoRA
 └── src
     ├── LoRAMoE 
     ├── OpenFedLLM
-    └── finetune
+    └── fine-tune
         ├── script_train.sh
         ├── train_lora.py
         └── utils.py
@@ -103,7 +103,7 @@ FinLoRA
 
 ### Cross-task Generalization (Mixture of LoRA Experts)
 
-We started with single-task finetuning, i.e., finetune a LoRA adaptor for a task. We got good performance.
+We started with single-task fine-tuning, i.e., fine-tune a LoRA adaptor for a task. We got good performance.
 
 Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as
 in [X-LoRA](https://arxiv.org/pdf/2402.07148) [4]. X-LoRA is built on top of huggingface PEFT.
@@ -117,12 +117,12 @@ Difficulty: Current SLoRA implementation does not work with HuggingFace, and doe
 
 ### Distributed Training with Enhanced Privacy
 
-Multiple institutions might want to collaborate to finetune a FinLLM using their private datasets. Using zero-Knowledge
+Multiple institutions might want to collaborate to fine-tune a FinLLM using their private datasets. Using zero-Knowledge
 Proofs (ZKPs) in
-the finetuning stage allows enhanced data privacy.
+the fine-tuning stage allows enhanced data privacy.
 
 
-[//]: # (Different user base, our model serve community, open-source well, we use finetuning)
+[//]: # (Different user base, our model serve community, open-source well, we use fine-tuning)
 
 [//]: # (assume large amount of user: )
 
@@ -134,7 +134,7 @@ the finetuning stage allows enhanced data privacy.
 
 ## References
 
-[1] Xiao-Yang Liu, Jie Zhang, Guoxuan Wang, Weiqing Tong, Anwar Walid. FinGPT-HPC: Efficient Pretraining and Finetuning
+[1] Xiao-Yang Liu, Jie Zhang, Guoxuan Wang, Weiqing Tong, Anwar Walid. FinGPT-HPC: Efficient Pretraining and Fine-Tuning
 Large Language Models for Financial Applications with High-Performance Computing. IEEE ICDCS 2024.
 
 [2] Mao, Y., Ge, Y., Fan, Y., Xu, W., Mi, Y., Hu, Z. and Gao, Y., 2024. A Survey on LoRA of Large Language Models. arXiv

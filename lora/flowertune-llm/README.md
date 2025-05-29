@@ -4,7 +4,7 @@ dataset: [Alpaca-GPT4]
 framework: [PEFT, torch]
 ---
 
-# FlowerTune LLM: Federated LLM Fine-tuning with Flower
+# FlowerTune LLM: Federated LLM Fine-Tuning with Flower
 
 Large language models (LLMs), which have been trained on vast amounts of publicly accessible data, have shown remarkable effectiveness in a wide range of areas.
 However, despite the fact that more data typically leads to improved performance, there is a concerning prospect that the supply of high-quality public data will deplete within a few years.
