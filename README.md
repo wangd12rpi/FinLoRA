@@ -84,12 +84,9 @@ Our models achieve the following performance on financial tasks. The table shows
 | Financial Math | 11.00/0.136 | 10.50/0.134 | 21.50/0.255 | 27.00/0.296 | 19.00/0.204 | 30.00/0.332 | 26.50/0.307 | 28.50/0.317 | 34.50/0.370 | **66.00**/**0.785** |
 | Overall Average | 37.05 | 52.36 | 57.16 | 63.39 | 58.97 | **74.74** | 74.29 | 69.53 | 73.82 | 71.08 |
 
-## Pre-trained Models
+## LoRA Models
 
-You can download pretrained LoRA models from the `lora_models` directory:
-
-- LoRA adapters trained on financial datasets using various configurations (8-bit r8, 4-bit r4, etc.)
-- Models fine-tuned on specific financial tasks including sentiment analysis, XBRL tagging, and financial math
+You can download LoRA adapaters from the `lora_models` directory. The adapters fine-tuned on financial datasets using various configurations (8-bit r8, 4-bit r4, etc.).
 
 ## File Structure
 
