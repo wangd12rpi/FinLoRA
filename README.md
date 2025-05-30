@@ -198,7 +198,7 @@ Define the adapters and tasks you want to run in the script, then execute:
 ./run_all_adapters.sh
 ```
 
-To run another base model (e.g., OpenAI):
+To run a base model (e.g., OpenAI):
 
 ```bash
 chmod +x ./run_openai.sh
