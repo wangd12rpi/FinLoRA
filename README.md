@@ -210,7 +210,7 @@ Enter your API key in the file, set tasks to run, then execute:
 ./run_openai.sh
 ```
 
-## Training
+## Fine-Tuning
 
 To perform fine-tuning, navigate to the lora directory:
 
