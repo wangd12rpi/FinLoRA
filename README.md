@@ -26,7 +26,7 @@ We want our models to have the ability to perform both general financial tasks a
 
 ## Dataset Statistics
 
-| **Datasets** | **Types** | **#Train/#Test** | **Average Prompt Length** | **Metrics** | **Original Sources & License** |
+| **Datasets** | **Types** | **#Train/#Test** | **Average Prompt Length** | **Metrics** | **Original Source & License** |
 |--------------|----------|------------------|---------------------------|-------------|----------------------|
 | **General Financial Tasks** (Total: 122.9k/31.7k) | | | | | |
 | FPB | Sentiment Analysis | 3.1k/970 | 56 | Accuracy, F1 | [TheFinAI/en-fpb](https://huggingface.co/datasets/TheFinAI/en-fpb), CC BY-SA 3.0 |
