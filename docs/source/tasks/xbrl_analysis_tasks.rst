@@ -1,5 +1,5 @@
 ==================
-XBRL Data Analysis
+Financial Statement Analysis
 ==================
 
 Overview
@@ -29,7 +29,7 @@ Overview
      -
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification>`__
-   * - Formula Formated with Tags
+   * - Formula Construction
      - XBRL Extraction
      -
      -

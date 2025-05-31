@@ -24,18 +24,26 @@ FinLoRA Documentation
    tasks/general_financial_tasks
    tasks/xbrl_reporting_tasks
    tasks/xbrl_analysis_tasks
+   tasks/dataset_processing
 
 .. toctree::
    :maxdepth: 3
    :caption: LoRA Methods
 
    lora_methods/lora_methods
+   lora_methods/qlora
+   lora_methods/dora
+   lora_methods/rslora
+   lora_methods/fed_lora
+
 
 .. toctree::
    :maxdepth: 3
    :caption: Tutorials
 
-   tutorials/tutorials
+   tutorials/setup
+   tutorials/finetune
+   tutorials/eval
 
 .. toctree::
    :maxdepth: 3

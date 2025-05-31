@@ -1,4 +1,4 @@
-LoRA Foundations and Methods
+LoRA Foundations
 ============================
 
 .. contents::
@@ -15,7 +15,7 @@ In this subsection, we introduce two fundamental concepts needed to understand L
 
 Ranks
 ~~~~~
-Rank is the number of linearly independent rows or columns in a matrix. 
+Rank is the number of linearly independent rows or columns in a matrix.
 Linearly independent columns, for example, are columns whose entries cannot be written as an integer-weighted sum of earlier columns.
 
 .. math::
@@ -30,7 +30,7 @@ Linearly independent columns, for example, are columns whose entries cannot be w
    \qquad
    \text{Dimensions: }4 \times 5\;(\text{rows}\times\text{columns})
 
-In this matrix there are **two** linearly independent columns, so 
+In this matrix there are **two** linearly independent columns, so
 :math:`\operatorname{rank}(W)=2`.
 
 * Column 1 is independent (nothing precedes it).
@@ -126,120 +126,6 @@ During fine-tuning, the weight matrices are updated as follows with the scaled l
    \end{aligned}
 
 Because the update is in-place, no extra layers are added, and inference latency is unchanged.
-
-Quantized LoRA (QLoRA)
-~~~~~~~~~~~~~~~~~~~~~~
-
-When fine-tuning, LoRA requires a large amount of GPU memory. To solve this issue, we can use QLoRA. 
-QLoRA drastically reduces memory usage and lets you fine-tune on a single GPU.
-
-In QLoRA, we quantize the weights of the adapter layers, reducing both parameter count and memory usage. Quantization is a technique that reduces the precision of the weights to reduce the number of bits used to store them. It consists of two parts: Rounding to the nearest integer and truncating to remove the decimal portion of a floating point number. QLoRA specifically uses 4-bit NormalFloat (NF4), an optimal data type for normally distributed weights, quantization. Pre-trained weights are usually normally distributed and centered around 0, which is why NF4 is ideal for quantization.
-
-If we quantize from Float16 to Int4, we can represent 16 different values (bins) because Int4 has 4 bits and :math:`2^{4}=16`. Inputs are usually normalized from -1 to 1. Very close together values, however, will be mapped to the same bin. This means that the precision is lost if we want to convert back to Float16. However, we can use blockwise quantization, where we divide the input range into blocks and quantize each block separately. QLoRA uses a 64 blocksize for better precision.
-
-Since regular quantization relies on the bins being equally probable, QLoRA uses NormalFloat where the bins are weighted by the normal distribution. The spacing between bins is therefore closer together near 0 and further apart further away from 0.
-
-Each block in QLoRA has a quantization constant. QLoRA employs double quantization, where it quantizes the quantization constants themselves to further save space.
-
-The last part of QLoRA is paged optimizers. Paged optimizers reduce GPU memory spikes by switching pages to CPU memory when GPU RAM becomes full when processing long sequences, and the pages are not needed for the current computation of the forward/backward pass.
-
-The forward pass for QLoRA is :math:`\boldsymbol{y} = p_{16}(\boldsymbol{W}_0^{\text{NF4}}) \boldsymbol{x} + \gamma_r \boldsymbol{B} \boldsymbol{A} \boldsymbol{x}`.
-
-Weight-Decomposed Low-Rank Adaptation (DoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships. DoRA solves this issue of capturing data complexity.
-
-DoRA decomposes the weight matrix into a *magnitude vector* and a *direction matrix*. 
-The magnitude vector consists of the lengths of the columns in the weight matrix and is computed by taking each column's :math:`\ell_2` norm. 
-The direction matrix :math:`\boldsymbol V` is the collection of the original columns. Its unit-column form :math:`\widehat{\boldsymbol V}=\boldsymbol V/\lVert\boldsymbol V\rVert_c` is obtained by dividing each column by its :math:`\ell_2` norm.
-
-The magnitude vector :math:`\boldsymbol{m}` is of size :math:`1 \times k`, where :math:`k` is the number of columns. The direction matrix :math:`\boldsymbol{V}` is of size :math:`d \times k`, where :math:`d` is the number of rows in a weight matrix.
-
-The decomposition can be written as:
-
-.. math::
-
-   \boldsymbol{W}_0 \;=\; \boldsymbol{m}\,\frac{\boldsymbol{V}}{\lVert \boldsymbol{V} \rVert_c}\;=\;\lVert \boldsymbol{W}_0 \rVert_c\,\frac{\boldsymbol{W}_0}{\lVert \boldsymbol{W}_0 \rVert_c},
-
-where :math:`\lVert \cdot \rVert_c` denotes the column-wise :math:`\ell_2` norm (i.e., the norm is taken independently for each column) and :math:`\boldsymbol{W}_0` is the frozen pretrained weight.
-
-Here is an example of the decomposition:
-
-.. math::
-
-   \boldsymbol{W}_0 =
-   \begin{bmatrix}
-   1 & 7 & 2 & 8 & 5 \\
-   2 & 10 & 4 & 12 & 10 \\
-   3 & 15 & 12 & 18 & 27 \\
-   4 & 12 & 16 & 16 & 36
-   \end{bmatrix}, \qquad
-   \boldsymbol{W}_0 \in \mathbb{R}^{4 \times 5}.
-
-For column :math:`j`
-
-.. math::
-
-   \lVert \boldsymbol{w}_j \rVert_2 = \sqrt{\sum_{i=1}^{4} W_{ij}^2}.
-
-These norms form a :math:`1 \times 5` magnitude vector:
-
-.. math::
-
-   \boldsymbol{m} = \left[ 5.4772,\; 22.7596,\; 20.4939,\; 28.0713,\; 46.3681 \right].
-
-The unit-column direction matrix is
-
-.. math::
-
-   \widehat{\boldsymbol{V}} =
-   \begin{bmatrix}
-   0.182574 & 0.307562 & 0.097590 & 0.284988 & 0.107833 \\
-   0.365148 & 0.439375 & 0.195180 & 0.427482 & 0.215666 \\
-   0.547723 & 0.659062 & 0.585540 & 0.641223 & 0.582297 \\
-   0.730297 & 0.527250 & 0.780720 & 0.569976 & 0.776396
-   \end{bmatrix}.
-
-Every column of :math:`\widehat{\boldsymbol{V}}` now has unit length:
-
-.. math::
-
-   \lVert \boldsymbol{v}_j \rVert_2 = 1, \qquad \text{for all } j.
-
-These are updated separately. The magnitude vector :math:`\boldsymbol{m}` is trained directly, while the direction matrix :math:`\boldsymbol{V}` is fine-tuned using LoRA: :math:`\Delta\boldsymbol{V} = \boldsymbol{B}\boldsymbol{A}` with :math:`\boldsymbol{B}\!\in\!\mathbb{R}^{d\times r}` and :math:`\boldsymbol{A}\!\in\!\mathbb{R}^{r\times k}`.
-
-After the updates, the new weight matrix is
-
-.. math::
-
-   \boldsymbol{W}' = \boldsymbol{m}\,\frac{\boldsymbol{V} + \Delta \boldsymbol{V}}{\lVert \boldsymbol{V} + \Delta \boldsymbol{V} \rVert_c}
-        = \boldsymbol{m}\,\frac{\boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A}}{\lVert \boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A} \rVert_c}.
-
-Rank-Stabilized LoRA (rsLoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LoRA scales the weight matrix update :math:`\boldsymbol{BA}` by :math:`\frac{\alpha}{r}`, which can cause gradients to explode or diminish as the rank :math:`r` increases. In contrast, rsLoRA uses a scaling factor :math:`\frac{\alpha}{\sqrt{r}}`:
-
-.. math::
-
-   \boldsymbol W'=\boldsymbol W_0+\frac{\alpha}{\sqrt{r}}\boldsymbol B\boldsymbol A.
-
-This scaling results in gradient-scale stability at higher ranks, enabling the rank to be higher to capture more details in long-context tasks like XBRL extraction. rsLoRA also results in lower perplexity—the model assigns higher probabilities to correct words—than LoRA at higher ranks.
-
-LoRA with Federated Learning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In the finance sector, multiple banks may want to work together on a model to predict credit risk and whether a borrower will default on a loan. Each bank may have a different dataset, but they cannot share their data due to compliance reasons and privacy concerns. Federated learning solves this issue by fine-tuning a model on local data and aggregating updates during backpropagation to a centralized model via a server.
-
-Differentially Private Low-Rank Adaptation (DP-LoRA) [5]_ is a method to use federated learning with LoRA.
-
-DP-LoRA first uses a server to send the current global LoRA weights (the A and B matrices from earlier) to all clients.
-
-Every client does the following: 1) Gets a minibatch of its private data 2) Computes the gradient for only its local A and B weights clipped with an :math:`\ell_2` norm (square root of the sum of the squares of elements in the vector) 3) Adds Gaussian noise to the gradients 4) Updates the A and B LoRA matrices 5) Sends the updated A and B matrices to the server.
-
-By adding noise, DP-LoRA prevents the centralized model from inferring the private data later on. This would allow the banks in the credit risk example to work on a model together.
-
-As in normal federated learning, the server then aggregates the weights from all clients in a weighted average and sends the updated weights to all clients.
 
 References
 ----------
