@@ -82,11 +82,15 @@ insightful analysis.
 
 Our models achieve the following performance on financial tasks. The table shows accuracy/F1 scores. -/value represents
 BERTScore F1.
+
+Llama models are their Instruct versions.
+
 <details><summary>Full Results</summary>
+
 
 | **Datasets**                           | **Base Models** |               |             |             |               | **Fine-tuned Models** |                     |                     |                     |                     |
 |----------------------------------------|-----------------|---------------|-------------|-------------|---------------|-----------------------|---------------------|---------------------|---------------------|---------------------|
-|                                        | Llama 3.1 8B    | Llama 3.1 70B | DeepSeek V3 | GPT-4o      | Gemini 2.0 FL | Llama 3.1 8B LoRA     | Llama 3.1 8B QLoRA  | Llama 3.1 8B DoRA   | Llama 3.1 8B rsLoRA | Gemini 2.0 FL       |
+|                                        | Llama 3.1 8B Instruct    | Llama 3.1 70B Instruct | DeepSeek V3 | GPT-4o      | Gemini 2.0 FL | Llama 3.1 8B Instruct LoRA     | Llama 3.1 8B Instruct QLoRA  | Llama 3.1 8B Instruct DoRA   | Llama 3.1 8B Instruct rsLoRA | Gemini 2.0 FL       |
 | **General Financial Tasks**            |                 |               |             |             |               |                       |                     |                     |                     |                     |
 | FPB                                    | 68.73/0.677     | 74.50/0.736   | 78.76/0.764 | 81.13/0.818 | 81.02/0.894   | 85.64/0.922           | 84.16/0.909         | 81.93/0.901         | 82.84/0.853         | **87.62**/0.878     |
 | FiQA SA                                | 46.55/0.557     | 47.27/0.565   | 60.43/0.686 | 72.34/0.773 | 68.09/0.810   | 81.28/**0.884**       | 78.30/0.874         | 78.72/0.874         | 73.19/0.806         | **88.09**/0.879     |
