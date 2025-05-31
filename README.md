@@ -80,10 +80,10 @@ insightful analysis.
 ## Benchmark Results
 ![](docs/source/_static/images/p1_new.svg)
 
-Our models achieve the following performance on financial tasks. The table shows accuracy/F1 scores. -/value represents
-BERTScore F1.
-
 Llama models are their Instruct versions.
+
+Our models achieve the following performance on financial tasks. The table below shows accuracy/F1 scores. -/value represents
+BERTScore F1.
 
 <details><summary>Full Results</summary>
 
