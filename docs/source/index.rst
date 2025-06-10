@@ -51,3 +51,4 @@ FinLoRA Documentation
 
    benchmark_results/angles
    benchmark_results/results
+   benchmark_results/comparisons

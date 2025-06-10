@@ -1,7 +1,3 @@
----
-base_model: meta-llama/Llama-3.1-70B-Instruct
-library_name: peft
----
 
 # Model Card for Model ID
 
