@@ -1,15 +1,3 @@
----
-library_name: peft
-license: llama3.1
-base_model: meta-llama/Llama-3.1-8B-Instruct
-tags:
-- generated_from_trainer
-datasets:
-- /workspace/FinLoRA/data/train/xbrl_extract_train.jsonl
-model-index:
-- name: workspace/FinLoRA/lora/axolotl-output/xbrl_extract_llama_3_1_8b_8bits_r8_rslora
-  results: []
----
 
 <!-- This model card has been generated automatically according to the information the Trainer had access to. You
 should probably proofread and complete it, then remove this comment. -->
