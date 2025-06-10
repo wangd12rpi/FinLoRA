@@ -1,0 +1,29 @@
+/* Custom styles for better visual appeal in light mode */
+.table-container {
+    border: 1px solid #e5e7eb; /* border-gray-200 */
+}
+
+body {
+    padding-bottom: 30px;
+}
+
+
+.data-cell {
+    min-width: 80px;
+}
+
+.accuracy-score {
+    color: #2563eb; /* text-blue-600 */
+}
+
+.f1-score {
+    color: #4b5563; /* text-gray-600 */
+}
+
+.model-group-light {
+    background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.model-group-white {
+    background-color: #ffffff; /* bg-white */
+}

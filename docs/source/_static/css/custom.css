@@ -3,10 +3,23 @@
 }
 
 .wy-nav-content {
-    max-width: 1000px !important;
+    max-width: 100% !important;
+    background: none;
 }
 
-.toctree-wrapper ul ul{
+.wy-nav-content-wrap {
+    background-color: #f9fafb;
+}
+
+.rst-content {
+    max-width: 900px !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin:auto;
+}
+
+.toctree-wrapper ul ul {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -16,6 +29,11 @@
     white-space: normal;
 }
 
-.body {
-    font-family: -apple-system, system-ui !important;
+
+body {
+    font-family: system-ui, 'Inter', sans-serif !important;
+}
+
+.rst-content .toctree-wrapper > p.caption, h1, h2, h3, h4, h5, h6, legend {
+    font-family: system-ui, 'Inter', sans-serif !important;
 }
