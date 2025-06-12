@@ -11,12 +11,50 @@
     background-color: #f9fafb;
 }
 
-.rst-content {
-    max-width: 900px !important;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin:auto;
+.wy-nav-side {
+    min-height: 90%;
+    color: #9b9b9b;
+    background: #343131;
+    z-index: 200;
+    margin: 18px 8px;
+    border-radius: 18px;
+    box-shadow: 0px 10px 36px -10px rgba(0, 0, 0, 0.53);;
+}
+
+.wy-side-nav-search {
+    text-align: left;
+    color: #fcfcfc;
+}
+
+input[type="color"], input[type="date"], input[type="datetime-local"], input[type="datetime"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"] {
+    border: 0 !important;
+    font-size: 80%;
+    border-radius: 0;
+    -webkit-transition: border .3s linear;
+    -moz-transition: border .3s linear;
+    transition: border .3s linear;
+    box-shadow: none !important;
+}
+
+@media screen and (min-width: 1600px) {
+    .rst-content {
+        max-width: 900px !important;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        padding-bottom: 40px;
+    }
+}
+
+.figure {
+    width: 100%;
+    text-align: center;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    padding: 18px 48px;
+    background-color: #fff;
+    margin: 0 0 32px 0;
 }
 
 .toctree-wrapper ul ul {
@@ -36,4 +74,62 @@ body {
 
 .rst-content .toctree-wrapper > p.caption, h1, h2, h3, h4, h5, h6, legend {
     font-family: system-ui, 'Inter', sans-serif !important;
+}
+
+th {
+    text-align: left !important;
+    border: none !important;
+}
+
+td {
+    border: none !important;
+}
+
+.rst-content table.docutils, .wy-table-bordered-all {
+    border: 1px solid #e1e4e5;
+    border-radius: 15px;
+    border-collapse: separate;
+    overflow: clip;
+    border-spacing: 0;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td, .wy-table-backed, .wy-table-odd td, .wy-table-striped tr:nth-child(2n-1) td {
+    background-color: inherit;
+}
+
+thead {
+    background-color: rgb(229 231 235);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+    text-transform: uppercase;
+}
+
+.rst-content table.docutils td, .rst-content table.field-list td, .wy-table td {
+	vertical-align: top;
+}
+
+.rst-content table.docutils td, .rst-content table.docutils th, .rst-content table.field-list td, .rst-content table.field-list th, .wy-table td, .wy-table th {
+    font-size: 0.75rem !important;
+    color: rgb(75 85 99) !important;
+    vertical-align: top !important;
+
+}
+
+tr {
+    outline: 0.5px solid #e5e7eb;
+}
+
+th {
+    outline: none;
+}
+
+.wy-nav-content-wrap {
+	background-color: rgba(0,0,0,0);
 }
