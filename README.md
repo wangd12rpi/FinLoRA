@@ -3,12 +3,11 @@
 <p>
   <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="static/dataset_btn.svg"></a>
   <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/demo_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/models_btn.svg"></a>
+  <a href="https://huggingface.co/spaces/wangd12/"><img src="static/models_btn.svg"></a>
+  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/paper_btn.svg"></a>
   <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/doc_btn.svg"></a>
 
 </p>
-
-This repository is the official implementation of [FinLoRA](https://github.com/Open-Finance-Lab/FinLoRA).
 
 ## Abstract
 

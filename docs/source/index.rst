@@ -52,9 +52,9 @@ FinLoRA
    tutorials/eval
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
    :caption: Benchmark Results
 
-   benchmark_results/angles
    benchmark_results/results
+   benchmark_results/angles
    benchmark_results/comparisons
