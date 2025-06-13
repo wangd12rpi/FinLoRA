@@ -334,34 +334,3 @@ If you use this work, please cite:
 }
 ```
 
-## References
-
-[1] Xiao-Yang Liu, Jie Zhang, Guoxuan Wang, Weiqing Tong, Anwar Walid. FinGPT-HPC: Efficient Pretraining and Fine-Tuning
-Large Language Models for Financial Applications with High-Performance Computing. IEEE ICDCS 2024.
-
-[2] Mao, Y., Ge, Y., Fan, Y., Xu, W., Mi, Y., Hu, Z. and Gao, Y., 2024. A Survey on LoRA of Large Language Models. arXiv
-preprint arXiv:2407.11046.
-
-[3] Vlad Fomenko, Han Yu, Jongho Lee, Stanley Hsieh, Weizhu Chen. A Note on LoRA, 2024. https://arxiv.org/abs/2404.05086
-
-[4] E.L. Buehler, M.J. Buehler. X-LoRA: Mixture of Low-Rank Adapter Experts, a Flexible Framework for Large Language
-Models with Applications in Protein Mechanics and Design. https://arxiv.org/abs/2402.07148
-
-[5] Sheng, Ying and Cao, Shiyi and Li. Dacheng and Hooper, et al. S-LoRA: Serving Thousands of Concurrent LoRA
-Adapters. https://arxiv.org/pdf/2311.03285
-
-[6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu, Differentially Private
-Low-Rank Adaptation of Large Language Model Using Federated Learning. https://arxiv.org/abs/2312.17493 ACM Transactions
-on Management Information Systems, 2024.
-
-[7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.; and Paliouras,
-G. 2022. FiNER: Financial Numeric Entity Recognition for XBRL Tagging.
-
-[8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Dasgupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric
-Extreme Labelling: A dataset and benchmarking.
-
-[9] Han, S.; Kang, H.; Jin, B.; Xiao-Yang Liu; and Yang, S. Y. 2024. XBRL Agent: Leveraging Large Language Models for
-Financial Report Analysis.
-
-[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin, A.; Borella, L.; Osborne, C.; White, M.; Yang, S.; and
-Yanglet, K. X. Xiao-Yang Liu. 2024. A Report on Financial Regulations Challenge at COLING 2025. arXiv:2412.11159.
