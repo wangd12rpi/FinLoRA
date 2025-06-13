@@ -1,7 +1,14 @@
-Analysis
+Overview
 ================
 
-Motivation
+Average performance of base models and LoRA models:
+
+.. raw:: html
+
+    <object class="figure" data="../_static/images/p1_new.svg" type="image/svg+xml"></object>
+    <br>
+
+Benchmark Motivation
 +++++++++++
 
 Angle I: LoRA Methods' Performance on Financial Datasets

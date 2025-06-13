@@ -133,3 +133,32 @@ th {
 .wy-nav-content-wrap {
 	background-color: rgba(0,0,0,0);
 }
+
+.btn {
+	display: inline-block;
+	border-radius: 32px;
+	line-height: normal;
+	white-space: nowrap;
+	text-align: center;
+	cursor: pointer;
+	font-size: 100%;
+	padding: 8px 14px 8px;
+	color: #fff;
+	border: 1px solid rgba(0,0,0,.1);
+	background-color: #27ae60;
+	text-decoration: none;
+	font-weight: 400;
+    box-shadow: none;
+	outline-none: false;
+	vertical-align: middle;
+	*display: inline;
+	zoom: 1;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all .1s linear;
+	-moz-transition: all .1s linear;
+	transition: all .1s linear;
+}
