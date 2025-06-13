@@ -3,8 +3,8 @@
 <p>
   <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="static/dataset_btn.svg"></a>
   <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/demo_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/"><img src="static/models_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/paper_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="static/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="static/paper_btn.svg"></a>
   <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/doc_btn.svg"></a>
 
 </p>

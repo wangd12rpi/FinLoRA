@@ -13,7 +13,7 @@ train/ft_models/
 /mamba/
 /xbrl/
 
-/lora_models/*/checkpoint-*/
+/lora_adaptors/*/checkpoint-*/
 /data/train/DowJones30/
 
 data/train/xbrl_extract_raw.json
