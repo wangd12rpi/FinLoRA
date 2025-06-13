@@ -49,7 +49,10 @@ in the XBRL format.
 insightful analysis.
 
 ## Datasets
-<img src="static/datasets.svg">
+<p>
+  <a style="cursor: text" href="#datasets"><img src="static/datasets.svg"></a>
+</p>
+
 
 [//]: # ()
 [//]: # (| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average Prompt Length** | **Metrics**  | **Original Source & License**                                                                                                                      |)
@@ -104,14 +107,6 @@ insightful analysis.
 
 
 
-<style>
-.figure {
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    padding: 10px 25px;
-    background-color: #fff;
-}
-</style>
 
 ## Benchmark Results
 <img class="figure" src="docs/source/_static/images/p1_new.svg">
