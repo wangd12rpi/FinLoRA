@@ -3,8 +3,8 @@
 <p>
   <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="static/dataset_btn.svg"></a>
   <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/demo_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/"><img src="static/models_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/paper_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="static/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="static/paper_btn.svg"></a>
   <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/doc_btn.svg"></a>
 
 </p>
@@ -49,35 +49,67 @@ in the XBRL format.
 insightful analysis.
 
 ## Datasets
+<p>
+  <a style="cursor: text" href="#datasets"><img src="static/datasets.svg"></a>
+</p>
 
-| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average Prompt Length** | **Metrics**  | **Original Source & License**                                                                                                                      |
-|------------------------------------------------------------|--------------------------|------------------|---------------------------|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| **General Financial Tasks** (Total: 122.9k/31.7k)          |                          |                  |                           |              |                                                                                                                                                    |
-| FPB                                                        | Sentiment Analysis       | 3.1k/970         | 56                        | Accuracy, F1 | [TheFinAI/en-fpb](https://huggingface.co/datasets/TheFinAI/en-fpb), CC BY-SA 3.0                                                                   |
-| FiQA SA                                                    | Sentiment Analysis       | 822/234          | 48                        | Accuracy, F1 | [TheFinAI/fiqa-sentiment-classification](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification), MIT                              |
-| TFNS                                                       | Sentiment Analysis       | 9.5k/2.4k        | 52                        | Accuracy, F1 | [zeroshot/twitter-financial-news-sentiment](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment), MIT                        |
-| NWGI                                                       | Sentiment Analysis       | 12.9k/4.1k       | 81                        | Accuracy, F1 | [TheFinAI/NWGI_test](https://huggingface.co/datasets/TheFinAI/NWGI_test), MIT                                                                      |
-| Headline                                                   | Headline Analysis        | 82.2k/20.5k      | 43                        | Accuracy, F1 | [FinGPT/fingpt-headline-cls](https://huggingface.co/datasets/FinGPT/fingpt-headline-cls), CC BY-SA 3.0                                             |
-| NER                                                        | Named Entity Recognition | 13.5k/3.5k       | 138                       | Accuracy, F1 | [FinGPT/fingpt-ner-cls](https://huggingface.co/datasets/FinGPT/fingpt-ner-cls), CC BY-SA 3.0                                                       |
-| **Financial Certificate Tasks** (Total: 472/346)           |                          |                  |                           |              |                                                                                                                                                    |
-| CFA Level I                                                | Analyst Exam             | 180/90           | 181                       | Accuracy, F1 | Internet (Public; Not Released Due to Copyright)                                                                                                   |
-| CFA Level II                                               | Analyst Exam             | 88/77            | 1.0k                      | Accuracy, F1 | Internet (Public; Not Released Due to Copyright)                                                                                                   |
-| CFA Level III                                              | Analyst Exam             | 80/78            | 961                       | Accuracy, F1 | Internet (Public; Not Released Due to Copyright)                                                                                                   |
-| CPA REG                                                    | Accountant Exam          | 124/101          | 147                       | Accuracy, F1 | Internet (Public; Not Released Due to Copyright)                                                                                                   |
-| **Financial Reporting Tasks** (Total: 15.9k/8.3k)          |                          |                  |                           |              |                                                                                                                                                    |
-| FiNER-139                                                  | XBRL Tagging             | 10.0k/7.4k       | 1.8k                      | Accuracy, F1 | [nlpaueb/finer-139](https://huggingface.co/datasets/nlpaueb/finer-139), CC BY-SA 4.0                                                               |
-| FNXL                                                       | XBRL Tagging             | -/247            | 7.1k                      | Accuracy, F1 | [soummyaah/FNXL](https://github.com/soummyaah/FNXL), Public                                                                                        |
-| XBRL Term                                                  | Terminology              | 5.9k/651         | 25                        | BERTScore    | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx), MIT                                |
-| **Financial Statement Analysis Tasks** (Total: 27.9k/7.3k) |                          |                  |                           |              |                                                                                                                                                    |
-| Financial Math                                             | Math                     | 800/200          | 116                       | Accuracy     | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx), MIT |
-| FinanceBench                                               | Math                     | 86/43            | 983                       | BERTScore    | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx), CC BY-NC 4.0                             |
-| Tags Extraction                                            | XBRL Analysis            | 10.1K/2.9k       | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT                                                                |
-| Values Extraction                                          | XBRL Analysis            | 10.1k/2.5k       | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT                                                                |
-| Formula Construction                                       | XBRL Analysis            | 3.4K/835         | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT                                                                |
-| Formula Calculation                                        | XBRL Analysis            | 3.4K/835         | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT                                                                |
+
+[//]: # ()
+[//]: # (| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average Prompt Length** | **Metrics**  | **Original Source & License**                                                                                                                      |)
+
+[//]: # (|------------------------------------------------------------|--------------------------|------------------|---------------------------|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------|)
+
+[//]: # (| **General Financial Tasks** &#40;Total: 122.9k/31.7k&#41;          |                          |                  |                           |              |                                                                                                                                                    |)
+
+[//]: # (| FPB                                                        | Sentiment Analysis       | 3.1k/970         | 56                        | Accuracy, F1 | [TheFinAI/en-fpb]&#40;https://huggingface.co/datasets/TheFinAI/en-fpb&#41;, CC BY-SA 3.0                                                                   |)
+
+[//]: # (| FiQA SA                                                    | Sentiment Analysis       | 822/234          | 48                        | Accuracy, F1 | [TheFinAI/fiqa-sentiment-classification]&#40;https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification&#41;, MIT                              |)
+
+[//]: # (| TFNS                                                       | Sentiment Analysis       | 9.5k/2.4k        | 52                        | Accuracy, F1 | [zeroshot/twitter-financial-news-sentiment]&#40;https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment&#41;, MIT                        |)
+
+[//]: # (| NWGI                                                       | Sentiment Analysis       | 12.9k/4.1k       | 81                        | Accuracy, F1 | [TheFinAI/NWGI_test]&#40;https://huggingface.co/datasets/TheFinAI/NWGI_test&#41;, MIT                                                                      |)
+
+[//]: # (| Headline                                                   | Headline Analysis        | 82.2k/20.5k      | 43                        | Accuracy, F1 | [FinGPT/fingpt-headline-cls]&#40;https://huggingface.co/datasets/FinGPT/fingpt-headline-cls&#41;, CC BY-SA 3.0                                             |)
+
+[//]: # (| NER                                                        | Named Entity Recognition | 13.5k/3.5k       | 138                       | Accuracy, F1 | [FinGPT/fingpt-ner-cls]&#40;https://huggingface.co/datasets/FinGPT/fingpt-ner-cls&#41;, CC BY-SA 3.0                                                       |)
+
+[//]: # (| **Financial Certificate Tasks** &#40;Total: 472/346&#41;           |                          |                  |                           |              |                                                                                                                                                    |)
+
+[//]: # (| CFA Level I                                                | Analyst Exam             | 180/90           | 181                       | Accuracy, F1 | Internet &#40;Public; Not Released Due to Copyright&#41;                                                                                                   |)
+
+[//]: # (| CFA Level II                                               | Analyst Exam             | 88/77            | 1.0k                      | Accuracy, F1 | Internet &#40;Public; Not Released Due to Copyright&#41;                                                                                                   |)
+
+[//]: # (| CFA Level III                                              | Analyst Exam             | 80/78            | 961                       | Accuracy, F1 | Internet &#40;Public; Not Released Due to Copyright&#41;                                                                                                   |)
+
+[//]: # (| CPA REG                                                    | Accountant Exam          | 124/101          | 147                       | Accuracy, F1 | Internet &#40;Public; Not Released Due to Copyright&#41;                                                                                                   |)
+
+[//]: # (| **Financial Reporting Tasks** &#40;Total: 15.9k/8.3k&#41;          |                          |                  |                           |              |                                                                                                                                                    |)
+
+[//]: # (| FiNER-139                                                  | XBRL Tagging             | 10.0k/7.4k       | 1.8k                      | Accuracy, F1 | [nlpaueb/finer-139]&#40;https://huggingface.co/datasets/nlpaueb/finer-139&#41;, CC BY-SA 4.0                                                               |)
+
+[//]: # (| FNXL                                                       | XBRL Tagging             | -/247            | 7.1k                      | Accuracy, F1 | [soummyaah/FNXL]&#40;https://github.com/soummyaah/FNXL&#41;, Public                                                                                        |)
+
+[//]: # (| XBRL Term                                                  | Terminology              | 5.9k/651         | 25                        | BERTScore    | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx&#41;, MIT                                |)
+
+[//]: # (| **Financial Statement Analysis Tasks** &#40;Total: 27.9k/7.3k&#41; |                          |                  |                           |              |                                                                                                                                                    |)
+
+[//]: # (| Financial Math                                             | Math                     | 800/200          | 116                       | Accuracy     | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx&#41;, MIT |)
+
+[//]: # (| FinanceBench                                               | Math                     | 86/43            | 983                       | BERTScore    | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx&#41;, CC BY-NC 4.0                             |)
+
+[//]: # (| Tags Extraction                                            | XBRL Analysis            | 10.1K/2.9k       | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT                                                                |)
+
+[//]: # (| Values Extraction                                          | XBRL Analysis            | 10.1k/2.5k       | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT                                                                |)
+
+[//]: # (| Formula Construction                                       | XBRL Analysis            | 3.4K/835         | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT                                                                |)
+
+[//]: # (| Formula Calculation                                        | XBRL Analysis            | 3.4K/835         | 3.8k                      | Accuracy, F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT                                                                |)
+
+
+
 
 ## Benchmark Results
-![](docs/source/_static/images/p1_new.svg)
+<img class="figure" src="docs/source/_static/images/p1_new.svg">
 
 Llama models are their Instruct versions.
 
@@ -119,80 +151,36 @@ BERTScore F1.
 
 
 ## LoRA Models
-
-You can download LoRA adapaters from the `lora_models` directory. The adapters fine-tuned on financial datasets using
-various configurations (8-bit r8, 4-bit r4, etc.).
+We use four LoRA methods: LoRA, QLoRA, DoRA, and rsLoRA. 
+You can download LoRA adapators from the `lora_adaptors` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters fine-tuned on financial datasets using various configurations (eg. 8-bit rank 8, 4-bit rank 4).
 
 ## File Structure
 
 ```
 FinLoRA/
-├── compute_dataset_stats/
-│   ├── compute_stats.py
-│   ├── confidence_intervals.py
-│   ├── README.md
-│   └── XBRL Terminology.csv
 ├── data/
-│   ├── convert_gemini_format.py
-│   ├── dataset_statistics.py
-│   ├── generate_xbrl_extract.ipynb
-│   ├── process_fin_data.ipynb
-│   ├── process_finer.py
-│   ├── process_fnxl.py
-│   ├── process_multitask_data.py
-│   ├── process_sentiment_train.py
-│   ├── process_xbrl_agent_data.py
-│   ├── process_xbrl_extract_find_context.py
-│   ├── process_xbrl_extract.py
-│   ├── process_xbrl_formula.py
-│   ├── process_xbrl_tag.py
-│   ├── README.md
-│   ├── test/ # Test datasets
-│   └── train/ # Training datasets
-├── demo/
-│   ├── app.py
-│   └── generate_example.py
-├── docs/ # Documentation and build files
+│   ├── *.py  # Dataset processing code
+│   ├── test/  # Test datasets
+│   └── train/  # Training datasets
+├── docs/  # Documentation 
 ├── lora/
-│   ├── example_config.yml
-│   ├── finetune_configs_plain.json
-│   ├── finetune_configs.json
-│   ├── finetune_lora_plain.py
-│   ├── finetune.py
-│   ├── flowertune-llm/ # Federated learning implementation
-│   └── lora/
-│       ├── config_.json
-│       ├── README.md
-│       ├── script_train.sh
-│       ├── train_lora.py
-│       └── utils.py
-├── lora_models/ # Pre-trained LoRA adapters
+│   ├── finetune.py  # Fine-tuning code using Axolotl
+│   ├── flowertune-llm/  # Federated learning implementation
+│   └── lora/  # Fine-tuning using HF PEFT
+├── lora_adaptors/  
 │   ├── 4bits_r4/
 │   ├── 8bits_r8/
 │   ├── 8bits_r8_dora/
 │   ├── 8bits_r8_rslora/
 │   ├── fp16_r8/
-│   └── misc/
 ├── test/
 │   ├── __init__.py
 │   ├── fingpt_tests/
 │   ├── inference.py
 │   ├── README.md
-│   ├── run_all_adapters.sh
-│   ├── run_claude.sh
-│   ├── run_deepseek.sh
-│   ├── run_forgetting_test.py
-│   ├── run_mixlora.sh
-│   ├── run_mixtral_test.sh
-│   ├── run_openai.sh
-│   ├── run_test.sh
-│   ├── run_together_ai.sh
-│   ├── run_xbrl_test.sh
-│   ├── test_dataset.py
-│   ├── test_mixlora_models.py
-│   ├── test.py
-│   └── xlora_test.py
-├── environment.yml
+│   ├── *.sh  # Test shell scripts
+│   └── *.py
+├── environment.yml  # Anaconda Enviornment
 ├── LICENSE
 ├── README.md
 ├── readthedocs.yml
@@ -207,8 +195,7 @@ FinLoRA/
 To install dependencies:
 
 ```bash
-chmod +x ./setup.sh
-./setup.sh
+bash ./setup.sh
 ```
 
 Login to HuggingFace:
@@ -225,25 +212,25 @@ To test adapters, navigate to the test directory:
 
 ```bash
 cd test
-bash ./run_all_adapters.sh
+bash run_all_adapters.sh
 ```
 
 Define the adapters and tasks you want to run in the script, then execute:
 
 ```bash
-./run_all_adapters.sh
+bash run_all_adapters.sh
 ```
 
 To run a base model (e.g., OpenAI):
 
 ```bash
-chmod +x ./run_openai.sh
+bash run_openai.sh
 ```
 
 Enter your API key in the file, set tasks to run, then execute:
 
 ```bash
-./run_openai.sh
+bash run_openai.sh
 ```
 
 ### Fine-Tuning
@@ -347,34 +334,3 @@ If you use this work, please cite:
 }
 ```
 
-## References
-
-[1] Xiao-Yang Liu, Jie Zhang, Guoxuan Wang, Weiqing Tong, Anwar Walid. FinGPT-HPC: Efficient Pretraining and Fine-Tuning
-Large Language Models for Financial Applications with High-Performance Computing. IEEE ICDCS 2024.
-
-[2] Mao, Y., Ge, Y., Fan, Y., Xu, W., Mi, Y., Hu, Z. and Gao, Y., 2024. A Survey on LoRA of Large Language Models. arXiv
-preprint arXiv:2407.11046.
-
-[3] Vlad Fomenko, Han Yu, Jongho Lee, Stanley Hsieh, Weizhu Chen. A Note on LoRA, 2024. https://arxiv.org/abs/2404.05086
-
-[4] E.L. Buehler, M.J. Buehler. X-LoRA: Mixture of Low-Rank Adapter Experts, a Flexible Framework for Large Language
-Models with Applications in Protein Mechanics and Design. https://arxiv.org/abs/2402.07148
-
-[5] Sheng, Ying and Cao, Shiyi and Li. Dacheng and Hooper, et al. S-LoRA: Serving Thousands of Concurrent LoRA
-Adapters. https://arxiv.org/pdf/2311.03285
-
-[6] Xiao-Yang Liu, Rongyi Zhu, Daochen Zha, Jiechao Gao, Shan Zhong, Matt White, Meikang Qiu, Differentially Private
-Low-Rank Adaptation of Large Language Model Using Federated Learning. https://arxiv.org/abs/2312.17493 ACM Transactions
-on Management Information Systems, 2024.
-
-[7] Loukas, L.; Fergadiotis, M.; Chalkidis, I.; Spyropoulou, E.; Malakasiotis, P.; Androutsopoulos, I.; and Paliouras,
-G. 2022. FiNER: Financial Numeric Entity Recognition for XBRL Tagging.
-
-[8] Sharma, S.; Khatuya, S.; Hegde, M.; Shaikh, A.; Dasgupta, K.; Goyal, P.; and Ganguly, N. 2023. Financial Numeric
-Extreme Labelling: A dataset and benchmarking.
-
-[9] Han, S.; Kang, H.; Jin, B.; Xiao-Yang Liu; and Yang, S. Y. 2024. XBRL Agent: Leveraging Large Language Models for
-Financial Report Analysis.
-
-[10] Wang, K.; Patel, J.; Shen, C.; Kim, D.; Zhu, A.; Lin, A.; Borella, L.; Osborne, C.; White, M.; Yang, S.; and
-Yanglet, K. X. Xiao-Yang Liu. 2024. A Report on Financial Regulations Challenge at COLING 2025. arXiv:2412.11159.

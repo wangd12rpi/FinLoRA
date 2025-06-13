@@ -1,0 +1,382 @@
+<svg id="financial_datasets_table" width="100%" viewBox="0 0 950 980" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!--
+        This SVG recreates the financial datasets table.
+        - It uses <g> elements to group rows.
+        - Text is laid out manually using x and y coordinates.
+        - CSS within the <style> tag handles theming (including hover effects and dark mode).
+        - Links are created using <a> tags around <text> elements.
+    -->
+    <defs>
+        <style>
+            /* General text styling */
+            .table-text {
+                font-family: system-ui, sans-serif;
+                font-size: 15px;
+                fill: #4b5563;
+            }
+            .table-text-strong {
+                font-weight: 500;
+                fill: #111827;
+            }
+
+            /* Header styling */
+            .header-text {
+                font-family: system-ui, sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                text-transform: uppercase;
+                fill: #374151;
+            }
+            .header-bg {
+                fill: #f3f4f6;
+            }
+
+            /* Row styling and interaction */
+            .row-bg {
+                fill: #ffffff;
+                transition: fill 0.2s ease-in-out;
+            }
+            .row:hover .row-bg {
+                fill: #f9fafb;
+            }
+            .row-border {
+                stroke: #e5e7eb;
+                stroke-width: 1;
+            }
+
+            /* Category header styling */
+            .category-header-bg {
+                 fill: #f3f4f6;
+            }
+            .category-header-text {
+                font-family: system-ui, sans-serif;
+                font-size: 17px;
+                font-weight: 600;
+                fill: #1f2937;
+            }
+            .category-header-subtext {
+                 font-family: system-ui, sans-serif;
+                 font-size: 17px;
+                 font-weight: 400;
+                 fill: #6b7280;
+            }
+
+            /* Link styling */
+            a .link-text {
+                fill: #2563eb;
+                text-decoration: none;
+                transition: fill 0.2s ease-in-out;
+            }
+            a:hover .link-text {
+                fill: #1d4ed8;
+                text-decoration: underline;
+            }
+
+            /* Dark mode overrides */
+            @media (prefers-color-scheme: dark) {
+                .main-bg, .row-bg { fill: #1f2937; }
+                .table-text { fill: #d1d5db; }
+                .table-text-strong { fill: #f9fafb; }
+                .header-bg, .category-header-bg { fill: #374151; }
+                .header-text { fill: #d1d5db; }
+                .row-border { stroke: #374151; }
+                .row:hover .row-bg { fill: #374151; }
+                .category-header-text { fill: #f9fafb; }
+                .category-header-subtext { fill: #9ca3af; }
+                a .link-text { fill: #60a5fa; }
+                a:hover .link-text { fill: #93c5fd; }
+            }
+
+        </style>
+    </defs>
+
+    <!-- Main Background -->
+    <rect width="950" height="980" class="main-bg" fill="#ffffff" rx="12"/>
+
+    <!-- Table Header -->
+    <g id="table-header">
+        <rect class="header-bg" y="10" width="950" height="40" rx="0"/>
+        <text x="20" y="35" class="header-text">Dataset</text>
+        <text x="180" y="35" class="header-text">Type</text>
+        <text x="340" y="35" class="header-text">#Train/#Test</text>
+        <text x="460" y="35" class="header-text">Prompt Len</text>
+        <text x="580" y="35" class="header-text">Metrics</text>
+        <text x="700" y="35" class="header-text">Original Source</text>
+    </g>
+
+    <!-- Table Content -->
+    <g id="table-body" transform="translate(0, 50)">
+        <!-- Data is structured in groups, each representing a row -->
+        <!-- Y position is incremented by 40 for each new row -->
+
+        <!-- Category: General Financial Tasks -->
+        <g class="category-header">
+            <rect class="category-header-bg" width="950" height="40" y="0"/>
+            <text class="category-header-text" x="20" y="25">General Financial Tasks
+                <tspan class="category-header-subtext">(Total: 122.9k/31.7k)</tspan>
+            </text>
+        </g>
+
+        <g class="row" transform="translate(0, 40)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">FPB</text>
+            <text class="table-text" x="180" y="25">Sentiment Analysis</text>
+            <text class="table-text" x="340" y="25">3.1k/970</text>
+            <text class="table-text" x="460" y="25">56</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/TheFinAI/en-fpb" target="_blank">
+                <text class="table-text link-text" x="700" y="25">TheFinAI/en-fpb</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 80)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">FiQA SA</text>
+            <text class="table-text" x="180" y="25">Sentiment Analysis</text>
+            <text class="table-text" x="340" y="25">822/234</text>
+            <text class="table-text" x="460" y="25">48</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification" target="_blank">
+                <text style="font-stretch: condensed" class="table-text link-text" x="700" y="25">TheFinAI/fiqa-sentiment-classification</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 120)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">TFNS</text>
+            <text class="table-text" x="180" y="25">Sentiment Analysis</text>
+            <text class="table-text" x="340" y="25">9.5k/2.4k</text>
+            <text class="table-text" x="460" y="25">52</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment" target="_blank">
+                <text style="font-stretch: condensed;" class="table-text link-text" x="700" y="25">zeroshot/twitter-financial-news-sentiment</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 160)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">NWGI</text>
+            <text class="table-text" x="180" y="25">Sentiment Analysis</text>
+            <text class="table-text" x="340" y="25">12.9k/4.1k</text>
+            <text class="table-text" x="460" y="25">81</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/TheFinAI/NWGI_test" target="_blank">
+                <text class="table-text link-text" x="700" y="25">TheFinAI/NWGI_test</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 200)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Headline</text>
+            <text class="table-text" x="180" y="25">Headline Analysis</text>
+            <text class="table-text" x="340" y="25">82.2k/20.5k</text>
+            <text class="table-text" x="460" y="25">43</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/FinGPT/fingpt-headline-cls" target="_blank">
+                <text class="table-text link-text" x="700" y="25">FinGPT/fingpt-headline-cls</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 240)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">NER</text>
+            <text class="table-text" x="180" y="25">NER</text>
+            <text class="table-text" x="340" y="25">13.5k/3.5k</text>
+            <text class="table-text" x="460" y="25">138</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/FinGPT/fingpt-ner-cls" target="_blank">
+                <text class="table-text link-text" x="700" y="25">FinGPT/fingpt-ner-cls</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <!-- Category: Financial Certificate Tasks -->
+        <g class="category-header" transform="translate(0, 280)">
+            <rect class="category-header-bg" width="950" height="40"/>
+            <text class="category-header-text" x="20" y="25">Financial Certificate Tasks
+                <tspan class="category-header-subtext">(Total: 472/346)</tspan>
+            </text>
+        </g>
+
+        <g class="row" transform="translate(0, 320)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">CFA Level I</text>
+            <text class="table-text" x="180" y="25">Analyst Exam</text>
+            <text class="table-text" x="340" y="25">180/90</text>
+            <text class="table-text" x="460" y="25">181</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <text class="table-text" x="700" y="25">Internet</text>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 360)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">CFA Level II</text>
+            <text class="table-text" x="180" y="25">Analyst Exam</text>
+            <text class="table-text" x="340" y="25">88/77</text>
+            <text class="table-text" x="460" y="25">1.0k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <text class="table-text" x="700" y="25">Internet</text>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 400)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">CFA Level III</text>
+            <text class="table-text" x="180" y="25">Analyst Exam</text>
+            <text class="table-text" x="340" y="25">80/78</text>
+            <text class="table-text" x="460" y="25">961</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <text class="table-text" x="700" y="25">Internet</text>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 440)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">CPA REG</text>
+            <text class="table-text" x="180" y="25">Accountant Exam</text>
+            <text class="table-text" x="340" y="25">124/101</text>
+            <text class="table-text" x="460" y="25">147</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <text class="table-text" x="700" y="25">Internet</text>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <!-- Category: Financial Reporting Tasks -->
+        <g class="category-header" transform="translate(0, 480)">
+            <rect class="category-header-bg" width="950" height="40"/>
+            <text class="category-header-text" x="20" y="25">Financial Reporting Tasks
+                <tspan class="category-header-subtext">(Total: 15.9k/8.3k)</tspan>
+            </text>
+        </g>
+
+        <g class="row" transform="translate(0, 520)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">FiNER-139</text>
+            <text class="table-text" x="180" y="25">XBRL Tagging</text>
+            <text class="table-text" x="340" y="25">10.0k/7.4k</text>
+            <text class="table-text" x="460" y="25">1.8k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/nlpaueb/finer-139" target="_blank">
+                <text class="table-text link-text" x="700" y="25">nlpaueb/finer-139</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 560)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">FNXL</text>
+            <text class="table-text" x="180" y="25">XBRL Tagging</text>
+            <text class="table-text" x="340" y="25">-/247</text>
+            <text class="table-text" x="460" y="25">7.1k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://github.com/soummyaah/FNXL" target="_blank">
+                <text class="table-text link-text" x="700" y="25">soummyaah/FNXL</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 600)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">XBRL Term</text>
+            <text class="table-text" x="180" y="25">Terminology</text>
+            <text class="table-text" x="340" y="25">5.9k/651</text>
+            <text class="table-text" x="460" y="25">25</text>
+            <text class="table-text" x="580" y="25">BERTScore</text>
+            <a xlink:href="https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx" target="_blank">
+                <text class="table-text link-text" x="700" y="25">KirkHan0920/XBRL-Agent</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <!-- Category: Financial Statement Analysis Tasks -->
+        <g class="category-header" transform="translate(0, 640)">
+            <rect class="category-header-bg" width="950" height="40"/>
+            <text class="category-header-text" x="20" y="25">Financial Statement Analysis Tasks
+                <tspan class="category-header-subtext">(Total: 27.9k/7.3k)</tspan>
+            </text>
+        </g>
+
+        <g class="row" transform="translate(0, 680)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Financial Math</text>
+            <text class="table-text" x="180" y="25">Math</text>
+            <text class="table-text" x="340" y="25">800/200</text>
+            <text class="table-text" x="460" y="25">116</text>
+            <text class="table-text" x="580" y="25">Accuracy</text>
+            <a xlink:href="https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx" target="_blank">
+                <text class="table-text link-text" x="700" y="25">KirkHan0920/XBRL-Agent</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 720)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">FinanceBench</text>
+            <text class="table-text" x="180" y="25">Math</text>
+            <text class="table-text" x="340" y="25">86/43</text>
+            <text class="table-text" x="460" y="25">983</text>
+            <text class="table-text" x="580" y="25">BERTScore</text>
+            <a xlink:href="https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx" target="_blank">
+                <text class="table-text link-text" x="700" y="25">KirkHan0920/XBRL-Agent</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 760)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Tags Extraction</text>
+            <text class="table-text" x="180" y="25">XBRL Analysis</text>
+            <text class="table-text" x="340" y="25">10.1K/2.9k</text>
+            <text class="table-text" x="460" y="25">3.8k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/wangd12/XBRL_analysis" target="_blank">
+                <text class="table-text link-text" x="700" y="25">wangd12/XBRL_analysis</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 800)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Values Extraction</text>
+            <text class="table-text" x="180" y="25">XBRL Analysis</text>
+            <text class="table-text" x="340" y="25">10.1k/2.5k</text>
+            <text class="table-text" x="460" y="25">3.8k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/wangd12/XBRL_analysis" target="_blank">
+                <text class="table-text link-text" x="700" y="25">wangd12/XBRL_analysis</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 840)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Formula Construction</text>
+            <text class="table-text" x="180" y="25">XBRL Analysis</text>
+            <text class="table-text" x="340" y="25">3.4K/835</text>
+            <text class="table-text" x="460" y="25">3.8k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/wangd12/XBRL_analysis" target="_blank">
+                <text class="table-text link-text" x="700" y="25">wangd12/XBRL_analysis</text>
+            </a>
+            <line class="row-border" x1="0" y1="40" x2="950" y2="40"/>
+        </g>
+
+        <g class="row" transform="translate(0, 880)">
+            <rect class="row-bg" width="950" height="40"/>
+            <text class="table-text table-text-strong" x="20" y="25">Formula Calculation</text>
+            <text class="table-text" x="180" y="25">XBRL Analysis</text>
+            <text class="table-text" x="340" y="25">3.4K/835</text>
+            <text class="table-text" x="460" y="25">3.8k</text>
+            <text class="table-text" x="580" y="25">Accuracy, F1</text>
+            <a xlink:href="https://huggingface.co/datasets/wangd12/XBRL_analysis" target="_blank">
+                <text class="table-text link-text" x="700" y="25">wangd12/XBRL_analysis</text>
+            </a>
+        </g>
+    </g>
+</svg>

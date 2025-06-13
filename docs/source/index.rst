@@ -55,6 +55,11 @@ FinLoRA
    :maxdepth: 4
    :caption: Benchmark Results
 
-   benchmark_results/results
-   benchmark_results/angles
+   benchmark_results/overview
+   benchmark_results/general_results
+   benchmark_results/certification_results
+   benchmark_results/reporting_results
+   benchmark_results/analysis_results
+   benchmark_results/federated_results
    benchmark_results/comparisons
+

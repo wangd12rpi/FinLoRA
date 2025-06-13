@@ -1,4 +1,4 @@
-Output Comparison
+Sample Outputs
 ----------
 
 XBRL Tagging
