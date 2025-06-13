@@ -72,7 +72,6 @@ def upload_lora_models_to_hub():
                     print(f"  Found LoRA model folder: {lora_model_folder_name}")
                     print(f"    Path: {lora_model_path}")
 
-                    # Attempt to remove metadata from README.md before uploading
                     remove_readme_metadata(lora_model_path)
 
                     print(f"    Attempting to upload as Hugging Face Hub repo: '{model_repo_name}'")
@@ -93,11 +92,6 @@ def upload_lora_models_to_hub():
                         f"    Successfully uploaded files from '{lora_model_folder_name}' to '{model_repo_name}'.")
 
                 print("--------------------------------------------------")
-    else:
-        # This message is for items directly in the current_directory that are not folders
-        # print(f"Skipping non-directory item in current path: {parent_folder_name}")
-        # print("--------------------------------------------------")
-        pass  # Or add a print if you want to log skipped files at the top level
 
 
 print("All relevant folders processed.")
