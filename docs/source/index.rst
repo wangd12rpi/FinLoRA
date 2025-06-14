@@ -28,6 +28,7 @@ FinLoRA
    :caption: Tasks
 
    tasks/general_financial_tasks
+   tasks/certification_tasks
    tasks/xbrl_reporting_tasks
    tasks/xbrl_analysis_tasks
    tasks/dataset_processing
@@ -48,6 +49,7 @@ FinLoRA
    :caption: Tutorials
 
    tutorials/setup
+   tutorials/data_processing
    tutorials/finetune
    tutorials/eval
 
@@ -62,4 +64,3 @@ FinLoRA
    benchmark_results/analysis_results
    benchmark_results/federated_results
    benchmark_results/comparisons
-
