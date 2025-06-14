@@ -17,42 +17,49 @@ We aim to enhance and benchmark our model with three main general capabilities: 
      - Type
      - #Train
      - #Test
+     - Average Prompt Length
      - Metrics
      - Source
    * - Financial Phrase Bank (FPB)
      - Sentiment Analysis
-     -
-     -
+     - 3.1k
+     - 970
+     - 56
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/en-fpb>`__
    * - Financial Question Answering (FiQA SA)
      - Sentiment Analysis
-     -
-     -
+     - 822
+     - 234
+     - 48
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification>`__
    * - Twitter Financial News Sentiment (TFNS)
      - Sentiment Analysis
-     -
-     -
+     - 9.5k
+     - 2.4k
+     - 52
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment>`__
    * - News with GPT (NWGI)
      - Sentiment Analysis
-     -
-     -
+     - 12.9k
+     - 4.1k
+     - 81
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/NWGI_test>`__
    * - Headline
      - Headline Analysis
-     -
-     -
+     - 82.2k
+     - 20.5k
+     - 43
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-headline-cls>`__
    * - Named Entity Recognition (NER)
      - Named Entity Recognition
-     -
-     -
+     - 13.5k
+     - 3.5k
+     - 138
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-ner-cls>`__
 

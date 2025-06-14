@@ -15,20 +15,30 @@ Overview
      - Type
      - #Train
      - #Test
+     - Average Prompt Length
      - Metrics
      - Source
    * - FiNER-139
      - XBRL Tagging
-     -
-     -
+     - 10.0k
+     - 7.4k
+     - 1.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/TheFinAI/en-fpb>`__
+     - `huggingface <https://huggingface.co/datasets/nlpaueb/finer-139>`__
    * - FNXL
      - XBRL Tagging
-     -
-     -
+     - -
+     - 247
+     - 7.1k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification>`__
+     - `github <https://github.com/soummyaah/FNXL>`__
+   * - XBRL Term
+     - Terminology
+     - 5.9k
+     - 651
+     - 25
+     - BERTScore
+     - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx>`__
 
 Tasks Details
 ************************
