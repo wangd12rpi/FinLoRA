@@ -1,5 +1,5 @@
 =======
-Financial Certification Tasks Results
+Results on Financial Certification Tasks
 =======
 
 .. raw:: html
@@ -27,4 +27,3 @@ Angle II: LoRA Suitability for Financial Tasks
 ================================================
 
 These results show that LoRA fine-tuning is very well-suited for tasks that depend on expert knowledge. The process effectively transforms a general-purpose model into a domain expert that can achieve professional-level performance.
-

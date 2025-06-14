@@ -1,5 +1,5 @@
 =======
-General Financial Tasks Results
+Results on General Financial Tasks
 =======
 
 Detailed Results
@@ -36,10 +36,3 @@ Angle II: LoRA Suitability for Financial Tasks
 The largest performance gains were observed in **pattern recognition and classification** tasks, such as Named Entity Recognition (NER), sentiment analysis (FiQA SA), and news classification (Headline). For these tasks, fine-tuning allows the model to learn the specific vocabulary, entities, and sentiment of the financial domain, leading to significant improvements.
 
 Conversely, NWGI saw the most modest gains. It might be due to NWGI uses five sentiment labels instead of three, causing the model unable to distinguish between more nuanced differences in sentiment.
-
-
-
-
-
-
-
