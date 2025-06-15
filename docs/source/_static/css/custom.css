@@ -162,3 +162,28 @@ th {
 	-moz-transition: all .1s linear;
 	transition: all .1s linear;
 }
+
+.ea-placement .ea-type-text, .ea-content, #readthedocs-ea-text-footer {
+    display: none;
+}
+
+.rst-content > div:first-child {
+	border: 1px solid rgba(0,0,0,0.1);
+	padding: 10px 16px 14px;
+	border-radius: 18px;
+	position: sticky;
+	width: 100%;
+	top: 26px;
+	backdrop-filter: blur(14px);
+	background-color: rgba(255,255,255,.5);
+	margin-bottom: 24px;
+	box-shadow: rgba(0,0,0,.1) 0px 3px 12px;
+}
+
+hr {
+    display: none;
+}
+
+.rst-footer-buttons {
+    margin-top: 40px;
+}

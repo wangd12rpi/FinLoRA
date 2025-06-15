@@ -1,131 +1,115 @@
-LoRA Foundations
+LoRA Methods
 ============================
 
-.. contents::
-   :local:
-   :depth: 4
+
 
 What is LoRA?
 -------------
-LoRA is a technique to efficiently update the parameters of pre-trained language models when fine-tuning on new tasks.
+LoRA (Low-Rank Adaptation) is a technique that makes fine-tuning large language models more efficient and practical. Instead of updating all parameters in a model during fine-tuning, LoRA provides an approach that updates only a small subset of parameters while keeping most of the model frozen.
 
-Foundations of LoRA
--------------------
-In this subsection, we introduce two fundamental concepts needed to understand LoRA—ranks and fine-tuning.
 
-Ranks
-~~~~~
-Rank is the number of linearly independent rows or columns in a matrix.
-Linearly independent columns, for example, are columns whose entries cannot be written as an integer-weighted sum of earlier columns.
+Why LoRA - Traditional Fine-Tuning Challenges
+---------------------------------------------
 
-.. math::
+When working with LLMs, traditional full fine-tuning presents several challenges:
 
-   W =
-   \begin{bmatrix}
-    1 & 7 & 2 & 8 & 5\\
-    2 & 10 & 4 & 12 & 10\\
-    3 & 15 & 12 & 18 & 27\\
-    4 & 12 & 16 & 16 & 36
-   \end{bmatrix},
-   \qquad
-   \text{Dimensions: }4 \times 5\;(\text{rows}\times\text{columns})
+* **Resource Intensive**: Updating all parameters (which can be billions) requires substantial computational resources
+* **Storage Problems**: Each fine-tuned model requires a complete copy of all parameters
 
-In this matrix there are **two** linearly independent columns, so
-:math:`\operatorname{rank}(W)=2`.
+For example, imagine a pre-trained model with 500 million parameters. With traditional fine-tuning, you'd need to update all 500 million parameters for each new task, which is extremely inefficient.
 
-* Column 1 is independent (nothing precedes it).
-* Column 2 cannot be written as a multiple of Column 1, so it is also independent.
-* Columns 3–5 are dependent:
+How LoRA Works
+-------------------------------------
 
-.. math::
+.. raw:: html
 
-     C_3 = 2C_1,\qquad
-     C_4 = C_1 + C_2,\qquad
-     C_5 = C_1 + 2C_2.
+    <object class="figure" data="../_static/images/lora_diagram.png" type="image/svg+xml"></object>
+    <br>
 
-Re-expressing those dependencies in vector form:
 
-.. math::
 
-   W \;=\;
-   \underbrace{\begin{bmatrix}
-    1 & 7\\
-    2 & 10\\
-    3 & 15\\
-    4 & 12
-   \end{bmatrix}}_{B\in\mathbb{R}^{4\times2}}
-   \;
-   \underbrace{\begin{bmatrix}
-    1 & 0 & 2 & 1 & 1\\
-    0 & 1 & 0 & 1 & 2
-   \end{bmatrix}}_{A\in\mathbb{R}^{2\times5}}.
 
-.. math::
+Here is a sample explanation of how LoRA works:
 
-   \begin{aligned}
-   \text{Dimensions}(W)     &= d\times k = 4\times5,\\
-   \text{Dimensions}(B)     &= d\times r = 4\times2,\\
-   \text{Dimensions}(A)     &= r\times k = 2\times5,\\
-   \text{Dimensions}(BA)    &= d\times k = \text{Dimensions}(W).
-   \end{aligned}
+1. **Keep the Base Model Frozen**: Don't change any of the original model parameters
+2. **Add a Second Channel**: Introduce small, trainable matrices that work alongside the original model
+3. **Use Low-Rank Matrices**: These matrices are specifically designed to be very small but still capture important adaptations
 
-.. math::
+The additional parameters required are minimal - typically less than 1% of the original model size.
 
-   \begin{aligned}
-   \text{Parameters}(W) &= 4\times5 = 20,\\
-   \text{Parameters}(B) &= 4\times2 = 8,\\
-   \text{Parameters}(A) &= 2\times5 = 10,\\
-   \text{Parameters}(BA)  &= 8 + 10 = 18.
-   \end{aligned}
 
-Thus storing :math:`B` and :math:`A` uses fewer parameters than storing :math:`W` directly—a key idea behind *low-rank* adaptation (LoRA).
+Practical Example
+~~~~~~~~~~~~~~~~
 
-Full Fine-Tuning
-~~~~~~~~~~~~~~~~~
+Let's say you have a weight matrix in your language model that is 1024×1024 (over 1 million parameters):
 
-Consider a pre-trained model M with 500 million parameters. Suppose we pre-trained M with two tasks. Task 1 is Masked Language Modeling (MLM), where we mask some words in a sentence, and the task is to predict the sentence with the masked tokens filled in. Task 2 is Next Sentence Prediction (NSP), where the task is to predict if, given 2 sentences, whether or not sentence A comes before sentence B.
+* With traditional fine-tuning: You would update all 1,048,576 parameters
+* With LoRA (rank=8): You only update about 16,384 parameters (about 1.5% of the original)
 
-If we want to fine-tune the pre-trained model M on a new task, Named Entity Recognition (NER), where the task is to annotate one entity (location/person/organization) per sentence in a financial task.
+During inference, the low-rank update can be merged with the original weight matrix, resulting in no additional computational overhead compared to the original model.
 
-When we perform full fine-tuning on model M, all parameters are updated based on the gradients we compute during backpropagation. In backpropagation, we compute the loss (the difference between the predicted output and the target output) and propagate the loss backward through the model. As we propagate the loss backward, we compute the gradient of the loss with respect to each parameter. The optimizer uses these gradients to update the model's parameters.
+Benefits of Using LoRA
+----------------------
 
-If we want to fine-tune model M on another task Financial Phrase Bank (FPB), where the task is to annotate sentences from financial news and reports with sentiment, we still need to update all 500 million parameters. This is costly and can lead to overfitting and the model forgetting pre-training tasks.
+1. **Efficiency**: Train significantly fewer parameters (typically <1% of the original model)
+2. **No Overhead During Inference**: LoRA updates can be merged with the original weights for deployment
+3. **Adaptability**: Create multiple specialized versions of your model for different tasks
+4. **Storage**: Store one base model and multiple small LoRA adaptations instead of many complete models
 
-Fine-Tuning With Adapters (Parameter-Efficient Fine-Tuning—PEFT)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+LoRA Methods and Variants
+-------------------------
 
-Parameter Efficient Fine-Tuning (PEFT) adds small adapter layers per transformer block as shown below. Let's consider a scenario in which we use PEFT to fine-tune the pre-trained model M and add two adapter layers per transformer layer.
-
-Now, when we fine-tune M on NER, only the adapter parameters are updated. This only consists of a tiny fraction of the original parameters. The rest of the model's parameters are frozen. This means that, during backpropagation, the gradients of loss pass through them, but the parameters aren't updated. While we do have to swap the adapters and store the updated parameters separately for FPB, the number of parameters required to fine-tune on FPB is much smaller than full fine-tuning.
-
-LoRA Methods
-------------
-In this subsection, we introduce the five LoRA methods we use in our paper. We choose LoRA [1]_ and QLoRA [2]_ due to their standard use in fine-tuning. We choose DoRA [3]_ and rsLoRA [4]_ due to their performance enhancements: DoRA proposes fine-grained updates for achieving accuracy through LoRA, and rsLoRA proposes a scaling factor to achieve gradient stability. Lastly, we choose LoRA with federated learning for its practical ability to allow financial institutions to collaborate in fine-tuning models while using private, confidential data.
+This section introduces several LoRA methods and variants that have been developed to address different aspects of efficient fine-tuning.
 
 Low-Rank Adaptation (LoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LoRA adds a scaled low-rank update :math:`\Delta \boldsymbol{W} = \gamma_r\boldsymbol{B}\boldsymbol{A}`—where :math:`\gamma_r` is a scaling factor (:math:`\gamma_r=\frac{\alpha}{r}` with :math:`\alpha` > 0 and rank :math:`r` > 0), :math:`\boldsymbol{B} \in \mathbb{R}^{d \times r}`, and :math:`\boldsymbol{A} \in \mathbb{R}^{r \times k}`—to the frozen pre-trained weight matrix :math:`\boldsymbol{W}_0 \in \mathbb{R}^{d \times k}`.
+The original LoRA method adds trainable low-rank matrices to the frozen pre-trained model. These matrices create an update channel that can be added to the original weights.
 
-For each multi-head attention layer, we have query, key, and value weight matrices, which we can factorize as follows:
+For each weight matrix in the model (particularly in attention layers), LoRA introduces two smaller matrices that, when multiplied together, produce an update that gets added to the original weight.
 
-.. math::
+During fine-tuning, only these smaller matrices are updated, while the original model remains frozen. This dramatically reduces the number of trainable parameters.
 
-   W_Q^{(n)} = B_Q^{(n)}A_Q^{(n)},\quad
-   W_K^{(n)} = B_K^{(n)}A_K^{(n)},\quad
-   W_V^{(n)} = B_V^{(n)}A_V^{(n)}.
+QLoRA
+~~~~~
 
-During fine-tuning, the weight matrices are updated as follows with the scaled low-rank update:
+QLoRA combines LoRA with 4-bit quantization to further reduce memory requirements. By using lower precision numbers to represent the frozen model weights, QLoRA makes it possible to fine-tune very large language models on consumer hardware with limited GPU memory.
 
-.. math::
+Key benefits include:
+* Enables fine-tuning on consumer-grade hardware
+* Maintains performance comparable to full-precision fine-tuning
+* Further reduces memory requirements beyond standard LoRA
 
-   \begin{aligned}
-   W_{Q,\text{new}}^{(n)} &= W_{Q,\text{old}}^{(n)} + \gamma_rB_Q^{(n)}A_Q^{(n)},\\
-   W_{K,\text{new}}^{(n)} &= W_{K,\text{old}}^{(n)} + \gamma_rB_K^{(n)}A_K^{(n)},\\
-   W_{V,\text{new}}^{(n)} &= W_{V,\text{old}}^{(n)} + \gamma_rB_V^{(n)}A_V^{(n)}.
-   \end{aligned}
+DoRA (Weight-Decomposed Low-Rank Adaptation)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because the update is in-place, no extra layers are added, and inference latency is unchanged.
+DoRA extends LoRA by decomposing weights into magnitude and direction components. This decomposition allows for more fine-grained updates while maintaining efficiency.
+
+The key insight of DoRA is that separating magnitude and direction allows for more expressive adaptation with the same parameter budget, leading to improved performance on downstream tasks.
+
+rsLoRA (Rank-Stabilized LoRA)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+rsLoRA introduces a scaling factor to improve gradient stability during training. This helps prevent training instability, especially in deeper models, by ensuring better gradient flow through the network.
+
+This variant is particularly useful when working with very deep models where traditional LoRA might encounter optimization challenges.
+
+Federated LoRA
+~~~~~~~~~~~~~~
+
+Federated LoRA combines LoRA with federated learning principles, allowing multiple organizations to collaboratively fine-tune models while keeping their data private.
+
+This approach is particularly valuable in domains like finance and healthcare where data privacy is crucial but model improvement benefits from diverse data sources.
+
+When to Use LoRA
+----------------
+
+LoRA is particularly valuable when:
+
+* You need multiple specialized versions of a model
+* Quick adaptation to new domains or tasks is required
+* You prefer low computational cost
+* You still want to keep world knowledge of the base model
 
 References
 ----------
@@ -139,3 +123,4 @@ References
 .. [4] Kalajdzievski, D. (2023). Rank-stabilized scaling factor for LoRA adaptation.
 
 .. [5] Liu, X. Y., Zhu, R., Zha, D., Gao, J., Zhong, S., White, M., & Qiu, M. (2025). Differentially private low-rank adaptation of large language model using federated learning. ACM Transactions on Management Information Systems, 16(2), 1-24.
+```
