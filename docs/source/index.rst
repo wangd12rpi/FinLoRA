@@ -22,6 +22,7 @@ FinLoRA
    :caption: Introduction
 
    intro/overview
+   intro/demo
 
 .. toctree::
    :maxdepth: 2
