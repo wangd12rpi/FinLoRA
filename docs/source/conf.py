@@ -6,6 +6,7 @@
 # -- Path Setup --------------------------------------------------------------
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath(''))
 sys.path.insert(0, os.path.abspath('..'))
 
@@ -29,6 +30,7 @@ extensions = [
     "sphinx_rtd_theme",
     "nbsphinx",
     "nbsphinx_link",
+    'sphinxcontrib.googleanalytics'
 ]
 
 templates_path = ['_templates']
@@ -53,11 +55,11 @@ html_css_files = [
 ]
 
 html_context = {
-    "display_github": True, # Integrate GitHub
-    "github_user": "Open-Finance-Lab", # Username
-    "github_repo": "FinLoRA", # Repo name
-    "github_version": "main", # Version
-    "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
+    "display_github": True,  # Integrate GitHub
+    "github_user": "Open-Finance-Lab",  # Username
+    "github_repo": "FinLoRA",  # Repo name
+    "github_version": "main",  # Version
+    "conf_py_path": "/docs/source/",  # Path in the checkout to the docs root
 }
 
 latex_elements = {
@@ -68,3 +70,5 @@ latex_elements = {
     \usepackage{algorithmic}
     '''
 }
+
+googleanalytics_id = "G-GS437TNCDJ"
