@@ -7,7 +7,7 @@ General Financial Tasks
 Overview
 ************
 
-We aim to enhance and benchmark our model with three main general capabilities: sentiment analysis, headline analysis, and name entity recognition.
+Financial Tasks
 
 .. list-table:: Question/training sets for general financial tasks.
    :widths: auto
