@@ -55,15 +55,15 @@ Example configuration:
      }
    }
 
-LoRA Adaptors
+LoRA Adapters
 -----------
 
-The fine-tuned LoRA adapters are saved in the ``lora_adaptors`` directory. This directory contains subdirectories for different quantization and rank configurations:
+The fine-tuned LoRA adapters are saved in the ``lora_adapters`` directory. This directory contains subdirectories for different quantization and rank configurations:
 
-- ``lora_adaptors/4bits_r4``: 4-bit quantization with rank 4
-- ``lora_adaptors/8bits_r8``: 8-bit quantization with rank 8
-- ``lora_adaptors/8bits_r8_dora``: 8-bit quantization with rank 8 using DoRA
-- ``lora_adaptors/8bits_r8_rslora``: 8-bit quantization with rank 8 using RSLoRA
+- ``lora_adapters/4bits_r4``: 4-bit quantization with rank 4
+- ``lora_adapters/8bits_r8``: 8-bit quantization with rank 8
+- ``lora_adapters/8bits_r8_dora``: 8-bit quantization with rank 8 using DoRA
+- ``lora_adapters/8bits_r8_rslora``: 8-bit quantization with rank 8 using RSLoRA
 
 Each subdirectory contains the fine-tuned adapters for different tasks, such as sentiment analysis, headline analysis, named entity recognition, etc.
 
