@@ -12,7 +12,7 @@ python test.py \
 --peft_model ../lora_adaptors/8b_8bits_r8/finer_non_batch_llama_3_1_8b_8bits_r8 \
 ```
 
-### Test all existing LoRA adaptors
+### Test all existing LoRA adapters
 
 Run the following python script to test all LoRA adaptors in `../lora_models`, or use `run_test_all.sh`.
 ```bash
