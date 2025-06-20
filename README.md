@@ -1,11 +1,11 @@
 # FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
 
 <p>
-  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="static/dataset_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/demo_btn.svg"></a>
-  <a href="https://huggingface.co/wangd12/"><img src="static/models_btn.svg"></a>
-  <a href="https://arxiv.org/abs/2505.19819"><img src="static/paper_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/doc_btn.svg"></a>
+  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="readme_images/dataset_btn.svg"></a>
+  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="readme_images/demo_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="readme_images/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="readme_images/paper_btn.svg"></a>
+  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="readme_images/doc_btn.svg"></a>
 
 </p>
 
@@ -46,7 +46,7 @@ We are particularly interested in two key XBRL applications:
 ## Datasets
 
 <p>
-  <a style="cursor: text" href="#datasets"><img src="static/datasets.svg"></a>
+  <a style="cursor: text" href="#datasets"><img src="readme_images/datasets.svg"></a>
 </p>
 
 [//]: #
@@ -128,7 +128,7 @@ We are particularly interested in two key XBRL applications:
 
 ## Benchmark Results
 
-<img class="figure" src="docs/source/_static/images/p1_new.svg">
+<img class="figure" src="docs/source/_readme_images/images/p1_new.svg">
 
 We use Llama 3.1 8B Instruct as the base model.
 
