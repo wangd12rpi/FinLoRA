@@ -172,11 +172,11 @@ Our models achieve the following performance on financial tasks. The table below
 
 </details>
 
-## LoRA Models
+## LoRA Methods
 
 We use four LoRA methods: LoRA, QLoRA, DoRA, and rsLoRA.
 
-You can download LoRA adapators from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters are fine-tuned on financial datasets using various configurations (e.g., 8-bit rank 8 and 4-bit rank 4).
+You can download LoRA adapaters from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters are fine-tuned on financial datasets using various configurations (e.g., 8-bit rank 8 and 4-bit rank 4).
 
 ## File Structure
 
