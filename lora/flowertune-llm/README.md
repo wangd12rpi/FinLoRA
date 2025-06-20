@@ -105,7 +105,7 @@ python test.py --peft-path=/path/to/trained-model-dir/ \
     --question="What is the ideal 1-day plan in London?"
 ```
 
-An answer generated from federated trained 7-billion (8-bit) OpenLLaMA model:
+An answer generated from a federated trained 7-billion (8-bit) OpenLLaMA model:
 
 ```
 Great choice.
