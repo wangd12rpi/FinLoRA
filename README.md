@@ -51,6 +51,35 @@ We test Llama 3.1 8B Instruct with our LoRA adapters on 19 datasets across 4 dif
   <a style="cursor: text" href="#datasets"><img src="_images/datasets.svg"></a>
 </p>
 
+### Dataset Formats
+
+Each dataset has a specific format:
+
+**General Financial Tasks:**
+
+- **Sentiment Analysis (FPB, FiQA SA, TFNS)**: In these datasets, a financial sentence must be classified with a sentiment from `{negative, neutral, positive}`.
+- **NWGI Sentiment**: In NWGI, financial text is classified into 7-level sentiment from `{strong negative, moderately negative, mildly negative, neutral, mildly positive, moderately positive, strong positive}`. In our testing, we simplified this to the `{negative, neutral, positive}` set of sentiments.
+- **Headline Analysis**: In the Headline dataset, financial headlines are classified with binary answers from `{Yes, No}` based on various questions like whether the headline talks about a share price going up.
+- **Named Entity Recognition**: In NER, financial text with a highlighted entity is classified into entity types from `{person, location, organization}`.
+
+**Financial Certificate Tasks:**
+
+- **CFA Level I/II/III & CPA REG**: The CFA and CPA exams datasets include multiple choice questions from mock exams. the LLM must select an answer from `{A, B, C, D}` or `{A, B, C}` based on the question and context in the case of CFA Level II and CFA Level III. Our question set has a particular focus on ethics and regulations questions.
+
+**Financial Reporting Tasks:**
+
+- **XBRL Term**: In XBRL Term, the LLM must provide a brief explanation for XBRL terminology from the XBRL International website.
+- **FiNER/FNXL Tagging**: In FiNER/FNX;, financial text contains numerical entities that must be tagged with appropriate US GAAP tags. Answers are comma-separated when multiple entities need tagging.
+
+**Financial Statement Analysis Tasks:**
+
+- **XBRL Tag Extraction**: In XBRL tag extraction, the LLM analyzes XBRL context and must respond with an XBRL tag for a specific element.
+- **XBRL Value Extraction**: In XBRL value extraction, the LLM analyzes XBRL context to find specific numerical values.
+- **XBRL Formula Construction**: In XBRL formula construction, the LLM creates financial formulas using US GAAP tags.
+- **XBRL Formula Calculation**: In XBRL formula calculation, the LLM substitutes actual numerical values from the XBRL context into financial formulas.
+- **Financial Math**: In Financial Math, the LLM applies financial formulas to solve numerical problems given a formula and specific values.
+- **FinanceBench**: In FinanceBench, the LLM answers various questions based on XBRL financial reports.
+
 [//]: #
 [//]: #
 [//]: # '| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average'
@@ -274,7 +303,7 @@ conda activate finenv
 
 #### Login to Hugging Face
 
-When using Llama models, you need to login to Hugging Face due to the models being gated. Run the following command:
+When using Llama models, you need to login to Hugging Face due to the LLMs being gated. Run the following command:
 
 ```bash
 huggingface-cli login
