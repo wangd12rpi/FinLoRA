@@ -128,7 +128,7 @@ We are particularly interested in two key XBRL applications:
 
 ## Benchmark Results
 
-<img class="figure" src="docs/source/_readme_images/images/p1_new.svg">
+<img class="figure" src="docs/source/_static/images/p1_new.svg">
 
 We use Llama 3.1 8B Instruct as the base model.
 
