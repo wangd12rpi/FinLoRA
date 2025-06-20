@@ -1,5 +1,5 @@
 """
-Benchmark every PEFT adapter in ../lora_adaptors/ on MMLU and
+Benchmark every PEFT adapter in ../lora_adapters/ on MMLU and
 measure catastrophic forgetting 
 """
 
@@ -73,7 +73,7 @@ def append_row(row: Dict, header: bool = False):
     )
 
 def main():
-    finetuned_root = Path("../lora_adaptors").resolve()
+    finetuned_root = Path("../lora_adapters").resolve()
     def sort_key(p: Path):
         n = p.name
         for t_idx, task in enumerate(FIN_TASKS):

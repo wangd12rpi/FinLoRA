@@ -52,7 +52,7 @@ Example:
    python test/test.py \
      --dataset sentiment \
      --base_model meta-llama/Llama-3.1-8B-Instruct \
-     --peft_model lora_adaptors/8bits_r8/sentiment_llama_3_1_8b_8bits_r8 \
+     --peft_model lora_adapters/8bits_r8/sentiment_llama_3_1_8b_8bits_r8 \
      --batch_size 8 \
      --quant_bits 8 \
      --source hf

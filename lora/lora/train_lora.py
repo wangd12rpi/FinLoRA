@@ -139,7 +139,7 @@ def main(args):
         "/", "-")
 
     training_args = TrainingArguments(
-        output_dir='../../lora_adaptors/' + "/" + task_name,
+        output_dir='../../lora_adapters/' + "/" + task_name,
 
         logging_steps=0.1,
         save_steps=args.eval_steps,

@@ -1,21 +1,21 @@
 # FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
 
 <p>
-  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="static/dataset_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="static/demo_btn.svg"></a>
-  <a href="https://huggingface.co/wangd12/"><img src="static/models_btn.svg"></a>
-  <a href="https://arxiv.org/abs/2505.19819"><img src="static/paper_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="static/doc_btn.svg"></a>
+  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="readme_images/dataset_btn.svg"></a>
+  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="readme_images/demo_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="readme_images/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="readme_images/paper_btn.svg"></a>
+  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="readme_images/doc_btn.svg"></a>
 
 </p>
 
 ## Abstract
 
-Low-rank adaptation (LoRA) methods offer an affordable solution to scale general-purpose 
+Low-rank adaptation (LoRA) methods offer an affordable solution to scale general-purpose
 LLMs to hundreds of use scenarios. However, their efficacy in high-stakes domains like finance is rarely
-explored, e.g., passing CFA exams and analyzing SEC filings. 
+explored, e.g., passing CFA exams and analyzing SEC filings.
 
-This open-source FinLoRA project benchmarks LoRA methods on both general and highly professional financial tasks. 
+This open-source FinLoRA project benchmarks LoRA methods on both general and highly professional financial tasks.
 First, we curated 19 datasets covering diverse financial applications; in particular, four novel XBRL analysis datasets are based on 150 SEC
 filings. Second, we evaluated five LoRA methods and five base LLMs. Finally, we provide extensive experimental results
 in terms of accuracy, F1, and BERTScore and report computational cost in terms of time and GPU memory during fine-tuning
@@ -25,176 +25,119 @@ general public.
 
 ## Motivation
 
-The proprietary [BloombergGPT model](https://arxiv.org/abs/2303.17564) released in April 2023 highlighted the potential of financial Large
-Language Models (FinLLMs). However, such a "train-from-scratch" approach was
-resource-intensive, requiring one million GPU hours at an estimated cost of $3 million ($3 per GPU
-hour in 2023). This substantial investment underscores the need for a cost-effective solution.
+The proprietary [BloombergGPT](https://arxiv.org/abs/2303.17564) model announced in April 2023 highlighted the potential of financial Large Language Models (FinLLMs). However, such a "train-from-scratch" approach was resource-intensive, requiring one million GPU hours at an estimated cost of $3 million ($3 per GPU
+hour in 2023) and 512 A100 GPUs. This substantial investment underscores the need for a cost-effective solution.
 
 We propose to leverage open-source models, such as Llama 3.1, and employ the LoRA (Low-Rank Adaptation)
-fine-tuning method. It dramatically reduces the number of trainable parameters to as less as 0.01% of the
-full model, bringing the computational cost down to less than $100, making FinLLMs accessible to the general public.
+fine-tuning method. It dramatically reduces the number of trainable parameters to as little as 0.01% of the full model's parameters. This enables fine-tuning on 4 A
+5000 GPUs and brings the cost of fine-tuning down to less than $100, making FinLLMs accessible to the general public.
 
 ## Financial Tasks
 
 Our goal is to develop models capable of performing a range of financial tasks, from general applications to
-professional-level functions. A critical area within professional finance is the eXtensible Business Reporting
-Language (XBRL), the global standard for digital business reporting. XBRL, being XML-based, is inherently complex,
-making it challenging for humans to generate and interpret directly.
+professional-level functions. A critical area within professional finance is the eXtensible Business Reporting Language (XBRL), the global standard for digital business reporting. XBRL, being XML-based, is inherently complex, making it challenging for humans to curate and interpret directly.
 
 We are particularly interested in two key XBRL applications:
 
-**1. Financial Reporting:** Assisting small and medium-sized businesses (SMBs) in generating compliant financial reports
-in the XBRL format.
+**1. Financial Reporting:** Assisting small and medium-sized businesses (SMBs) in generating compliant financial reports in the XBRL format.
 
-**2. Financial Statement Analysis:** Facilitating the extraction of data from XBRL financial reports and enabling
-insightful analysis.
+**2. Financial Statement Analysis:** Facilitating the extraction of data from XBRL financial reports and enabling insightful analysis.
 
 ## Datasets
 
 <p>
-  <a style="cursor: text" href="#datasets"><img src="static/datasets.svg"></a>
+  <a style="cursor: text" href="#datasets"><img src="readme_images/datasets.svg"></a>
 </p>
 
-[//]: # ()
-[//]: # ()
-[//]: # (| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average)
-
-[//]: # (Prompt Length** | **Metrics**  | **Original Source & License)
-
-[//]: # (**                                                                                                                      |)
-
-[//]: # ()
-[//]: # (|------------------------------------------------------------|--------------------------|------------------|---------------------------|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------|)
-
-[//]: # ()
-[//]: # (| **General Financial Tasks** &#40;Total: 122.9k/31.7k&#41;          | | | | | |)
-
-[//]: # ()
-[//]: # (| FPB | Sentiment Analysis | 3.1k/970 | 56 | Accuracy,)
-
-[//]: # (F1 | [TheFinAI/en-fpb]&#40;https://huggingface.co/datasets/TheFinAI/en-fpb&#41;, CC BY-SA 3.0 |)
-
-[//]: # ()
-[//]: # (| FiQA SA | Sentiment Analysis | 822/234 | 48 | Accuracy,)
-
-[//]: # (F1 | [TheFinAI/fiqa-sentiment-classification]&#40;https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification&#41;,)
-
-[//]: # (MIT |)
-
-[//]: # ()
-[//]: # (| TFNS | Sentiment Analysis | 9.5k/2.4k | 52 | Accuracy,)
-
-[//]: # (F1 | [zeroshot/twitter-financial-news-sentiment]&#40;https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment&#41;,)
-
-[//]: # (MIT |)
-
-[//]: # ()
-[//]: # (| NWGI | Sentiment Analysis | 12.9k/4.1k | 81 | Accuracy,)
-
-[//]: # (F1 | [TheFinAI/NWGI_test]&#40;https://huggingface.co/datasets/TheFinAI/NWGI_test&#41;, MIT |)
-
-[//]: # ()
-[//]: # (| Headline | Headline Analysis | 82.2k/20.5k | 43 | Accuracy,)
-
-[//]: # (F1 | [FinGPT/fingpt-headline-cls]&#40;https://huggingface.co/datasets/FinGPT/fingpt-headline-cls&#41;, CC BY-SA 3.0 |)
-
-[//]: # ()
-[//]: # (| NER | Named Entity Recognition | 13.5k/3.5k | 138 | Accuracy,)
-
-[//]: # (F1 | [FinGPT/fingpt-ner-cls]&#40;https://huggingface.co/datasets/FinGPT/fingpt-ner-cls&#41;, CC BY-SA 3.0 |)
-
-[//]: # ()
-[//]: # (| **Financial Certificate Tasks** &#40;Total: 472/346&#41;           | | | | | |)
-
-[//]: # ()
-[//]: # (| CFA Level I | Analyst Exam | 180/90 | 181 | Accuracy, F1 | Internet &#40;Public; Not Released Due to)
-
-[//]: # (Copyright&#41;                                                                                                   |)
-
-[//]: # ()
-[//]: # (| CFA Level II | Analyst Exam | 88/77 | 1.0k | Accuracy, F1 | Internet &#40;Public; Not Released Due to)
-
-[//]: # (Copyright&#41;                                                                                                   |)
-
-[//]: # ()
-[//]: # (| CFA Level III | Analyst Exam | 80/78 | 961 | Accuracy, F1 | Internet &#40;Public; Not Released Due to)
-
-[//]: # (Copyright&#41;                                                                                                   |)
-
-[//]: # ()
-[//]: # (| CPA REG | Accountant Exam | 124/101 | 147 | Accuracy, F1 | Internet &#40;Public; Not Released Due to)
-
-[//]: # (Copyright&#41;                                                                                                   |)
-
-[//]: # ()
-[//]: # (| **Financial Reporting Tasks** &#40;Total: 15.9k/8.3k&#41;          | | | | | |)
-
-[//]: # ()
-[//]: # (| FiNER-139 | XBRL Tagging | 10.0k/7.4k | 1.8k | Accuracy,)
-
-[//]: # (F1 | [nlpaueb/finer-139]&#40;https://huggingface.co/datasets/nlpaueb/finer-139&#41;, CC BY-SA 4.0 |)
-
-[//]: # ()
-[//]: # (| FNXL | XBRL Tagging | -/247 | 7.1k | Accuracy, F1 | [soummyaah/FNXL]&#40;https://github.com/soummyaah/FNXL&#41;, Public |)
-
-[//]: # ()
-[//]: # (| XBRL Term | Terminology | 5.9k/651 | 25 |)
-
-[//]: # (BERTScore | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx&#41;,)
-
-[//]: # (MIT |)
-
-[//]: # ()
-[//]: # (| **Financial Statement Analysis Tasks** &#40;Total: 27.9k/7.3k&#41; | | | | | |)
-
-[//]: # ()
-[//]: # (| Financial Math | Math | 800/200 | 116 |)
-
-[//]: # (Accuracy | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx&#41;,)
-
-[//]: # (MIT |)
-
-[//]: # ()
-[//]: # (| FinanceBench | Math | 86/43 | 983 |)
-
-[//]: # (BERTScore | [KirkHan0920/XBRL-Agent]&#40;https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx&#41;, CC)
-
-[//]: # (BY-NC 4.0 |)
-
-[//]: # ()
-[//]: # (| Tags Extraction | XBRL Analysis | 10.1K/2.9k | 3.8k | Accuracy,)
-
-[//]: # (F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT |)
-
-[//]: # ()
-[//]: # (| Values Extraction | XBRL Analysis | 10.1k/2.5k | 3.8k | Accuracy,)
-
-[//]: # (F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT |)
-
-[//]: # ()
-[//]: # (| Formula Construction | XBRL Analysis | 3.4K/835 | 3.8k | Accuracy,)
-
-[//]: # (F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT |)
-
-[//]: # ()
-[//]: # (| Formula Calculation | XBRL Analysis | 3.4K/835 | 3.8k | Accuracy,)
-
-[//]: # (F1 | [wangd12/XBRL_analysis]&#40;https://huggingface.co/datasets/wangd12/XBRL_analysis&#41;, MIT |)
+[//]: #
+[//]: #
+[//]: # '| **Datasets**                                               | **Types**                | **#Train/#Test** | **Average'
+[//]: # 'Prompt Length** | **Metrics**  | **Original Source & License'
+[//]: # '**                                                                                                                      |'
+[//]: #
+[//]: # '|------------------------------------------------------------|--------------------------|------------------|---------------------------|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------|'
+[//]: #
+[//]: # '| **General Financial Tasks** (Total: 122.9k/31.7k)          | | | | | |'
+[//]: #
+[//]: # '| FPB | Sentiment Analysis | 3.1k/970 | 56 | Accuracy,'
+[//]: # 'F1 | [TheFinAI/en-fpb](https://huggingface.co/datasets/TheFinAI/en-fpb), CC BY-SA 3.0 |'
+[//]: #
+[//]: # '| FiQA SA | Sentiment Analysis | 822/234 | 48 | Accuracy,'
+[//]: # 'F1 | [TheFinAI/fiqa-sentiment-classification](https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification),'
+[//]: # 'MIT |'
+[//]: #
+[//]: # '| TFNS | Sentiment Analysis | 9.5k/2.4k | 52 | Accuracy,'
+[//]: # 'F1 | [zeroshot/twitter-financial-news-sentiment](https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment),'
+[//]: # 'MIT |'
+[//]: #
+[//]: # '| NWGI | Sentiment Analysis | 12.9k/4.1k | 81 | Accuracy,'
+[//]: # 'F1 | [TheFinAI/NWGI_test](https://huggingface.co/datasets/TheFinAI/NWGI_test), MIT |'
+[//]: #
+[//]: # '| Headline | Headline Analysis | 82.2k/20.5k | 43 | Accuracy,'
+[//]: # 'F1 | [FinGPT/fingpt-headline-cls](https://huggingface.co/datasets/FinGPT/fingpt-headline-cls), CC BY-SA 3.0 |'
+[//]: #
+[//]: # '| NER | Named Entity Recognition | 13.5k/3.5k | 138 | Accuracy,'
+[//]: # 'F1 | [FinGPT/fingpt-ner-cls](https://huggingface.co/datasets/FinGPT/fingpt-ner-cls), CC BY-SA 3.0 |'
+[//]: #
+[//]: # '| **Financial Certificate Tasks** (Total: 472/346)           | | | | | |'
+[//]: #
+[//]: # '| CFA Level I | Analyst Exam | 180/90 | 181 | Accuracy, F1 | Internet (Public; Not Released Due to'
+[//]: # 'Copyright)                                                                                                   |'
+[//]: #
+[//]: # '| CFA Level II | Analyst Exam | 88/77 | 1.0k | Accuracy, F1 | Internet (Public; Not Released Due to'
+[//]: # 'Copyright)                                                                                                   |'
+[//]: #
+[//]: # '| CFA Level III | Analyst Exam | 80/78 | 961 | Accuracy, F1 | Internet (Public; Not Released Due to'
+[//]: # 'Copyright)                                                                                                   |'
+[//]: #
+[//]: # '| CPA REG | Accountant Exam | 124/101 | 147 | Accuracy, F1 | Internet (Public; Not Released Due to'
+[//]: # 'Copyright)                                                                                                   |'
+[//]: #
+[//]: # '| **Financial Reporting Tasks** (Total: 15.9k/8.3k)          | | | | | |'
+[//]: #
+[//]: # '| FiNER-139 | XBRL Tagging | 10.0k/7.4k | 1.8k | Accuracy,'
+[//]: # 'F1 | [nlpaueb/finer-139](https://huggingface.co/datasets/nlpaueb/finer-139), CC BY-SA 4.0 |'
+[//]: #
+[//]: # '| FNXL | XBRL Tagging | -/247 | 7.1k | Accuracy, F1 | [soummyaah/FNXL](https://github.com/soummyaah/FNXL), Public |'
+[//]: #
+[//]: # '| XBRL Term | Terminology | 5.9k/651 | 25 |'
+[//]: # 'BERTScore | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx),'
+[//]: # 'MIT |'
+[//]: #
+[//]: # '| **Financial Statement Analysis Tasks** (Total: 27.9k/7.3k) | | | | | |'
+[//]: #
+[//]: # '| Financial Math | Math | 800/200 | 116 |'
+[//]: # 'Accuracy | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx),'
+[//]: # 'MIT |'
+[//]: #
+[//]: # '| FinanceBench | Math | 86/43 | 983 |'
+[//]: # 'BERTScore | [KirkHan0920/XBRL-Agent](https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx), CC'
+[//]: # 'BY-NC 4.0 |'
+[//]: #
+[//]: # '| Tags Extraction | XBRL Analysis | 10.1K/2.9k | 3.8k | Accuracy,'
+[//]: # 'F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT |'
+[//]: #
+[//]: # '| Values Extraction | XBRL Analysis | 10.1k/2.5k | 3.8k | Accuracy,'
+[//]: # 'F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT |'
+[//]: #
+[//]: # '| Formula Construction | XBRL Analysis | 3.4K/835 | 3.8k | Accuracy,'
+[//]: # 'F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT |'
+[//]: #
+[//]: # '| Formula Calculation | XBRL Analysis | 3.4K/835 | 3.8k | Accuracy,'
+[//]: # 'F1 | [wangd12/XBRL_analysis](https://huggingface.co/datasets/wangd12/XBRL_analysis), MIT |'
 
 ## Benchmark Results
 
 <img class="figure" src="docs/source/_static/images/p1_new.svg">
 
-Llama models are their Instruct versions.
+We use Llama 3.1 8B Instruct as the base model.
 
-Our models achieve the following performance on financial tasks. The table below shows accuracy/F1 scores. -/value
-represents
-BERTScore F1.
+Our models achieve the following performance on financial tasks. The table below shows accuracy/F1 scores. -/value represents BERTScore F1.
 
 <details><summary>Full Results</summary>
 
 | **Datasets**                           | **Base Models**       |                        |             |             |               | **Fine-tuned Models**      |                             |                            |                              |                     |
-|----------------------------------------|-----------------------|------------------------|-------------|-------------|---------------|----------------------------|-----------------------------|----------------------------|------------------------------|---------------------|
+| -------------------------------------- | --------------------- | ---------------------- | ----------- | ----------- | ------------- | -------------------------- | --------------------------- | -------------------------- | ---------------------------- | ------------------- |
 |                                        | Llama 3.1 8B Instruct | Llama 3.1 70B Instruct | DeepSeek V3 | GPT-4o      | Gemini 2.0 FL | Llama 3.1 8B Instruct LoRA | Llama 3.1 8B Instruct QLoRA | Llama 3.1 8B Instruct DoRA | Llama 3.1 8B Instruct rsLoRA | Gemini 2.0 FL       |
 | **General Financial Tasks**            |                       |                        |             |             |               |                            |                             |                            |                              |                     |
 | FPB                                    | 68.73/0.677           | 74.50/0.736            | 78.76/0.764 | 81.13/0.818 | 81.02/0.894   | 85.64/0.922                | 84.16/0.909                 | 81.93/0.901                | 82.84/0.853                  | **87.62**/0.878     |
@@ -226,8 +169,8 @@ BERTScore F1.
 ## LoRA Models
 
 We use four LoRA methods: LoRA, QLoRA, DoRA, and rsLoRA.
-You can download LoRA adapators from the `lora_adaptors` directory or [Hugging Face](https://huggingface.co/wangd12).
-The adapters fine-tuned on financial datasets using various configurations (eg. 8-bit rank 8, 4-bit rank 4).
+
+You can download LoRA adapators from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters are fine-tuned on financial datasets using various configurations (e.g., 8-bit rank 8 and 4-bit rank 4).
 
 ## File Structure
 
@@ -237,12 +180,12 @@ FinLoRA/
 │   ├── *.py  # Dataset processing code
 │   ├── test/  # Test datasets
 │   └── train/  # Training datasets
-├── docs/  # Documentation 
+├── docs/  # Documentation
 ├── lora/
 │   ├── finetune.py  # Fine-tuning code using Axolotl
 │   ├── flowertune-llm/  # Federated learning implementation
 │   └── lora/  # Fine-tuning using HF PEFT
-├── lora_adaptors/  
+├── lora_adapters/
 │   ├── 4bits_r4/
 │   ├── 8bits_r8/
 │   ├── 8bits_r8_dora/
@@ -255,7 +198,7 @@ FinLoRA/
 │   ├── README.md
 │   ├── *.sh  # Test shell scripts
 │   └── *.py
-├── environment.yml  # Anaconda Enviornment
+├── environment.yml
 ├── LICENSE
 ├── README.md
 ├── readthedocs.yml
@@ -266,21 +209,78 @@ FinLoRA/
 
 ## Guide
 
-### Setup
+### Environment Setup
 
-To install dependencies:
+This guide will help you set up the environment for FinLoRA.
+
+#### GPU Requirements
+
+FinLoRA works with CUDA-enabled GPUs. CUDA should be at least version 11.8.
+
+GPU memory requirements depend on the size of the LLM, quantization, batch size, and prompt length. For Llama 3.1 8B Instruct, we reccomend the following:
+
+- **NVIDIA GPU with at least 24GB VRAM** for 8-bit quantization
+- **NVIDIA GPU with at least 16GB VRAM** for 4-bit quantization
+
+#### Runpod Setup (optional)
+
+If you don't have access to GPUs with sufficient VRAM, you can rent them affordably from cloud providers like [RunPod](https://www.runpod.io). To create a proper Runpod environment, you can follow these steps:
+
+1. After you have created a Runpod account, go to the "Billing" tab and add $10 of credits. In our testing, when we rented 4 A5000 GPUs, we spent an average of $1.05/hr.
+2. Now go click on the "Storage" tab. This tab allows you to create network volumes for persistent storage of uploaded files and models if you disconnect from the service.
+3. Click on "New Network Volume" and select a Datacenter that shows that RTX A5000s are available.
+4. Name your network volume and add make the size of the volume 50 GB. This should only cost $3.50 a month. Then click "Create Network Volume."
+5. Under the storage tab, click "Deploy" on your network volume. Select the RTX A5000 GPU.
+6. Name your pod, set "GPU Count" to 4, and select the "Runpod Pytorch 2.8.0" pod template. Note: If you only want to run inference instead of fine-tuning, you can select 1.
+7. Make sure the instance pricing is set to on-demand. This should cost $0.26/hr per A5000 GPU.
+8. Click "Deploy On-Demand."
+
+#### Package Installation
+
+You can set up the environment using either the provided setup script or conda environment file.
+
+##### Using setup.sh
+
+The easiest way to set up the environment is to use the provided setup script:
 
 ```bash
-bash ./setup.sh
+git clone https://github.com/Open-Finance-Lab/FinLoRA.git
+cd FinLoRA
+chmod +x setup.sh
+./setup.sh
 ```
 
-Login to HuggingFace:
+This script will install all the required dependencies, including:
+
+- PyTorch with CUDA support
+- Transformers library
+- Axolotl for fine-tuning
+- Other required libraries
+
+##### Using conda
+
+Alternatively, you can use the provided conda environment file:
+
+```bash
+conda env create -f environment.yml
+conda activate finenv
+```
+
+#### Login to Hugging Face
+
+When using Llama models, you need to login to Hugging Face due to the models being gated. Run the following command:
 
 ```bash
 huggingface-cli login
 ```
 
-Enter your HuggingFace API token when prompted.
+You will be prompted to enter your Hugging Face token. You can find your token at https://huggingface.co/settings/tokens.
+
+Alternatively, you can set the HF_TOKEN environment variable:
+
+```bash
+export HF_TOKEN=your_token_here
+```
 
 ### Evaluation
 
@@ -303,7 +303,7 @@ To run a base model (e.g., OpenAI):
 bash run_openai.sh
 ```
 
-Enter your API key in the file, set tasks to run, then execute:
+Enter your API key in the file, set the tasks to run, then execute:
 
 ```bash
 bash run_openai.sh
@@ -311,20 +311,85 @@ bash run_openai.sh
 
 ### Fine-Tuning
 
-To perform fine-tuning, navigate to the lora directory:
+1. To perform fine-tuning, first navigate to the lora directory and fetch deepspeed configs. The deepspeed configs allow the fine-tuning framework to parallelize fine-tuning across GPUs
 
 ```bash
 cd lora
-axolotl fetch deepspeed+configs
+axolotl fetch deepspeed_configs
 ```
 
-Then run fine-tuning with a specific configuration:
+2. Add your fine-tuning dataset (e.g., `your_dataset_train.jsonl`) in the `../data/train/` folder.
+
+3. Open `finetune_configs.json` and add the configursation for the LoRA adapter you want to create with hyperparameters defined. There are examples you can reference in the file. The following is an example:
+
+```json
+"your_config_name": {
+  "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+  "dataset_path": "../data/train/your_dataset_train.jsonl",
+  "lora_r": 8,
+  "quant_bits": 8,
+  "learning_rate": 0.0001,
+  "num_epochs": 1,
+  "batch_size": 4,
+  "gradient_accumulation_steps": 2
+}
+```
+
+4. Run fine-tuning with your configuration by executing the following command:
+
+```bash
+python finetune.py your_config_name
+```
+
+For example, to use the existing formula configuration:
 
 ```bash
 python finetune.py formula_llama_3_1_8b_8bits_r8
 ```
 
-If you don't have compute resources, you can rent 4 A5000s for cheap from [RunPod](https://www.runpod.io).
+5. After fine-tuning completes, the adapter will be saved in the `axolotl-output` subfolder within the 'lora' folder. Download the adapter files from this directory. You can remove checkpoints
+
+If you don't have compute resources, you can rent 4 A5000s at a low cost from [RunPod](https://www.runpod.io).
+
+### Using Your LoRA Adapter
+
+Once you have trained a LoRA adapter, you can use it for inference by modifying the following code:
+
+```python
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from peft import PeftModel
+import torch
+
+# Load base model and tokenizer
+base_model_name = "meta-llama/Llama-3.1-8B-Instruct"
+tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+base_model = AutoModelForCausalLM.from_pretrained(
+    base_model_name,
+    torch_dtype=torch.float16,
+    device_map="auto",
+    trust_remote_code=True
+)
+
+# Load and apply the LoRA adapter
+adapter_path = "./path/to/your/adapter"  # Path to your adapter
+model = PeftModel.from_pretrained(base_model, adapter_path)
+
+# Generate text
+prompt = "What is the formula for the Black-Scholes model?"
+inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+
+with torch.no_grad():
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=512,
+        # This ensures that you get reproducible responses.
+        temperature=0,
+        pad_token_id=tokenizer.eos_token_id
+    )
+
+response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(response)
+```
 
 ### Federated Learning
 
@@ -356,47 +421,27 @@ flwr run . --run-config "model.name='openlm-research/open_llama_7b_v2' model.qua
 flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
 ```
 
-[//]: # ()
-
-[//]: # (## Scenarios)
-
-[//]: # ()
-
-[//]: # (### Cross-task Generalization &#40;Mixture of LoRA Experts&#41;)
-
-[//]: # ()
-
-[//]: # (We started with single-task fine-tuning, i.e., fine-tune a LoRA adaptor for a task. We got good performance.)
-
-[//]: # ()
-
-[//]: # (Mixture of LoRA Experts &#40;LoRA-MoE&#41;: a LoRA module acts as an expert, a router network assigns weights, such as)
-
-[//]: # (in [X-LoRA]&#40;https://arxiv.org/pdf/2402.07148&#41;. X-LoRA is built on top of HuggingFace PEFT.)
-
-[//]: # ()
-
-[//]: # (### Improving Performance and Scalability for Inference Stage)
-
-[//]: # ()
-
-[//]: # (SLoRA is designed for serving many LoRA adapters efficiently. It stores all adapters in the CPU memory and fetches the)
-
-[//]: # (adapters needed to GPU memory. We will deploy it on a cloud server.)
-
-[//]: # ()
-
-[//]: # (Difficulty: Current SLoRA implementation does not work with HuggingFace, and does not support newer models like Llama 3.)
-
-[//]: # ()
-
-[//]: # (### Distributed Training with Enhanced Privacy)
-
-[//]: # ()
-
-[//]: # (Multiple institutions might want to collaborate to fine-tune a FinLLM using their private datasets. Using zero-Knowledge)
-
-[//]: # (Proofs &#40;ZKPs&#41; in the fine-tuning stage allows enhanced data privacy.)
+[//]: #
+[//]: # '## Scenarios'
+[//]: #
+[//]: # '### Cross-task Generalization (Mixture of LoRA Experts)'
+[//]: #
+[//]: # 'We started with single-task fine-tuning, i.e., fine-tune a LoRA adaptor for a task. We got good performance.'
+[//]: #
+[//]: # 'Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as'
+[//]: # 'in [X-LoRA](https://arxiv.org/pdf/2402.07148). X-LoRA is built on top of HuggingFace PEFT.'
+[//]: #
+[//]: # '### Improving Performance and Scalability for Inference Stage'
+[//]: #
+[//]: # 'SLoRA is designed for serving many LoRA adapters efficiently. It stores all adapters in the CPU memory and fetches the'
+[//]: # 'adapters needed to GPU memory. We will deploy it on a cloud server.'
+[//]: #
+[//]: # 'Difficulty: Current SLoRA implementation does not work with HuggingFace, and does not support newer models like Llama 3.'
+[//]: #
+[//]: # '### Distributed Training with Enhanced Privacy'
+[//]: #
+[//]: # 'Multiple institutions might want to collaborate to fine-tune a FinLLM using their private datasets. Using zero-Knowledge'
+[//]: # 'Proofs (ZKPs) in the fine-tuning stage allows enhanced data privacy.'
 
 ## Contributing
 
@@ -418,4 +463,3 @@ If you use this work, please cite:
   year={2025}
 }
 ```
-
