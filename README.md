@@ -45,6 +45,8 @@ We are particularly interested in two key XBRL applications:
 
 ## Datasets
 
+We test Llama 3.1 8B Instruct with our LoRA adapters on 19 datasets across 4 different types of tasks, ranging from general financial tasks to professional level XBRL (eXtensible Business Reporting Language)-based financial statement analysis. The train-test splits for the four task categories are as follows: General Financial Tasks-122.9k/31.7k, Financial Certificate Tasks—472/346, Financial Reporting Tasks—15.9k/8.3k, and Financial Statement Analysis Tasks—Total: 27.9k/7.3k. For each task, we compute an accuracy and F1 score except for XBRL Term and Finance Bench, for which we compute a [BERTScore F1](https://arxiv.org/abs/1904.09675). The dataset statistics are shown below.
+
 <p>
   <a style="cursor: text" href="#datasets"><img src="_images/datasets.svg"></a>
 </p>
@@ -132,7 +134,7 @@ We are particularly interested in two key XBRL applications:
 
 We use Llama 3.1 8B Instruct as the base model.
 
-**Key Findings:** As illustrated in the performance comparison above, our LoRA-adapted models demonstrate substantial improvements across all financial task categories. The fine-tuned Llama 3.1 8B models using various LoRA methods achieve remarkable performance gains, with improvements ranging from +36.4% to +67.1% across different task types. Most notably, LoRA methods show exceptional effectiveness in **Financial Certificate** tasks (professional exams like CFA and CPA), where models achieve over 80% accuracy compared to the base model's 13-32% range. Similarly, **Financial Statement Analysis** tasks, particularly our novel XBRL analysis datasets, demonstrate significant improvements of +40% to +52%, highlighting LoRA's capability in handling complex, structured financial data.
+As illustrated in the performance comparison above, Llama 3.1 8B Intruct with our LoRA adpaters demonstrates substantial improvements across all financial task categories. The fine-tuned Llama 3.1 8B model using various LoRA methods achieves remarkable performance gains, with improvements ranging from +36.4% to +67.1% across different task types. Most notably, LoRA methods show exceptional effectiveness in **Financial Certificate** tasks (professional exams like CFA and CPA), where models achieve over 80% accuracy compared to the base model's 13-32% range. Similarly, our LoRA adpaters show significant improvements of +40% to +52% in **Financial Statement Analysis** tasks, particularly our novel XBRL analysis datasets, highlighting LoRA's capability in handling complex, structured financial data.
 
 The results reveal that while larger base models like GPT-4o and DeepSeek V3 perform well on general financial tasks, our cost-effective LoRA-adapted Llama 3.1 8B models often match or exceed their performance while requiring only a fraction of the computational resources. This validates our approach of democratizing financial intelligence through parameter-efficient fine-tuning, making sophisticated financial AI accessible to organizations without massive computational budgets.
 
@@ -430,7 +432,7 @@ flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
 [//]: #
 [//]: # '### Cross-task Generalization (Mixture of LoRA Experts)'
 [//]: #
-[//]: # 'We started with single-task fine-tuning, i.e., fine-tune a LoRA adaptor for a task. We got good performance.'
+[//]: # 'We started with single-task fine-tuning, i.e., fine-tuning a LoRA adapter for a task. We got good performance.'
 [//]: #
 [//]: # 'Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as'
 [//]: # 'in [X-LoRA](https://arxiv.org/pdf/2402.07148). X-LoRA is built on top of HuggingFace PEFT.'
