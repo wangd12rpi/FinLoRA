@@ -3,6 +3,7 @@
 ### Test a specific dataset
 
 Run the following python script or use `run_test.sh`.
+
 ```bash
 python test.py \
 --dataset xbrl_finer \
@@ -14,8 +15,8 @@ python test.py \
 
 ### Test all existing LoRA adapters
 
-Run the following python script to test all LoRA adaptors in `../lora_models`, or use `run_test_all.sh`.
+Run the following python script to test all LoRA adapters in `../lora_models`, or use `run_test_all.sh`.
+
 ```bash
 python python test_all.py
 ```
-

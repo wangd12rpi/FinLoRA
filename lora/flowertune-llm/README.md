@@ -35,7 +35,7 @@ flowertune-llm
 │   ├── server_app.py   # Defines your ServerApp
 │   ├── dataset.py      # Defines your dataset and tokenizer
 │   └── models.py       # Defines your models
-│   
+│
 ├── pyproject.toml      # Project metadata like dependencies and configs
 ├── test.py             # Test pre-trained model
 └── README.md
@@ -80,7 +80,7 @@ If you are already familiar with how the Deployment Engine works, you may want t
 
 ## Expected results
 
-![](_static/train_loss_smooth.png)
+![](_readme_images/train_loss_smooth.png)
 
 As expected, OpenLLaMA-7B model works better than its 3B version with lower training loss. With the hyperparameters tested, the 8-bit model seems to deliver lower training loss for the smaller 3B model compared to its 4-bit version.
 
@@ -108,13 +108,13 @@ python test.py --peft-path=/path/to/trained-model-dir/ \
 An answer generated from federated trained 7-billion (8-bit) OpenLLaMA model:
 
 ```
-Great choice. 
-London has so much to offer, and you can really soak up all the sights and sounds in just a single day. 
-Here's a suggested itinerary for you. 
-Start your day off with a hearty breakfast at an authentic British diner. 
-Then head to the iconic Big Ben and the Houses of Parliament to learn about the history of the city. 
-Next, make your way to Westminster Abbey to see the many historical monuments and memorials. 
-From there, cross the river Thames to the Tower of London, which is home to the Crown Jewels of England and Scotland. 
+Great choice.
+London has so much to offer, and you can really soak up all the sights and sounds in just a single day.
+Here's a suggested itinerary for you.
+Start your day off with a hearty breakfast at an authentic British diner.
+Then head to the iconic Big Ben and the Houses of Parliament to learn about the history of the city.
+Next, make your way to Westminster Abbey to see the many historical monuments and memorials.
+From there, cross the river Thames to the Tower of London, which is home to the Crown Jewels of England and Scotland.
 Finally, end your day with a relaxing visit to the London Eye, the tallest Ferris wheel in Europe, for a beautiful view of the city.
 ```
 
