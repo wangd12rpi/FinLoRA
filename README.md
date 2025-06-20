@@ -1,11 +1,11 @@
 # FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
 
 <p>
-  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="readme_images/dataset_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="readme_images/demo_btn.svg"></a>
-  <a href="https://huggingface.co/wangd12/"><img src="readme_images/models_btn.svg"></a>
-  <a href="https://arxiv.org/abs/2505.19819"><img src="readme_images/paper_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="readme_images/doc_btn.svg"></a>
+  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="_images/dataset_btn.svg"></a>
+  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="_images/demo_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="_images/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="_images/paper_btn.svg"></a>
+  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="_images/doc_btn.svg"></a>
 
 </p>
 
@@ -45,9 +45,40 @@ We are particularly interested in two key XBRL applications:
 
 ## Datasets
 
+We test Llama 3.1 8B Instruct with our LoRA adapters on 19 datasets across 4 different types of tasks, ranging from general financial tasks to professional level XBRL (eXtensible Business Reporting Language)-based financial statement analysis. The train-test splits for the four task categories are as follows: General Financial Tasks-122.9k/31.7k, Financial Certificate Tasks—472/346, Financial Reporting Tasks—15.9k/8.3k, and Financial Statement Analysis Tasks—Total: 27.9k/7.3k. For each task, we compute an accuracy and F1 score except for XBRL Term and Finance Bench, for which we compute a [BERTScore F1](https://arxiv.org/abs/1904.09675). The dataset statistics are shown below.
+
 <p>
-  <a style="cursor: text" href="#datasets"><img src="readme_images/datasets.svg"></a>
+  <a style="cursor: text" href="#datasets"><img src="_images/datasets.svg"></a>
 </p>
+
+### Dataset Formats
+
+Each dataset has a specific format:
+
+**General Financial Tasks:**
+
+- **Sentiment Analysis (FPB, FiQA SA, TFNS)**: In these datasets, a financial sentence must be classified with a sentiment from `{negative, neutral, positive}`.
+- **NWGI Sentiment**: In NWGI, financial text is classified into 7-level sentiment from `{strong negative, moderately negative, mildly negative, neutral, mildly positive, moderately positive, strong positive}`. In our testing, we simplified this to the `{negative, neutral, positive}` set of sentiments.
+- **Headline Analysis**: In the Headline dataset, financial headlines are classified with binary answers from `{Yes, No}` based on various questions like whether the headline talks about a share price going up.
+- **Named Entity Recognition**: In NER, financial text with a highlighted entity is classified into entity types from `{person, location, organization}`.
+
+**Financial Certificate Tasks:**
+
+- **CFA Level I/II/III & CPA REG**: The CFA and CPA exams datasets include multiple choice questions from mock exams. the LLM must select an answer from `{A, B, C, D}` or `{A, B, C}` based on the question and context in the case of CFA Level II and CFA Level III. Our question set has a particular focus on ethics and regulations questions.
+
+**Financial Reporting Tasks:**
+
+- **XBRL Term**: In XBRL Term, the LLM must provide a brief explanation for XBRL terminology from the XBRL International website.
+- **FiNER/FNXL Tagging**: In FiNER/FNX;, financial text contains numerical entities that must be tagged with appropriate US GAAP tags. Answers are comma-separated when multiple entities need tagging.
+
+**Financial Statement Analysis Tasks:**
+
+- **XBRL Tag Extraction**: In XBRL tag extraction, the LLM analyzes XBRL context and must respond with an XBRL tag for a specific element.
+- **XBRL Value Extraction**: In XBRL value extraction, the LLM analyzes XBRL context to find specific numerical values.
+- **XBRL Formula Construction**: In XBRL formula construction, the LLM creates financial formulas using US GAAP tags.
+- **XBRL Formula Calculation**: In XBRL formula calculation, the LLM substitutes actual numerical values from the XBRL context into financial formulas.
+- **Financial Math**: In Financial Math, the LLM applies financial formulas to solve numerical problems given a formula and specific values.
+- **FinanceBench**: In FinanceBench, the LLM answers various questions based on XBRL financial reports.
 
 [//]: #
 [//]: #
@@ -132,6 +163,10 @@ We are particularly interested in two key XBRL applications:
 
 We use Llama 3.1 8B Instruct as the base model.
 
+As illustrated in the performance comparison above, Llama 3.1 8B Intruct with our LoRA adpaters demonstrates substantial improvements across all financial task categories. The fine-tuned Llama 3.1 8B model using various LoRA methods achieves remarkable performance gains, with improvements ranging from +36.4% to +67.1% across different task types. Most notably, LoRA methods show exceptional effectiveness in **Financial Certificate** tasks (professional exams like CFA and CPA), where models achieve over 80% accuracy compared to the base model's 13-32% range. Similarly, our LoRA adpaters show significant improvements of +40% to +52% in **Financial Statement Analysis** tasks, particularly our novel XBRL analysis datasets, highlighting LoRA's capability in handling complex, structured financial data.
+
+The results reveal that while larger base models like GPT-4o and DeepSeek V3 perform well on general financial tasks, our cost-effective LoRA-adapted Llama 3.1 8B models often match or exceed their performance while requiring only a fraction of the computational resources. This validates our approach of democratizing financial intelligence through parameter-efficient fine-tuning, making sophisticated financial AI accessible to organizations without massive computational budgets.
+
 Our models achieve the following performance on financial tasks. The table below shows accuracy/F1 scores. -/value represents BERTScore F1.
 
 <details><summary>Full Results</summary>
@@ -166,11 +201,11 @@ Our models achieve the following performance on financial tasks. The table below
 
 </details>
 
-## LoRA Models
+## LoRA Methods
 
 We use four LoRA methods: LoRA, QLoRA, DoRA, and rsLoRA.
 
-You can download LoRA adapators from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters are fine-tuned on financial datasets using various configurations (e.g., 8-bit rank 8 and 4-bit rank 4).
+You can download LoRA adapaters from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12). The adapters are fine-tuned on financial datasets using various configurations (e.g., 8-bit rank 8 and 4-bit rank 4).
 
 ## File Structure
 
@@ -268,7 +303,7 @@ conda activate finenv
 
 #### Login to Hugging Face
 
-When using Llama models, you need to login to Hugging Face due to the models being gated. Run the following command:
+When using Llama models, you need to login to Hugging Face due to the LLMs being gated. Run the following command:
 
 ```bash
 huggingface-cli login
@@ -426,7 +461,7 @@ flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
 [//]: #
 [//]: # '### Cross-task Generalization (Mixture of LoRA Experts)'
 [//]: #
-[//]: # 'We started with single-task fine-tuning, i.e., fine-tune a LoRA adaptor for a task. We got good performance.'
+[//]: # 'We started with single-task fine-tuning, i.e., fine-tuning a LoRA adapter for a task. We got good performance.'
 [//]: #
 [//]: # 'Mixture of LoRA Experts (LoRA-MoE): a LoRA module acts as an expert, a router network assigns weights, such as'
 [//]: # 'in [X-LoRA](https://arxiv.org/pdf/2402.07148). X-LoRA is built on top of HuggingFace PEFT.'
