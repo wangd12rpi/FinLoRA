@@ -9,7 +9,7 @@ python test.py \
 --base_model meta-llama/Llama-3.1-8B-Instruct \
 --batch_size 8 \
 --quant_bits 8 \
---peft_model ../lora_adaptors/8b_8bits_r8/finer_non_batch_llama_3_1_8b_8bits_r8 \
+--peft_model ../lora_adapters/8b_8bits_r8/finer_non_batch_llama_3_1_8b_8bits_r8 \
 ```
 
 ### Test all existing LoRA adapters

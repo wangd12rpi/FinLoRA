@@ -226,7 +226,7 @@ BERTScore F1.
 ## LoRA Models
 
 We use four LoRA methods: LoRA, QLoRA, DoRA, and rsLoRA.
-You can download LoRA adapators from the `lora_adaptors` directory or [Hugging Face](https://huggingface.co/wangd12).
+You can download LoRA adapators from the `lora_adapters` directory or [Hugging Face](https://huggingface.co/wangd12).
 The adapters fine-tuned on financial datasets using various configurations (eg. 8-bit rank 8, 4-bit rank 4).
 
 ## File Structure
@@ -242,7 +242,7 @@ FinLoRA/
 │   ├── finetune.py  # Fine-tuning code using Axolotl
 │   ├── flowertune-llm/  # Federated learning implementation
 │   └── lora/  # Fine-tuning using HF PEFT
-├── lora_adaptors/  
+├── lora_adapters/  
 │   ├── 4bits_r4/
 │   ├── 8bits_r8/
 │   ├── 8bits_r8_dora/
