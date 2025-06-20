@@ -25,7 +25,7 @@ general public.
 
 ## Motivation
 
-The proprietary [BloombergGPT model](https://arxiv.org/abs/2303.17564) released in April 2023 highlighted the potential of financial Large
+The proprietary [BloombergGPT](https://arxiv.org/abs/2303.17564) model annouced in April 2023 highlighted the potential of financial Large
 Language Models (FinLLMs). However, such a "train-from-scratch" approach was
 resource-intensive, requiring one million GPU hours at an estimated cost of $3 million ($3 per GPU
 hour in 2023). This substantial investment underscores the need for a cost-effective solution.
