@@ -1,11 +1,11 @@
 # FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets
 
 <p>
-  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="readme_images/dataset_btn.svg"></a>
-  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="readme_images/demo_btn.svg"></a>
-  <a href="https://huggingface.co/wangd12/"><img src="readme_images/models_btn.svg"></a>
-  <a href="https://arxiv.org/abs/2505.19819"><img src="readme_images/paper_btn.svg"></a>
-  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="readme_images/doc_btn.svg"></a>
+  <a href="https://huggingface.co/datasets/wangd12/XBRL_analysis"><img src="_images/dataset_btn.svg"></a>
+  <a href="https://huggingface.co/spaces/wangd12/xbrl_llm_demo"><img src="_images/demo_btn.svg"></a>
+  <a href="https://huggingface.co/wangd12/"><img src="_images/models_btn.svg"></a>
+  <a href="https://arxiv.org/abs/2505.19819"><img src="_images/paper_btn.svg"></a>
+  <a href="https://finlora-docs.readthedocs.io/en/latest/"><img src="_images/doc_btn.svg"></a>
 
 </p>
 
@@ -46,7 +46,7 @@ We are particularly interested in two key XBRL applications:
 ## Datasets
 
 <p>
-  <a style="cursor: text" href="#datasets"><img src="readme_images/datasets.svg"></a>
+  <a style="cursor: text" href="#datasets"><img src="_images/datasets.svg"></a>
 </p>
 
 [//]: #
@@ -131,6 +131,10 @@ We are particularly interested in two key XBRL applications:
 <img class="figure" src="docs/source/_static/images/p1_new.svg">
 
 We use Llama 3.1 8B Instruct as the base model.
+
+**Key Findings:** As illustrated in the performance comparison above, our LoRA-adapted models demonstrate substantial improvements across all financial task categories. The fine-tuned Llama 3.1 8B models using various LoRA methods achieve remarkable performance gains, with improvements ranging from +36.4% to +67.1% across different task types. Most notably, LoRA methods show exceptional effectiveness in **Financial Certificate** tasks (professional exams like CFA and CPA), where models achieve over 80% accuracy compared to the base model's 13-32% range. Similarly, **Financial Statement Analysis** tasks, particularly our novel XBRL analysis datasets, demonstrate significant improvements of +40% to +52%, highlighting LoRA's capability in handling complex, structured financial data.
+
+The results reveal that while larger base models like GPT-4o and DeepSeek V3 perform well on general financial tasks, our cost-effective LoRA-adapted Llama 3.1 8B models often match or exceed their performance while requiring only a fraction of the computational resources. This validates our approach of democratizing financial intelligence through parameter-efficient fine-tuning, making sophisticated financial AI accessible to organizations without massive computational budgets.
 
 Our models achieve the following performance on financial tasks. The table below shows accuracy/F1 scores. -/value represents BERTScore F1.
 
