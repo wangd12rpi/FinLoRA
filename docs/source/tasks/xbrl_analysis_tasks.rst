@@ -2,9 +2,6 @@
 Financial Statement Analysis
 ==================
 
-Overview
-************
-
 
 
 .. list-table:: Question/training sets for XBRL analysis tasks.
@@ -61,11 +58,3 @@ Overview
      - BERTScore
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx>`__
 
-Tasks Details
-************************
-
-
-
-
-Citations
-****************

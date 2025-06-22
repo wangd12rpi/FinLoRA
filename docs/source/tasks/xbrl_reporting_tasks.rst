@@ -2,8 +2,7 @@
 Financial Data Reporting
 ==================
 
-Overview
-************
+XBRL tagging is a crucial step in creating XBRL reports. This process involves tagging numerical entities within texts, such as earnings call transcripts, using US GAAP tags.
 
 
 
@@ -40,16 +39,13 @@ Overview
      - BERTScore
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx>`__
 
-Tasks Details
-************************
-
-XBRL tagging is a crucial step in creating XBRL reports. This process involves tagging numerical entities within texts, such as earnings call transcripts, using US GAAP tags.
 
 Two distinct approaches are employed:
 
 * Regular Approach: The input addresses only one numerical entity at a time, and a list of potential US GAAP tag options is not provided. This approach is designed for simple and quick queries. Since options aren't provided, input processing can be faster. Fine-tuned models perform well after learning the tag taxonomy, but base models perform poorly because they lack knowledge of all the valid tags.
 
 * Batched Approach: The input includes multiple (e.g., four) numerical entities to be tagged simultaneously, and a list of potential US GAAP tag options is provided. Providing the options allows the Large Language Model (LLM) to know which tags are valid choices without needing pre-existing knowledge of the entire taxonomy; it can infer the appropriate tag from its name and context. To improve efficiency and reduce token usage, given the large number of tags, multiple tagging questions are grouped into a single input batch following the list of options.
+
 
 FiNER-139
 --------------------
