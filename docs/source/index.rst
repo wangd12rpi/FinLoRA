@@ -24,15 +24,26 @@ FinLoRA
    intro/overview
    intro/demo
 
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Tutorials
+
+   tutorials/setup
+   tutorials/data_processing
+   tutorials/finetune
+   tutorials/eval
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Tasks
 
+   tasks/overview.rst
    tasks/general_financial_tasks
    tasks/certification_tasks
    tasks/xbrl_reporting_tasks
    tasks/xbrl_analysis_tasks
-   tasks/dataset_processing
 
 .. toctree::
    :maxdepth: 3
@@ -45,14 +56,7 @@ FinLoRA
    lora_methods/fed_lora
 
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Tutorials
 
-   tutorials/setup
-   tutorials/data_processing
-   tutorials/finetune
-   tutorials/eval
 
 .. toctree::
    :maxdepth: 4

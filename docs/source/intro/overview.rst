@@ -2,8 +2,6 @@
 Overview
 ==================
 
-Introduction
-============
 
 Low-rank adaptation (LoRA) methods show great potential for scaling pre-trained general-purpose
 Large Language Models (LLMs) to hundreds or thousands of use scenarios. However, their efficacy in
@@ -30,7 +28,7 @@ fine-tuning method. It dramatically reduces the number of trainable parameters t
 of the full model's parameters. This enables fine-tuning on 4 A5000 GPUs and brings the cost of
 fine-tuning down to less than \$100, making FinLLMs accessible to the general public.
 
-Performance of FinLoRA
+Performance
 ======================
 
 .. raw:: html
@@ -42,7 +40,5 @@ As illustrated in the performance comparison above, Llama 3.1 8B Intruct with ou
 
 The results reveal that, while larger base models like GPT-4o and DeepSeek V3 perform well on general financial tasks, our cost-effective LoRA-adapted Llama 3.1 8B models often match or exceed their performance while requiring only a fraction of the computational resources. This validates our approach of democratizing financial intelligence through parameter-efficient fine-tuning, making sophisticated financial AI accessible to organizations without massive computational budgets.
 
-References
-==========
 
 .. _BloombergGPT: https://arxiv.org/abs/2303.17564
