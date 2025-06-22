@@ -315,33 +315,6 @@ Alternatively, you can set the HF_TOKEN environment variable:
 export HF_TOKEN=your_token_here
 ```
 
-### Evaluation
-
-To test adapters, navigate to the test directory:
-
-```bash
-cd test
-bash run_all_adapters.sh
-```
-
-Define the adapters and tasks you want to run in the script, then execute:
-
-```bash
-bash run_all_adapters.sh
-```
-
-To run a base model (e.g., OpenAI):
-
-```bash
-bash run_openai.sh
-```
-
-Enter your API key in the file, set the tasks to run, then execute:
-
-```bash
-bash run_openai.sh
-```
-
 ### Fine-Tuning
 
 1. To perform fine-tuning, first navigate to the lora directory and fetch deepspeed configs. The deepspeed configs allow the fine-tuning framework to parallelize fine-tuning across GPUs
@@ -452,6 +425,33 @@ flwr run . --run-config "model.name='openlm-research/open_llama_7b_v2' model.qua
 
 # Run for 50 rounds with 25% client participation
 flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
+```
+
+### Evaluation
+
+To test adapters, navigate to the test directory:
+
+```bash
+cd test
+bash run_all_adapters.sh
+```
+
+Define the adapters and tasks you want to run in the script, then execute:
+
+```bash
+bash run_all_adapters.sh
+```
+
+To run a base model (e.g., OpenAI):
+
+```bash
+bash run_openai.sh
+```
+
+Enter your API key in the file, set the tasks to run, then execute:
+
+```bash
+bash run_openai.sh
 ```
 
 [//]: #
