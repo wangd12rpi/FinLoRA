@@ -13,6 +13,7 @@ Financial Statement Analysis
      - Average Prompt Length
      - Metrics
      - Source
+     - Dataset File
    * - Financial Math
      - Math
      - 800
@@ -20,6 +21,7 @@ Financial Statement Analysis
      - 116
      - Accuracy
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx>`__
+     - `formula_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/formula_train.jsonl>`__
    * - Tag Extraction
      - XBRL Extraction
      - 10.1k
@@ -27,6 +29,7 @@ Financial Statement Analysis
      - 3.8k
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
    * - Value Extraction
      - XBRL Extraction
      - 10.1k
@@ -34,6 +37,7 @@ Financial Statement Analysis
      - 3.8k
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
    * - Formula Construction
      - XBRL Extraction
      - 3.4k
@@ -41,6 +45,7 @@ Financial Statement Analysis
      - 3.8k
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
    * - Formula Calculation
      - XBRL Extraction
      - 3.4k
@@ -48,6 +53,7 @@ Financial Statement Analysis
      - 3.8k
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
    * - FinanceBench
      - Math
      - 86
@@ -55,6 +61,7 @@ Financial Statement Analysis
      - 983
      - BERTScore
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx>`__
+     - `financebench_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/financebench_train.jsonl>`__
 
 
 Financial Statement analysis involves extracting and interpreting financial data from XBRL-formatted documents. This process enables users to analyze financial statements, extract specific values, construct formulas, and perform calculations based on the extracted data.
@@ -206,4 +213,85 @@ FinanceBench involves analyzing and interpreting financial benchmarks and metric
      - Apple Inc. outperforms industry benchmarks across all metrics. The company's gross profit margin (44.13% vs 35.20%), operating margin (29.82% vs 18.50%), and net profit margin (25.31% vs 15.70%) are significantly higher than industry averages, indicating superior operational efficiency. Return on assets (20.35% vs 12.40%) shows effective asset utilization, while return on equity (160.09% vs 22.30%) demonstrates exceptional shareholder value creation, though this extremely high figure may reflect significant share buybacks or debt leverage.
 
 
+Fine-tuning for Financial Statement Analysis Tasks
+--------------------------------------------------
 
+To fine-tune a model for financial statement analysis tasks, you can use the configurations provided in the ``lora/finetune_configs.json`` file. Below are the configurations for each task:
+
+Financial Math
+^^^^^^^^^^^^^
+
+To fine-tune a model for the Financial Math task, you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py formula_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py formula_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py formula_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py formula_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **formula_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **formula_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **formula_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **formula_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
+
+Tag Extraction and Value Extraction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To fine-tune a model for the Tag Extraction or Value Extraction tasks, you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py xbrl_extract_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py xbrl_extract_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py xbrl_extract_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py xbrl_extract_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **xbrl_extract_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **xbrl_extract_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **xbrl_extract_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **xbrl_extract_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
+
+FinanceBench
+^^^^^^^^^^^
+
+To fine-tune a model for the FinanceBench task, you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py financebench_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py financebench_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py financebench_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py financebench_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **financebench_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **financebench_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **financebench_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **financebench_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.

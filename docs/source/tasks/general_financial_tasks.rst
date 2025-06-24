@@ -14,6 +14,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - Average Prompt Length
      - Metrics
      - Source
+     - Dataset File
    * - Financial Phrase Bank (FPB)
      - Sentiment Analysis
      - 3.1k
@@ -21,6 +22,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 56
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/en-fpb>`__
+     - Part of `finlora_sentiment_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/finlora_sentiment_train.jsonl>`__
    * - Financial Question Answering (FiQA SA)
      - Sentiment Analysis
      - 822
@@ -28,6 +30,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 48
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/fiqa-sentiment-classification>`__
+     - Part of `finlora_sentiment_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/finlora_sentiment_train.jsonl>`__
    * - Twitter Financial News Sentiment (TFNS)
      - Sentiment Analysis
      - 9.5k
@@ -35,6 +38,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 52
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment>`__
+     - Part of `finlora_sentiment_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/finlora_sentiment_train.jsonl>`__
    * - News with GPT (NWGI)
      - Sentiment Analysis
      - 12.9k
@@ -42,6 +46,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 81
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/TheFinAI/NWGI_test>`__
+     - Part of `finlora_sentiment_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/finlora_sentiment_train.jsonl>`__
    * - Headline
      - Headline Analysis
      - 82.2k
@@ -49,6 +54,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 43
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-headline-cls>`__
+     - `headline_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/headline_train.jsonl>`__
    * - Named Entity Recognition (NER)
      - Named Entity Recognition
      - 13.5k
@@ -56,6 +62,7 @@ We consider six general financial tasks, in total 122.9k train questions and 31.
      - 138
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/FinGPT/fingpt-ner-cls>`__
+     - `ner_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/ner_train.jsonl>`__
 
 
 
@@ -164,6 +171,89 @@ The NER dataset annotates one entity per sentence, categorized into one of three
    * - **Output**
      - location
 
+
+Fine-tuning for General Financial Tasks
+--------------------------------------------------
+
+To fine-tune a model for general financial tasks, you can use the configurations provided in the ``lora/finetune_configs.json`` file. Below are the configurations for each task:
+
+Sentiment Analysis
+^^^^^^^^^^^^^^^^^^^^^
+
+To fine-tune a model for sentiment analysis tasks (FPB, FiQA SA, TFNS, NWGI), you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py sentiment_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **sentiment_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **sentiment_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **sentiment_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **sentiment_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
+
+Headline Analysis
+^^^^^^^^^^^^^^^^^^^^^
+
+To fine-tune a model for the Headline Analysis task, you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py headline_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py headline_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py headline_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py headline_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **headline_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **headline_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **headline_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **headline_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
+
+Named Entity Recognition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To fine-tune a model for the Named Entity Recognition task, you can use one of the following configurations:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py ner_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py ner_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py ner_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py ner_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **ner_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **ner_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **ner_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **ner_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
 
 Citations
 ****************

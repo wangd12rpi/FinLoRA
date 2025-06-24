@@ -62,6 +62,37 @@ LoRA is particularly valuable when:
 * You prefer low computational cost
 * You still want to keep world knowledge of the base model
 
+Using LoRA in FinLoRA
+----------------------
+
+To use standard LoRA in FinLoRA, you can configure fine-tuning without specifying any special parameters for other LoRA variants. Here's an example of how to configure standard LoRA for fine-tuning:
+
+.. code-block:: bash
+
+   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8
+
+This uses the configuration from ``lora/finetune_configs.json``:
+
+.. code-block:: json
+
+   "sentiment_llama_3_1_8b_8bits_r8": {
+     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+     "lora_r": 8,
+     "quant_bits": 8,
+     "learning_rate": 0.0001,
+     "num_epochs": 4,
+     "batch_size": 8,
+     "gradient_accumulation_steps": 2
+   }
+
+The key parameters for standard LoRA are:
+- ``lora_r``: The rank of the LoRA adapter
+- ``quant_bits``: The quantization bits (8 for standard LoRA)
+- ``lora_alpha``: The scaling factor for the LoRA adapter (optional, default is 16)
+
+Standard LoRA adapters are saved in the ``lora_adapters/8bits_r8`` directory after fine-tuning.
+
 References
 ----------
 

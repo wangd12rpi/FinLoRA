@@ -63,3 +63,92 @@ Evaluation Results
 The evaluation results will be printed to the console, including metrics such as accuracy and F1 score. The results can also be found in the ``test/results`` directory.
 
 For each dataset, the evaluation script will generate a report with the model's performance on the test set.
+
+Available Datasets and LoRA Adapters for Evaluation
+--------------------------------------------------
+
+The following table lists the available datasets and LoRA adapters for evaluation in FinLoRA:
+
+.. list-table:: Datasets for Evaluation
+   :widths: auto
+   :header-rows: 1
+
+   * - Dataset
+     - Description
+     - Dataset Parameter
+     - Documentation
+   * - Sentiment Analysis
+     - Financial sentiment analysis datasets (FPB, FiQA SA, TFNS, NWGI)
+     - ``sentiment``
+     - :doc:`../tasks/general_financial_tasks`
+   * - Headline Analysis
+     - Financial headline classification
+     - ``headline``
+     - :doc:`../tasks/general_financial_tasks`
+   * - Named Entity Recognition
+     - Financial named entity recognition
+     - ``ner``
+     - :doc:`../tasks/general_financial_tasks`
+   * - FiNER-139
+     - XBRL tagging with 139 common US GAAP tags
+     - ``finer``
+     - :doc:`../tasks/xbrl_reporting_tasks`
+   * - XBRL Term
+     - XBRL terminology explanation
+     - ``xbrl_term``
+     - :doc:`../tasks/xbrl_reporting_tasks`
+   * - XBRL Extraction
+     - Tag and value extraction from XBRL documents
+     - ``xbrl_extract``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+   * - Financial Math
+     - Financial mathematics problems
+     - ``formula``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+   * - FinanceBench
+     - Financial benchmarking and analysis
+     - ``financebench``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+   * - CFA Level I
+     - CFA Level I exam questions
+     - ``cfa_level1``
+     - :doc:`../tasks/certification_tasks`
+   * - CFA Level II
+     - CFA Level II exam questions
+     - ``cfa_level2``
+     - :doc:`../tasks/certification_tasks`
+   * - CFA Level III
+     - CFA Level III exam questions
+     - ``cfa_level3``
+     - :doc:`../tasks/certification_tasks`
+   * - CPA REG
+     - CPA Regulation exam questions
+     - ``cpa_reg``
+     - :doc:`../tasks/certification_tasks`
+
+.. list-table:: LoRA Adapters for Evaluation
+   :widths: auto
+   :header-rows: 1
+
+   * - Adapter Type
+     - Description
+     - Path
+     - Documentation
+   * - Standard LoRA (8-bit)
+     - 8-bit quantization with rank 8
+     - ``lora_adapters/8bits_r8/<task>_llama_3_1_8b_8bits_r8``
+     - :doc:`../lora_methods/lora_methods`
+   * - QLoRA (4-bit)
+     - 4-bit quantization with rank 4
+     - ``lora_adapters/4bits_r4/<task>_llama_3_1_8b_4bits_r4``
+     - :doc:`../lora_methods/qlora`
+   * - DoRA
+     - Weight-Decomposed Low-Rank Adaptation
+     - ``lora_adapters/8bits_r8_dora/<task>_llama_3_1_8b_8bits_r8_dora``
+     - :doc:`../lora_methods/dora`
+   * - RSLoRA
+     - Rank-Stabilized LoRA
+     - ``lora_adapters/8bits_r8_rslora/<task>_llama_3_1_8b_8bits_r8_rslora``
+     - :doc:`../lora_methods/rslora`
+
+Replace ``<task>`` with the specific task name (e.g., ``sentiment``, ``headline``, ``ner``, etc.).

@@ -68,3 +68,78 @@ The fine-tuned LoRA adapters are saved in the ``lora_adapters`` directory. This 
 Each subdirectory contains the fine-tuned adapters for different tasks, such as sentiment analysis, headline analysis, named entity recognition, etc.
 
 These adapters can be loaded during evaluation to test the fine-tuned models.
+
+Available Datasets and LoRA Methods
+----------------------------------
+
+The following table lists the available datasets and LoRA methods in FinLoRA, along with links to their documentation:
+
+.. list-table:: Datasets and LoRA Methods
+   :widths: auto
+   :header-rows: 1
+
+   * - Dataset
+     - Description
+     - Configuration Name
+     - Documentation
+   * - Sentiment Analysis
+     - Financial sentiment analysis datasets (FPB, FiQA SA, TFNS, NWGI)
+     - ``sentiment_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/general_financial_tasks`
+   * - Headline Analysis
+     - Financial headline classification
+     - ``headline_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/general_financial_tasks`
+   * - Named Entity Recognition
+     - Financial named entity recognition
+     - ``ner_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/general_financial_tasks`
+   * - FiNER-139
+     - XBRL tagging with 139 common US GAAP tags
+     - ``finer_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/xbrl_reporting_tasks`
+   * - XBRL Term
+     - XBRL terminology explanation
+     - ``xbrl_term_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/xbrl_reporting_tasks`
+   * - XBRL Extraction
+     - Tag and value extraction from XBRL documents
+     - ``xbrl_extract_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+   * - Financial Math
+     - Financial mathematics problems
+     - ``formula_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+   * - FinanceBench
+     - Financial benchmarking and analysis
+     - ``financebench_llama_3_1_8b_8bits_r8``
+     - :doc:`../tasks/xbrl_analysis_tasks`
+
+.. list-table:: LoRA Methods
+   :widths: auto
+   :header-rows: 1
+
+   * - Method
+     - Description
+     - Configuration Parameter
+     - Documentation
+   * - Standard LoRA
+     - Low-Rank Adaptation
+     - No special parameter needed
+     - :doc:`../lora_methods/lora_methods`
+   * - QLoRA
+     - Quantized LoRA (4-bit)
+     - ``quant_bits: 4``
+     - :doc:`../lora_methods/qlora`
+   * - DoRA
+     - Weight-Decomposed Low-Rank Adaptation
+     - ``peft_use_dora: true``
+     - :doc:`../lora_methods/dora`
+   * - RSLoRA
+     - Rank-Stabilized LoRA
+     - ``peft_use_rslora: true``
+     - :doc:`../lora_methods/rslora`
+   * - FedLoRA
+     - Federated Learning with LoRA
+     - Uses Flower framework
+     - :doc:`../lora_methods/fed_lora`

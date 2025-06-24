@@ -13,3 +13,32 @@ Every client does the following: 1) Gets a minibatch of its private data 2) Comp
 By adding noise, DP-LoRA prevents the centralized model from inferring the private data later on. This would allow the banks in the credit risk example to work on a model together.
 
 As in normal federated learning, the server then aggregates the weights from all clients in a weighted average and sends the updated weights to all clients.
+
+Using FedLoRA in FinLoRA
+------------------------
+
+FinLoRA implements federated learning with LoRA using the Flower framework. To use FedLoRA, you need to navigate to the flowertune-llm directory and run the federated learning simulation:
+
+.. code-block:: bash
+
+   cd lora/flowertune-llm
+   pip install -e .
+   flwr run .
+
+You can customize the configuration using command-line arguments:
+
+.. code-block:: bash
+
+   # Use Llama-3.1-8B instead of the default model and 8-bits quantization
+   flwr run . --run-config "model.name='meta-llama/Llama-3.1-8B-Instruct' model.quantization=8"
+
+   # Run for 50 rounds with 25% client participation
+   flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
+
+The implementation is located in the ``lora/flowertune-llm`` directory. The main components are:
+
+- ``flowertune_llm/dataset.py``: Handles dataset loading and partitioning for federated learning
+- ``flowertune_llm/client.py``: Implements the federated learning client
+- ``flowertune_llm/server.py``: Implements the federated learning server
+
+For more details on the implementation, refer to the code in the ``lora/flowertune-llm`` directory.
