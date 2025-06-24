@@ -69,3 +69,52 @@ After the updates, the new weight matrix is
 
    \boldsymbol{W}' = \boldsymbol{m}\,\frac{\boldsymbol{V} + \Delta \boldsymbol{V}}{\lVert \boldsymbol{V} + \Delta \boldsymbol{V} \rVert_c}
         = \boldsymbol{m}\,\frac{\boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A}}{\lVert \boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A} \rVert_c}.
+
+Using DoRA in FinLoRA
+----------------------
+
+To use DoRA in FinLoRA, you need to set the ``peft_use_dora`` parameter to ``true`` in your configuration. Here's an example of how to configure DoRA for fine-tuning:
+
+.. code-block:: bash
+
+   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8_dora
+
+This uses the configuration from ``lora/finetune_configs.json``:
+
+.. code-block:: json
+
+   "sentiment_llama_3_1_8b_8bits_r8_dora": {
+     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+     "lora_r": 8,
+     "quant_bits": 8,
+     "learning_rate": 0.0001,
+     "num_epochs": 4,
+     "batch_size": 8,
+     "gradient_accumulation_steps": 2,
+     "peft_use_dora": true
+   }
+
+You can also specify a custom ``lora_alpha`` value for DoRA:
+
+.. code-block:: json
+
+   "sentiment_llama_3_1_8b_8bits_r8_dora_a32": {
+     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+     "lora_r": 8,
+     "quant_bits": 8,
+     "learning_rate": 0.0001,
+     "num_epochs": 4,
+     "batch_size": 8,
+     "gradient_accumulation_steps": 2,
+     "lora_alpha": 32,
+     "peft_use_dora": true
+   }
+
+The key parameters for DoRA are:
+- ``peft_use_dora``: Set to ``true`` to enable DoRA
+- ``lora_r``: The rank of the LoRA adapter
+- ``lora_alpha``: The scaling factor for the LoRA adapter (optional, default is 16)
+
+DoRA adapters are saved in the ``lora_adapters/8bits_r8_dora`` directory after fine-tuning.

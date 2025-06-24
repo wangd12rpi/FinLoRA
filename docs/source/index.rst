@@ -69,3 +69,9 @@ FinLoRA
    benchmark_results/analysis_results
    benchmark_results/federated_results
    benchmark_results/comparisons
+
+.. toctree::
+   :maxdepth: 2
+   :caption: References
+
+   references

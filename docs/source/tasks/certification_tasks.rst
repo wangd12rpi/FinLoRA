@@ -16,30 +16,35 @@ We aim to benchmark our model's performance on professional financial certificat
      - #Test
      - Average Prompt Length
      - Metrics
+     - Dataset File
    * - CFA Level I
      - Analyst Exam
      - 180
      - 90
      - 181
      - Accuracy, F1
+     - Not publicly available due to copyright
    * - CFA Level II
      - Analyst Exam
      - 88
      - 77
      - 1.0k
      - Accuracy, F1
+     - Not publicly available due to copyright
    * - CFA Level III
      - Analyst Exam
      - 80
      - 78
      - 961
      - Accuracy, F1
+     - Not publicly available due to copyright
    * - CPA REG
      - Accountant Exam
      - 124
      - 101
      - 147
      - Accuracy, F1
+     - Not publicly available due to copyright
 
 
 
@@ -106,3 +111,32 @@ The CPA Regulation (REG) exam tests knowledge of federal taxation, business law,
      - Question: A tax return preparer may disclose or use tax return information without the taxpayer's consent to. Choices: A. Facilitate a supplier's or lender's credit evaluation of the taxpayer., B. Accommodate the request of a financial institution that needs to determine the amount of taxpayer's debt to it, to be forgiven., C. Be evaluated by a quality or peer review., D. Solicit additional nontax business..
    * - **Output**
      - C. Be evaluated by a quality or peer review.
+
+
+Fine-tuning for Financial Certification Tasks
+--------------------------------------------------
+
+Due to the copyright restrictions on the certification exam datasets, we cannot provide the exact datasets used for fine-tuning. However, if you have your own collection of certification exam questions, you can use one of the following configurations to fine-tune a model for these tasks:
+
+.. code-block:: bash
+
+   # Standard LoRA with 8-bit quantization and rank 8
+   python lora/finetune.py cfa_llama_3_1_8b_8bits_r8
+
+   # QLoRA with 4-bit quantization and rank 4
+   python lora/finetune.py cfa_llama_3_1_8b_4bits_r4
+
+   # DoRA with 8-bit quantization and rank 8
+   python lora/finetune.py cfa_llama_3_1_8b_8bits_r8_dora
+
+   # RSLoRA with 8-bit quantization and rank 8
+   python lora/finetune.py cfa_llama_3_1_8b_8bits_r8_rslora
+
+These configurations use different combinations of quantization bits, rank, and LoRA methods:
+
+- **cfa_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **cfa_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
+- **cfa_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
+- **cfa_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
+
+The dataset should be formatted in JSONL format with fields for instruction, input, and output, similar to other tasks in this documentation. You would need to replace the dataset path in the configuration with the path to your own certification exam dataset.

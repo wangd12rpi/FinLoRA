@@ -16,3 +16,33 @@ Each block in QLoRA has a quantization constant. QLoRA employs double quantizati
 The last part of QLoRA is paged optimizers. Paged optimizers reduce GPU memory spikes by switching pages to CPU memory when GPU RAM becomes full when processing long sequences, and the pages are not needed for the current computation of the forward/backward pass.
 
 The forward pass for QLoRA is :math:`\boldsymbol{y} = p_{16}(\boldsymbol{W}_0^{\text{NF4}}) \boldsymbol{x} + \gamma_r \boldsymbol{B} \boldsymbol{A} \boldsymbol{x}`.
+
+Using QLoRA in FinLoRA
+----------------------
+
+To use QLoRA in FinLoRA, you need to set the ``quant_bits`` parameter to ``4`` in your configuration. Here's an example of how to configure QLoRA for fine-tuning:
+
+.. code-block:: bash
+
+   python lora/finetune.py sentiment_llama_3_1_8b_4bits_r4
+
+This uses the configuration from ``lora/finetune_configs.json``:
+
+.. code-block:: json
+
+   "sentiment_llama_3_1_8b_4bits_r4": {
+     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+     "lora_r": 4,
+     "quant_bits": 4,
+     "learning_rate": 0.0001,
+     "num_epochs": 4,
+     "batch_size": 8,
+     "gradient_accumulation_steps": 2
+   }
+
+The key parameters for QLoRA are:
+- ``quant_bits``: Set to ``4`` to enable 4-bit quantization
+- ``lora_r``: The rank of the LoRA adapter, typically smaller (e.g., ``4``) for QLoRA to further reduce memory usage
+
+QLoRA adapters are saved in the ``lora_adapters/4bits_r4`` directory after fine-tuning.
