@@ -482,7 +482,7 @@ We welcome contributions to the FinLoRA project! Please feel free to submit issu
 
 ## License
 
-This project is open source. Please check individual dataset licenses for specific usage terms.
+This project is released under OpenMDW-1.0. Please check individual dataset licenses for specific usage terms.
 
 ## Citation
 
