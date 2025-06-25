@@ -88,7 +88,6 @@
     "peft_use_rslora": true
   },
 
-
   "sentiment_llama_3_1_8b_8bits_r8_dora_a32": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
@@ -186,8 +185,6 @@
     "peft_use_dora": true
   },
 
-
-
   "sentiment_llama_3_1_8b_8bits_r8_dora": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
@@ -277,7 +274,6 @@
     "peft_use_dora": true
   },
 
-
   "xbrl_extract_llama_3_1_8b_8bits_r8": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
     "dataset_path": "../data/train/xbrl_extract_train.jsonl",
@@ -296,7 +292,7 @@
     "learning_rate": 0.0001,
     "num_epochs": 1,
     "batch_size": 1,
-    "gradient_accumulation_steps": 8,
+    "gradient_accumulation_steps": 8
   },
   "finer_llama_3_1_8b_8bits_r8": {
     "base_model": "meta-llama/Llama-3.1-8B-Instruct",

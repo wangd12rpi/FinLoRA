@@ -57,6 +57,47 @@ Example:
      --quant_bits 8 \
      --source hf
 
+Using run_all_adapters.sh
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To test multiple adapters systematically, use the ``run_all_adapters.sh`` script:
+
+.. code-block:: bash
+
+   cd test
+   bash run_all_adapters.sh
+
+Before running, define the adapters and tasks you want to run in the script by editing the configuration variables. Then execute:
+
+.. code-block:: bash
+
+   bash run_all_adapters.sh
+
+This script allows you to batch evaluate multiple LoRA adapters across different tasks efficiently.
+
+Using run_openai.sh
+^^^^^^^^^^^^^^^^^^
+
+To run evaluations using base models from external APIs (e.g., OpenAI):
+
+.. code-block:: bash
+
+   bash run_openai.sh
+
+Before running:
+
+1. Enter your API key in the file
+2. Set the tasks you want to run
+3. Configure any other API-specific parameters
+
+Then execute:
+
+.. code-block:: bash
+
+   bash run_openai.sh
+
+This is useful for comparing your fine-tuned LoRA adapters against commercial models like GPT-4.
+
 Evaluation Results
 ---------------
 
