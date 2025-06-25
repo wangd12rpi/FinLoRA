@@ -1,85 +1,83 @@
+DoRA
+====
 
-Weight-Decomposed Low-Rank Adaptation (DoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. contents:: Table of Contents
 
-LoRA makes simple changes to the model weights, so it sometimes doesn't capture the full complexity of the data and its relationships. DoRA solves this issue of capturing data complexity.
+Background
+----------
 
-DoRA decomposes the weight matrix into a *magnitude vector* and a *direction matrix*.
-The magnitude vector consists of the lengths of the columns in the weight matrix and is computed by taking each column's :math:`\ell_2` norm.
-The direction matrix :math:`\boldsymbol V` is the collection of the original columns. Its unit-column form :math:`\widehat{\boldsymbol V}=\boldsymbol V/\lVert\boldsymbol V\rVert_c` is obtained by dividing each column by its :math:`\ell_2` norm.
+**Citation:** `DoRA: Weight-Decomposed Low-Rank Adaptation (Liu et al., 2024) <https://arxiv.org/abs/2402.09353>`_
 
-The magnitude vector :math:`\boldsymbol{m}` is of size :math:`1 \times k`, where :math:`k` is the number of columns. The direction matrix :math:`\boldsymbol{V}` is of size :math:`d \times k`, where :math:`d` is the number of rows in a weight matrix.
+DoRA introduces improvements that are intended to close the issue of LoRA's accuracy lagging behind that of full fine-tuning. DoRA decomposes pre-trained weights into magnitude and direction components, fine-tuning both while using LoRA specifically for directional updates to efficiently minimize trainable parameters. It enhances both learning capacity and training stability while avoiding additional inference overhead.
 
-The decomposition can be written as:
+Quick Facts
+~~~~~~~~~~~
 
-.. math::
+#. DoRA is a weight-decomposed fine-tuning method that extends LoRA with magnitude-direction decomposition.
+#. DoRA can often but not in all cases (such as ours)achieve accuracy close to full fine-tuning while maintaining the same parameter count as LoRA.
+#. DoRA introduces no additional inference latency when weights are merged.
+#. DoRA works with any neural network containing dense layers.
 
-   \boldsymbol{W}_0 \;=\; \boldsymbol{m}\,\frac{\boldsymbol{V}}{\lVert \boldsymbol{V} \rVert_c}\;=\;\lVert \boldsymbol{W}_0 \rVert_c\,\frac{\boldsymbol{W}_0}{\lVert \boldsymbol{W}_0 \rVert_c},
+Algorithmic Idea
+~~~~~~~~~~~~~~~~
 
-where :math:`\lVert \cdot \rVert_c` denotes the column-wise :math:`\ell_2` norm (i.e., the norm is taken independently for each column) and :math:`\boldsymbol{W}_0` is the frozen pretrained weight.
+LoRA's limitations come from coupling magnitude and direction updates. DoRA separates those components, enabling mo43 fine-grained adaptation that more closely matches full fine-tuning.
 
-Here is an example of the decomposition:
+For a pre-trained weight matrix :math:`\mathbf{W}_0`, DoRA decomposes it into a magnitude vector :math:`\mathbf{m}` and direction matrix :math:`\mathbf{V}` where :math:`\mathbf{m} = ||\mathbf{W}_0||_c` (column-wise norm) and :math:`\mathbf{V} = \mathbf{W}_0`. The magnitude vector consists of the :math:`\ell_2` norms of each column, while the direction matrix contains the original weight matrix.
 
-.. math::
+During training, the following hold true:
 
-   \boldsymbol{W}_0 =
-   \begin{bmatrix}
-   1 & 7 & 2 & 8 & 5 \\
-   2 & 10 & 4 & 12 & 10 \\
-   3 & 15 & 12 & 18 & 27 \\
-   4 & 12 & 16 & 16 & 36
-   \end{bmatrix}, \qquad
-   \boldsymbol{W}_0 \in \mathbb{R}^{4 \times 5}.
+#. :math:`\mathbf{W}_0` is decomposed into trainable magnitude :math:`\mathbf{m}` and direction components :math:`\mathbf{V}`.
+#. Only the direction matrix receives LoRA updates :math:`\Delta\mathbf{V} = \mathbf{B}\mathbf{A}` while magnitude is trained directly.
+#. The forward pass becomes: :math:`\mathbf{W}' = \mathbf{m} \frac{\mathbf{V} + \Delta\mathbf{V}}{||\mathbf{V} + \Delta\mathbf{V}||_c}`.
+#. DoRA exhibits learning patterns closer to full fine-tuning with negative correlation between magnitude and direction changes.
 
-For column :math:`j`
+Key Equations
+~~~~~~~~~~~~
 
-.. math::
-
-   \lVert \boldsymbol{w}_j \rVert_2 = \sqrt{\sum_{i=1}^{4} W_{ij}^2}.
-
-These norms form a :math:`1 \times 5` magnitude vector:
+For a pre-trained weight matrix :math:`\mathbf{W}_0 \in \mathbb{R}^{d \times k}`, the DoRA decomposition follows:
 
 .. math::
 
-   \boldsymbol{m} = \left[ 5.4772,\; 22.7596,\; 20.4939,\; 28.0713,\; 46.3681 \right].
+   \mathbf{W}_0 = \mathbf{m} \frac{\mathbf{V}}{||\mathbf{V}||_c} = ||\mathbf{W}_0||_c \frac{\mathbf{W}_0}{||\mathbf{W}_0||_c}
 
-The unit-column direction matrix is
-
-.. math::
-
-   \widehat{\boldsymbol{V}} =
-   \begin{bmatrix}
-   0.182574 & 0.307562 & 0.097590 & 0.284988 & 0.107833 \\
-   0.365148 & 0.439375 & 0.195180 & 0.427482 & 0.215666 \\
-   0.547723 & 0.659062 & 0.585540 & 0.641223 & 0.582297 \\
-   0.730297 & 0.527250 & 0.780720 & 0.569976 & 0.776396
-   \end{bmatrix}.
-
-Every column of :math:`\widehat{\boldsymbol{V}}` now has unit length:
+Where the weight decomposition is:
 
 .. math::
 
-   \lVert \boldsymbol{v}_j \rVert_2 = 1, \qquad \text{for all } j.
+   \mathbf{m} = ||\mathbf{W}_0||_c, \quad \mathbf{V} = \mathbf{W}_0
 
-These are updated separately. The magnitude vector :math:`\boldsymbol{m}` is trained directly, while the direction matrix :math:`\boldsymbol{V}` is fine-tuned using LoRA: :math:`\Delta\boldsymbol{V} = \boldsymbol{B}\boldsymbol{A}` with :math:`\boldsymbol{B}\!\in\!\mathbb{R}^{d\times r}` and :math:`\boldsymbol{A}\!\in\!\mathbb{R}^{r\times k}`.
-
-After the updates, the new weight matrix is
+The updated weight matrix becomes:
 
 .. math::
 
-   \boldsymbol{W}' = \boldsymbol{m}\,\frac{\boldsymbol{V} + \Delta \boldsymbol{V}}{\lVert \boldsymbol{V} + \Delta \boldsymbol{V} \rVert_c}
-        = \boldsymbol{m}\,\frac{\boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A}}{\lVert \boldsymbol{W}_0 + \boldsymbol{B}\boldsymbol{A} \rVert_c}.
+   \mathbf{W}' = \mathbf{m} \frac{\mathbf{V} + \Delta\mathbf{V}}{||\mathbf{V} + \Delta\mathbf{V}||_c} = \mathbf{m} \frac{\mathbf{W}_0 + \mathbf{B}\mathbf{A}}{||\mathbf{W}_0 + \mathbf{B}\mathbf{A}||_c}
 
-Using DoRA in FinLoRA
-----------------------
+Where:
 
-To use DoRA in FinLoRA, you need to set the ``peft_use_dora`` parameter to ``true`` in your configuration. Here's an example of how to configure DoRA for fine-tuning:
+#. :math:`\mathbf{m} \in \mathbb{R}^{1 \times k}` is the magnitude vector of column-wise :math:`\ell_2` norms.
+#. :math:`\mathbf{V} \in \mathbb{R}^{d \times k}` is the direction matrix initialized as :math:`\mathbf{W}_0`.
+#. :math:`\mathbf{A} \in \mathbb{R}^{r \times k}` and :math:`\mathbf{B} \in \mathbb{R}^{d \times r}` are the LoRA adaptation matrices for directional updates.
+#. :math:`||\cdot||_c` denotes the column-wise :math:`\ell_2` norm operation.
+
+The number of trainable parameters is:
+
+.. math::
+
+   |\Theta| = k + 2 \times L_{\text{DoRA}} \times d_{\text{model}} \times r
+
+where :math:`k` accounts for the magnitude vector, :math:`L_{\text{DoRA}}` is the number of weight matrices DoRA is applied to, :math:`d_{\text{model}}` is the model dimension, and :math:`r` is the rank.
+
+Implementation in FinLoRA
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use DoRA in FinLoRA, configure fine-tuning with DoRA enabled:
 
 .. code-block:: bash
 
    python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8_dora
 
-This uses the configuration from ``lora/finetune_configs.json``:
+Configuration example from ``lora/finetune_configs.json``:
 
 .. code-block:: json
 
@@ -88,33 +86,63 @@ This uses the configuration from ``lora/finetune_configs.json``:
      "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
      "lora_r": 8,
      "quant_bits": 8,
+     "peft_use_dora": true,
      "learning_rate": 0.0001,
      "num_epochs": 4,
      "batch_size": 8,
-     "gradient_accumulation_steps": 2,
-     "peft_use_dora": true
+     "gradient_accumulation_steps": 2
    }
 
-You can also specify a custom ``lora_alpha`` value for DoRA:
+Key parameters:
+- ``lora_r``: The rank :math:`r` of the LoRA adapter (typically 8-16 for DoRA)
+- ``quant_bits``: The quantization bits (8 or 4, same as standard LoRA)
+- ``peft_use_dora``: Enable DoRA decomposition (set to true)
+- ``lora_alpha``: The scaling parameter :math:`\alpha` (default: 16, giving :math:`\gamma_r = \alpha/r`)
 
-.. code-block:: json
+Usage Example
+~~~~~~~~~~~~
 
-   "sentiment_llama_3_1_8b_8bits_r8_dora_a32": {
-     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
-     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
-     "lora_r": 8,
-     "quant_bits": 8,
-     "learning_rate": 0.0001,
-     "num_epochs": 4,
-     "batch_size": 8,
-     "gradient_accumulation_steps": 2,
-     "lora_alpha": 32,
-     "peft_use_dora": true
-   }
+.. code-block:: python
 
-The key parameters for DoRA are:
-- ``peft_use_dora``: Set to ``true`` to enable DoRA
-- ``lora_r``: The rank of the LoRA adapter
-- ``lora_alpha``: The scaling factor for the LoRA adapter (optional, default is 16)
+   from transformers import AutoTokenizer, AutoModelForCausalLM
+   from peft import PeftModel
+   import torch
 
-DoRA adapters are saved in the ``lora_adapters/8bits_r8_dora`` directory after fine-tuning.
+   # Load base model
+   base_model_name = "meta-llama/Llama-3.1-8B-Instruct"
+   base_model = AutoModelForCausalLM.from_pretrained(
+       base_model_name,
+       torch_dtype=torch.float16,
+       device_map="auto"
+   )
+
+   # Load DoRA adapter
+   adapter_path = "./lora_adapters/8bits_r8_dora/sentiment_llama_3_1_8b_8bits_r8_dora"
+   model = PeftModel.from_pretrained(base_model, adapter_path)
+
+   # Generate text
+   tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+   prompt = "The financial markets showed positive sentiment today"
+   inputs = tokenizer(prompt, return_tensors="pt")
+   
+   with torch.no_grad():
+       outputs = model.generate(**inputs, max_new_tokens=100, temperature=0)
+   
+   response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+References
+----------
+
+.. [1] Liu, S. Y., Wang, C. Y., Yin, H., Molchanov, P., Wang, Y. C. F., Cheng, K. T., & Chen, M. H. (2024). DoRA: Weight-Decomposed Low-Rank Adaptation. *arXiv preprint arXiv:2402.09353*.
+
+Why This Paper?
+~~~~~~~~~~~~~~~
+
+The DoRA paper is important for understanding advanced parameter-efficient fine-tuning techniques that bridge the gap between LoRA and full fine-tuning. It introduces weight decomposition analysis that reveals fundamental differences in learning patterns, providing both theoretical insights and practical improvements. The paper demonstrates how decomposing optimization into magnitude and direction components can enhance learning capacity while maintaining efficiency.
+
+Useful Links
+~~~~~~~~~~~~
+
+* `NVIDIA DoRA Implementation <https://github.com/NVlabs/DoRA>`_ - Official implementation by NVIDIA
+* `NVIDIA Technical Blog: Introducing DoRA <https://developer.nvidia.com/blog/introducing-dora-a-high-performing-alternative-to-lora-for-fine-tuning/>`_ - Technical blog about DoRA by NVIDIA
+* `Axolotl <https://github.com/OpenAccess-AI-Collective/axolotl>`_ - Training framework with DoRA support used in FinLoRA
