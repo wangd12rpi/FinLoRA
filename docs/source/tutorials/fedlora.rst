@@ -1,26 +1,26 @@
-Federated Learning
-==================
+FedLoRA
+=======
 
-This guide explains how to perform federated LoRA fine-tuning using the Flower framework in FinLoRA.
+This guide explains how to perform FedLoRA fine-tuning using the Flower framework in FinLoRA.
 
 Setup and Installation
----------------------
+----------------------
 
-Federated LoRA is implemented using the Flower framework, which provides a flexible platform for federated learning.
+FedLoRA is implemented using the Flower framework, which provides a flexible platform for federated learning.
 
-Navigate to Federated Learning Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Navigate to FedLoRA Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, navigate to the federated learning directory:
+First, navigate to the FedLoRA directory:
 
 .. code-block:: bash
 
    cd lora/flowertune-llm
 
 Install Dependencies
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
-Install the required dependencies for federated learning:
+Install the required dependencies for FedLoRA:
 
 .. code-block:: bash
 
@@ -28,24 +28,24 @@ Install the required dependencies for federated learning:
 
 This will install the flowertune-llm package and its dependencies, including the Flower framework.
 
-Running Federated Learning
---------------------------
+Running FedLoRA
+----------------
 
-Basic Federated Learning Simulation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Basic FedLoRA Simulation
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-Run the federated learning simulation with default settings:
+Run the FedLoRA simulation with default settings:
 
 .. code-block:: bash
 
    flwr run .
 
-This command will start a federated learning simulation using the default configuration.
+This command will start a FedLoRA simulation using the default configuration.
 
 Custom Configuration Options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can customize the federated learning configuration using various run-config parameters:
+You can customize the FedLoRA configuration using various run-config parameters:
 
 **Using Different Base Models:**
 
@@ -69,11 +69,11 @@ You can customize the federated learning configuration using various run-config 
    flwr run . --run-config "model.name='meta-llama/Llama-3.1-8B-Instruct' model.quantization=8 num-server-rounds=30 strategy.fraction-fit=0.3"
 
 Configuration Parameters
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following table describes the key configuration parameters for federated learning:
+The following table describes the key configuration parameters for FedLoRA:
 
-.. list-table:: Federated Learning Configuration Parameters
+.. list-table:: FedLoRA Configuration Parameters
    :widths: auto
    :header-rows: 1
 
@@ -90,7 +90,7 @@ The following table describes the key configuration parameters for federated lea
      - ``4``
      - ``4``, ``8``, ``16``
    * - ``num-server-rounds``
-     - Number of federated learning rounds
+     - Number of FedLoRA rounds
      - ``10``
      - ``10``, ``20``, ``50``
    * - ``strategy.fraction-fit``
@@ -103,11 +103,11 @@ The following table describes the key configuration parameters for federated lea
      - ``0.1``, ``0.2``
 
 Related Documentation
---------------------
+---------------------
 
 For more information on LoRA methods and financial tasks, see:
 
-- :doc:`../lora_methods/fed_lora` - Detailed federated LoRA documentation
+- :doc:`../lora_methods/fed_lora` - Detailed FedLoRA documentation
 - :doc:`finetune` - Standard fine-tuning procedures
 - :doc:`eval` - Evaluation methods and metrics
 - :doc:`../tasks/general_financial_tasks` - Financial task descriptions 
