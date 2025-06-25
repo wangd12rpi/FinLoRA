@@ -68,6 +68,7 @@ FinLoRA
    benchmark_results/reporting_results
    benchmark_results/analysis_results
    benchmark_results/federated_results
+   benchmark_results/resources
    benchmark_results/comparisons
 
 .. toctree::

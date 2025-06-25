@@ -13,7 +13,8 @@ Financial Statement Analysis
      - Average Prompt Length
      - Metrics
      - Source
-     - Dataset File
+     - Train Data
+     - Test Data
    * - Financial Math
      - Math
      - 800
@@ -22,6 +23,7 @@ Financial Statement Analysis
      - Accuracy
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx>`__
      - `formula_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/formula_train.jsonl>`__
+     - `formula_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/formula_test.jsonl>`__
    * - Tag Extraction
      - XBRL Extraction
      - 10.1k
@@ -30,6 +32,7 @@ Financial Statement Analysis
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
+     - `xbrl_extract_tags_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_tags_test.jsonl>`__
    * - Value Extraction
      - XBRL Extraction
      - 10.1k
@@ -38,6 +41,7 @@ Financial Statement Analysis
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
+     - `xbrl_extract_value_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_value_test.jsonl>`__
    * - Formula Construction
      - XBRL Extraction
      - 3.4k
@@ -46,6 +50,7 @@ Financial Statement Analysis
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
+     - `xbrl_extract_formula_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_formula_test.jsonl>`__
    * - Formula Calculation
      - XBRL Extraction
      - 3.4k
@@ -54,6 +59,7 @@ Financial Statement Analysis
      - Accuracy, F1
      - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
+     - `xbrl_extract_formula_calculations_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_formula_calculations_test.jsonl>`__
    * - FinanceBench
      - Math
      - 86
@@ -62,6 +68,7 @@ Financial Statement Analysis
      - BERTScore
      - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx>`__
      - `financebench_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/financebench_train.jsonl>`__
+     - `financebench_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/financebench_test.jsonl>`__
 
 
 Financial Statement analysis involves extracting and interpreting financial data from XBRL-formatted documents. This process enables users to analyze financial statements, extract specific values, construct formulas, and perform calculations based on the extracted data.
@@ -118,7 +125,7 @@ Tag Extraction involves identifying the appropriate XBRL tag for a specific fina
    * - **Instruction**
      - You are a knowledgeable XBRL assistant. Your task is to analyze the XBRL context and provide an accurate and very concise answer to the question. DO NOT output xml, code, explanation or create new question.
    * - **Input**
-     - XML File: <us-gaap:CashAndCashEquivalentsAtCarryingValue>2757000000</>\n<us-gaap:AccountsReceivableNetCurrent>3317000000</>\n<us-gaap:InventoryNet>24886000000</>\n<us-gaap:AssetsCurrent>32471000000</>\n<us-gaap:PropertyPlantAndEquipmentNet>25631000000</>\n<us-gaap:Assets>76445000000</>\n<us-gaap:LiabilitiesCurrent>23110000000</>\n<us-gaap:Liabilities>74883000000</>\n<us-gaap:StockholdersEquity>1562000000</>\n<us-gaap:LiabilitiesAndStockholdersEquity>76445000000</>\n
+     - XML File: [XML omitted]
 
        Question: What is the US GAAP XBRL tag for Total Equity as reported by Home Depot Inc for the Fiscal Year ending in FY 2023?
    * - **Output**
@@ -136,7 +143,7 @@ Value Extraction involves retrieving the numerical value associated with a speci
    * - **Instruction**
      - You are a knowledgeable XBRL assistant. Your task is to analyze the XBRL context and provide an accurate and very concise answer to the question. DO NOT output xml, code, explanation or create new question.
    * - **Input**
-     - XML File: <us-gaap:CashAndCashEquivalentsAtCarryingValue>2757000000</>\n<us-gaap:AccountsReceivableNetCurrent>3317000000</>\n<us-gaap:InventoryNet>24886000000</>\n<us-gaap:AssetsCurrent>32471000000</>\n<us-gaap:PropertyPlantAndEquipmentNet>25631000000</>\n<us-gaap:Assets>76445000000</>\n<us-gaap:LiabilitiesCurrent>23110000000</>\n<us-gaap:Liabilities>74883000000</>\n<us-gaap:StockholdersEquity>1562000000</>\n<us-gaap:LiabilitiesAndStockholdersEquity>76445000000</>\n
+     - XML File:  [XML omitted]
 
        Question: What is the value of Inventory for Home Depot Inc for the Fiscal Year ending in FY 2023?
    * - **Output**
@@ -154,7 +161,7 @@ Formula Construction involves creating a formula that defines the relationship b
    * - **Instruction**
      - You are a knowledgeable XBRL assistant. Your task is to analyze the XBRL context and provide an accurate formula based on the question. DO NOT output xml, code, explanation or create new question.
    * - **Input**
-     - XML File: <us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax>383285000000</>\n<us-gaap:CostOfGoodsAndServicesSold>214137000000</>\n<us-gaap:GrossProfit>169148000000</>\n<us-gaap:ResearchAndDevelopmentExpense>29915000000</>\n<us-gaap:SellingGeneralAndAdministrativeExpense>24932000000</>\n<us-gaap:OperatingExpenses>54847000000</>\n<us-gaap:OperatingIncomeLoss>114301000000</>\n<us-gaap:NonoperatingIncomeExpense>-565000000</>\n<us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest>113736000000</>\n<us-gaap:IncomeTaxExpenseBenefit>16741000000</>\n<us-gaap:NetIncomeLoss>96995000000</>\n
+     - XML File: [XML omitted]
 
        Question: Construct a formula for calculating Gross Profit Margin using the appropriate XBRL tags.
    * - **Output**
@@ -172,7 +179,7 @@ Formula Calculation involves applying a formula to calculate a financial metric 
    * - **Instruction**
      - You are a knowledgeable XBRL assistant. Your task is to analyze the XBRL context and calculate the requested financial metric. DO NOT output xml, code, explanation or create new question.
    * - **Input**
-     - XML File: <us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax>383285000000</>\n<us-gaap:CostOfGoodsAndServicesSold>214137000000</>\n<us-gaap:GrossProfit>169148000000</>\n<us-gaap:ResearchAndDevelopmentExpense>29915000000</>\n<us-gaap:SellingGeneralAndAdministrativeExpense>24932000000</>\n<us-gaap:OperatingExpenses>54847000000</>\n<us-gaap:OperatingIncomeLoss>114301000000</>\n<us-gaap:NonoperatingIncomeExpense>-565000000</>\n<us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest>113736000000</>\n<us-gaap:IncomeTaxExpenseBenefit>16741000000</>\n<us-gaap:NetIncomeLoss>96995000000</>\n
+     - XML File: [XML omitted]
 
        Question: Calculate the Gross Profit Margin for Apple Inc for the Fiscal Year ending in FY 2023.
    * - **Output**

@@ -16,13 +16,15 @@ We aim to benchmark our model's performance on professional financial certificat
      - #Test
      - Average Prompt Length
      - Metrics
-     - Dataset File
+     - Train Data
+     - Test Data
    * - CFA Level I
      - Analyst Exam
      - 180
      - 90
      - 181
      - Accuracy, F1
+     - Not publicly available due to copyright
      - Not publicly available due to copyright
    * - CFA Level II
      - Analyst Exam
@@ -31,6 +33,7 @@ We aim to benchmark our model's performance on professional financial certificat
      - 1.0k
      - Accuracy, F1
      - Not publicly available due to copyright
+     - Not publicly available due to copyright
    * - CFA Level III
      - Analyst Exam
      - 80
@@ -38,12 +41,14 @@ We aim to benchmark our model's performance on professional financial certificat
      - 961
      - Accuracy, F1
      - Not publicly available due to copyright
+     - Not publicly available due to copyright
    * - CPA REG
      - Accountant Exam
      - 124
      - 101
      - 147
      - Accuracy, F1
+     - Not publicly available due to copyright
      - Not publicly available due to copyright
 
 
