@@ -1,7 +1,7 @@
 FedLoRA
 =======
 
-This guide explains how to perform FedLoRA fine-tuning using the Flower framework in FinLoRA.
+This guide explains how to perform federated learning with LoRA (FedLoRA) fine-tuning using the Flower framework in FinLoRA.
 
 Setup and Installation
 ----------------------
