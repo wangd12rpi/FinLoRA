@@ -32,6 +32,7 @@ FinLoRA
    tutorials/setup
    tutorials/data_processing
    tutorials/finetune
+   tutorials/federated_learning
    tutorials/eval
 
 

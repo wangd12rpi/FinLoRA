@@ -6,25 +6,64 @@ This guide explains how to fine-tune models using LoRA (Low-Rank Adaptation) in 
 Fine-Tuning Process
 ------------------
 
-FinLoRA uses the Axolotl library for fine-tuning, which is wrapped in a convenient script. The fine-tuning process is controlled by configuration files.
+FinLoRA uses the Axolotl library for fine-tuning, which is wrapped in a convenient script. The fine-tuning process involves several steps outlined below.
 
-Using finetune.py
-^^^^^^^^^^^^^^^
+Step-by-Step Fine-Tuning
+^^^^^^^^^^^^^^^^^^^^^^^
 
-The main script for fine-tuning is ``lora/finetune.py``. This script takes a configuration file as input and generates an Axolotl YAML configuration file, which is then used to run the fine-tuning process.
+1. **Navigate to the LoRA directory and fetch deepspeed configs**
 
-Basic usage:
+   First, navigate to the lora directory and fetch deepspeed configs. The deepspeed configs allow the fine-tuning framework to parallelize fine-tuning across GPUs:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   python lora/finetune.py --config lora/finetune_configs.json --run_name <run_name>
+      cd lora
+      axolotl fetch deepspeed_configs
 
-Where:
-- ``--config`` specifies the path to the configuration file
-- ``--run_name`` specifies the name of the configuration to use from the config file
+2. **Add your fine-tuning dataset**
 
-Configuration File
-^^^^^^^^^^^^^^^^
+   Add your fine-tuning dataset (e.g., ``your_dataset_train.jsonl``) in the ``../data/train/`` folder.
+
+3. **Configure your LoRA adapter**
+
+   Open ``finetune_configs.json`` and add the configuration for the LoRA adapter you want to create with hyperparameters defined. There are examples you can reference in the file. The following is an example:
+
+   .. code-block:: json
+
+      "your_config_name": {
+        "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+        "dataset_path": "../data/train/your_dataset_train.jsonl",
+        "lora_r": 8,
+        "quant_bits": 8,
+        "learning_rate": 0.0001,
+        "num_epochs": 1,
+        "batch_size": 4,
+        "gradient_accumulation_steps": 2
+      }
+
+4. **Run fine-tuning**
+
+   Run fine-tuning with your configuration by executing the following command:
+
+   .. code-block:: bash
+
+      python finetune.py your_config_name
+
+   For example, to use the existing formula configuration:
+
+   .. code-block:: bash
+
+      python finetune.py formula_llama_3_1_8b_8bits_r8
+
+5. **Retrieve your adapter**
+
+   After fine-tuning completes, the adapter will be saved in the ``axolotl-output`` subfolder within the 'lora' folder. Download the adapter files from this directory. You can remove checkpoints to save space.
+
+.. note::
+   If you don't have compute resources, you can rent 4 A5000s at a low cost from `RunPod <https://www.runpod.io>`_.
+
+Configuration File Structure
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The configuration file (``finetune_configs.json``) contains settings for different fine-tuning runs. Each configuration includes:
 
@@ -38,7 +77,9 @@ The configuration file (``finetune_configs.json``) contains settings for differe
 - ``gradient_accumulation_steps``: Number of gradient accumulation steps
 - Additional parameters for specific LoRA variants (e.g., ``peft_use_rslora``, ``peft_use_dora``)
 
-Example configuration:
+Example configurations for different LoRA methods:
+
+**Vanilla LoRA:**
 
 .. code-block:: json
 
@@ -55,8 +96,102 @@ Example configuration:
      }
    }
 
-LoRA Adapters
------------
+**QLoRA (Quantized LoRA):**
+
+.. code-block:: json
+
+   {
+     "xbrl_term_llama_3_1_8b_4bits_r4": {
+       "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+       "dataset_path": "../data/train/xbrl_term_train.jsonl",
+       "lora_r": 4,
+       "quant_bits": 4,
+       "learning_rate": 0.0001,
+       "num_epochs": 1,
+       "batch_size": 4,
+       "gradient_accumulation_steps": 2
+     }
+   }
+
+**DoRA (Weight-Decomposed Low-Rank Adaptation):**
+
+.. code-block:: json
+
+   {
+     "sentiment_llama_3_1_8b_8bits_r8_dora": {
+       "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+       "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+       "lora_r": 8,
+       "quant_bits": 8,
+       "learning_rate": 0.0001,
+       "num_epochs": 4,
+       "batch_size": 8,
+       "gradient_accumulation_steps": 2,
+       "peft_use_dora": true
+     }
+   }
+
+**RSLoRA (Rank-Stabilized LoRA):**
+
+.. code-block:: json
+
+   {
+     "sentiment_llama_3_1_8b_8bits_r8_rslora": {
+       "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+       "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
+       "lora_r": 8,
+       "quant_bits": 8,
+       "learning_rate": 0.0001,
+       "num_epochs": 4,
+       "batch_size": 8,
+       "gradient_accumulation_steps": 2,
+       "peft_use_rslora": true
+     }
+   }
+
+Using Your LoRA Adapter
+----------------------
+
+Once you have trained a LoRA adapter, you can use it for inference by using the following code:
+
+.. code-block:: python
+
+   from transformers import AutoTokenizer, AutoModelForCausalLM
+   from peft import PeftModel
+   import torch
+
+   # Load base model and tokenizer
+   base_model_name = "meta-llama/Llama-3.1-8B-Instruct"
+   tokenizer = AutoTokenizer.from_pretrained(base_model_name)
+   base_model = AutoModelForCausalLM.from_pretrained(
+       base_model_name,
+       torch_dtype=torch.float16,
+       device_map="auto",
+       trust_remote_code=True
+   )
+
+   # Load and apply the LoRA adapter
+   adapter_path = "./path/to/your/adapter"  # Path to your adapter
+   model = PeftModel.from_pretrained(base_model, adapter_path)
+
+   # Generate text
+   prompt = "What is the formula for the Black-Scholes model?"
+   inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+
+   with torch.no_grad():
+       outputs = model.generate(
+           **inputs,
+           max_new_tokens=512,
+           # This ensures that you get reproducible responses.
+           temperature=0,
+           pad_token_id=tokenizer.eos_token_id
+       )
+
+   response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+   print(response)
+
+LoRA Adapters Directory Structure
+-------------------------------
 
 The fine-tuned LoRA adapters are saved in the ``lora_adapters`` directory. This directory contains subdirectories for different quantization and rank configurations:
 
@@ -64,6 +199,7 @@ The fine-tuned LoRA adapters are saved in the ``lora_adapters`` directory. This 
 - ``lora_adapters/8bits_r8``: 8-bit quantization with rank 8
 - ``lora_adapters/8bits_r8_dora``: 8-bit quantization with rank 8 using DoRA
 - ``lora_adapters/8bits_r8_rslora``: 8-bit quantization with rank 8 using RSLoRA
+- ``lora_adapters/fp16_r8``: FP16 precision with rank 8
 
 Each subdirectory contains the fine-tuned adapters for different tasks, such as sentiment analysis, headline analysis, named entity recognition, etc.
 
