@@ -1,10 +1,10 @@
 
-LoRA with Federated Learning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FedLoRA
+~~~~~~~
 
 In the finance sector, multiple banks may want to work together on a model to predict credit risk and whether a borrower will default on a loan. Each bank may have a different dataset, but they cannot share their data due to compliance reasons and privacy concerns. Federated learning solves this issue by fine-tuning a model on local data and aggregating updates during backpropagation to a centralized model via a server.
 
-Differentially Private Low-Rank Adaptation (DP-LoRA) [5]_ is a method to use federated learning with LoRA.
+Differentially Private Low-Rank Adaptation (DP-LoRA) [5]_ is a method to use federated learning with LoRA (FedLoRA).
 
 DP-LoRA first uses a server to send the current global LoRA weights (the A and B matrices from earlier) to all clients.
 
@@ -17,7 +17,7 @@ As in normal federated learning, the server then aggregates the weights from all
 Using FedLoRA in FinLoRA
 ------------------------
 
-FinLoRA implements federated learning with LoRA using the Flower framework. To use FedLoRA, you need to navigate to the flowertune-llm directory and run the federated learning simulation:
+FinLoRA implements FedLoRA using the Flower framework. To use FedLoRA, you need to navigate to the flowertune-llm directory and run the FedLoRA simulation:
 
 .. code-block:: bash
 
@@ -37,8 +37,8 @@ You can customize the configuration using command-line arguments:
 
 The implementation is located in the ``lora/flowertune-llm`` directory. The main components are:
 
-- ``flowertune_llm/dataset.py``: Handles dataset loading and partitioning for federated learning
-- ``flowertune_llm/client.py``: Implements the federated learning client
-- ``flowertune_llm/server.py``: Implements the federated learning server
+- ``flowertune_llm/dataset.py``: Handles dataset loading and partitioning for FedLoRA
+- ``flowertune_llm/client.py``: Implements the FedLoRA client
+- ``flowertune_llm/server.py``: Implements the FedLoRA server
 
 For more details on the implementation, refer to the code in the ``lora/flowertune-llm`` directory.
