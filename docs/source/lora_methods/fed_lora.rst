@@ -1,5 +1,5 @@
-Federated Learning with LoRA (FedLoRA)
-======================================
+FedLoRA
+=======
 
 .. contents:: Table of Contents
 
