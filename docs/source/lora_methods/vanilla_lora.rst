@@ -8,7 +8,7 @@ Background
 
 **Citation:** `LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021) <https://arxiv.org/abs/2106.09685>`_
 
-LoRA addresses the fundamental challenge of full fine-tuning large language models (LLMs), which is it becomes increasingly impractical as models grow larger due to requiring more compute and storage. LoRA freezes pre-trained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture, enabling efficient adaptation to downstream tasks. The method can reduce the number of trainable parameters by up to 10,000 times and GPU memory requirements by three times.
+LoRA addresses the fundamental challenge of full fine-tuning large language models (LLMs), which is it becomes increasingly impractical as models grow larger due to requiring more compute and storage. LoRA freezes pre-trained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture, enabling efficient adaptation to downstream tasks. It can reduce the number of trainable parameters by up to 10,000 times and GPU memory requirements by three times.
 
 Quick Facts
 ~~~~~~~~~~~
@@ -16,7 +16,6 @@ Quick Facts
 #. LoRA is a parameter-efficient fine-tuning method.
 #. LoRA can reduce trainable parameters by up to 10,000x compared to full fine-tuning.
 #. LoRA introduces no additional inference latency when weights are merged.
-#. LoRA works with any neural network containing dense layers.
 
 Algorithmic Idea
 ~~~~~~~~~~~~~~~~
@@ -131,16 +130,16 @@ Usage Example
 References
 ----------
 
-.. [1] Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2021). LoRA: Low-Rank Adaptation of Large Language Models. *arXiv preprint arXiv:2106.09685*.
+.. [1] Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., ... & Chen, W. (2022). Lora: Low-rank adaptation of large language models. ICLR, 1(2), 3.
 
 Why This Paper?
 ~~~~~~~~~~~~~~~
 
 The original LoRA paper is important to understanding parameter-efficient fine-tuning. It introduces the core mathematical techniques that all subsequent LoRA variants build upon. The paper provides theoretical justification for low-rank adaptations and has been widely adopted for fine-tuning LLMs.
 
-Other Public Implementations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Useful Links
+~~~~~~~~~~~~
 
-* `Microsoft LoRA <https://github.com/microsoft/LoRA>`_ - Original implementation
-* `Hugging Face PEFT <https://github.com/huggingface/peft>`_ - Production-ready implementation
-* `Axolotl <https://github.com/OpenAccess-AI-Collective/axolotl>`_ - Training framework used in FinLoRA 
+* `Microsoft LoRA <https://github.com/microsoft/LoRA>`_ - Original implementation by the authors
+* `LoRA Explained by Primary Author <https://www.youtube.com/watch?v=DhRoTONcyZE>`_ - Production-ready LoRA implementation
+* `Axolotl <https://github.com/OpenAccess-AI-Collective/axolotl>`_ - Training framework with LoRA support used in FinLoRA 

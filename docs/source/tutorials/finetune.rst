@@ -51,7 +51,7 @@ Step-by-Step Fine-Tuning
 
    For example, to use the existing formula configuration:
 
-   .. code-block:: bash
+.. code-block:: bash
 
       python finetune.py formula_llama_3_1_8b_8bits_r8
 
