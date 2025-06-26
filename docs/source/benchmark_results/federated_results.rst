@@ -1,10 +1,10 @@
-Results on Federated LoRA Tasks
-=======
+Results on Federated Learning with LoRA (FedLoRA) Tasks
+========================================================
 
-Performance Comparison: Central vs Federated LoRA
--------------------------------------------------
+Performance Comparison: Central vs FedLoRA
+-------------------------------------------
 
-The sensitive nature of financial data necessitates privacy-preserving techniques like Federated Learning for collaborative training. We evaluated Federated LoRA in a four-node environment using the FedAvg algorithm, where sentiment analysis datasets were partitioned across nodes.
+The sensitive nature of financial data necessitates privacy-preserving techniques like Federated Learning for collaborative training. We evaluated FedLoRA in a four-node environment using the FedAvg algorithm, where sentiment analysis datasets were partitioned across nodes.
 
 .. list-table:: Performance Comparison on Sentiment Analysis Tasks
    :header-rows: 2
@@ -36,7 +36,7 @@ Key Findings
 
 **Performance Hierarchy:**
 - Central LoRA achieves the highest performance across all tasks
-- Federated LoRA shows substantial improvement over base model
+- FedLoRA shows substantial improvement over base model
 - Privacy preservation comes with performance trade-offs
 
 **Task-Specific Results:**
@@ -45,4 +45,4 @@ Key Findings
 - **NWGI**: Most challenging task (61.92% accuracy, 0.748 F1)
 
 **Privacy vs Performance Trade-off:**
-While Federated LoRA does not match centralized performance levels, it demonstrates notable improvements over the base model while maintaining data privacy across
+While FedLoRA does not match centralized performance levels, it demonstrates notable improvements over the base model while maintaining data privacy across
