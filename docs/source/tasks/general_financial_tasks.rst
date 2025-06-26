@@ -191,7 +191,7 @@ To fine-tune a model for sentiment analysis tasks (FPB, FiQA SA, TFNS, NWGI), yo
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -205,7 +205,7 @@ To fine-tune a model for sentiment analysis tasks (FPB, FiQA SA, TFNS, NWGI), yo
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **sentiment_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **sentiment_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **sentiment_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **sentiment_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **sentiment_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
@@ -217,7 +217,7 @@ To fine-tune a model for the Headline Analysis task, you can use one of the foll
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py headline_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -231,7 +231,7 @@ To fine-tune a model for the Headline Analysis task, you can use one of the foll
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **headline_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **headline_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **headline_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **headline_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **headline_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
@@ -243,7 +243,7 @@ To fine-tune a model for the Named Entity Recognition task, you can use one of t
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py ner_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -257,7 +257,7 @@ To fine-tune a model for the Named Entity Recognition task, you can use one of t
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **ner_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **ner_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **ner_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **ner_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **ner_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.

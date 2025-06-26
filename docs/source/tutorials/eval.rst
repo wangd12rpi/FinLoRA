@@ -175,7 +175,7 @@ The following table lists the available datasets and LoRA adapters for evaluatio
      - Description
      - Path
      - Documentation
-   * - Standard LoRA (8-bit)
+   * - Vanilla LoRA (8-bit)
      - 8-bit quantization with rank 8
      - ``lora_adapters/8bits_r8/<task>_llama_3_1_8b_8bits_r8``
      - :doc:`../lora_methods/lora_methods`

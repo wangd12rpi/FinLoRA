@@ -259,7 +259,7 @@ The following table lists the available datasets and LoRA methods in FinLoRA, al
      - Description
      - Configuration Parameter
      - Documentation
-   * - Standard LoRA
+   * - Vanilla LoRA
      - Low-Rank Adaptation
      - No special parameter needed
      - :doc:`../lora_methods/lora_methods`

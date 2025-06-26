@@ -93,7 +93,7 @@ Configuration example from ``lora/finetune_configs.json``:
 
 Key parameters:
 - ``lora_r``: The rank :math:`r` of the LoRA adapter (typically 8-16 for DoRA)
-- ``quant_bits``: The quantization bits (8 or 4, same as standard LoRA)
+- ``quant_bits``: The quantization bits (8 or 4, same as vanilla LoRA)
 - ``peft_use_dora``: Enable DoRA decomposition (set to true)
 - ``lora_alpha``: The scaling parameter :math:`\alpha` (default: 16, giving :math:`\gamma_r = \alpha/r`)
 
