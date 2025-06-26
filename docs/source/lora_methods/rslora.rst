@@ -2,6 +2,8 @@
 rsLoRA
 ================
 
+.. contents:: Table of Contents
+
 Background
 ~~~~~~~~~~
 
