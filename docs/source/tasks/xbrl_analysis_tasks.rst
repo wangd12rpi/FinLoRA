@@ -232,7 +232,7 @@ To fine-tune a model for the Financial Math task, you can use one of the followi
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py formula_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -246,7 +246,7 @@ To fine-tune a model for the Financial Math task, you can use one of the followi
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **formula_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **formula_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **formula_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **formula_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **formula_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
@@ -258,7 +258,7 @@ To fine-tune a model for the Tag Extraction or Value Extraction tasks, you can u
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py xbrl_extract_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -272,7 +272,7 @@ To fine-tune a model for the Tag Extraction or Value Extraction tasks, you can u
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **xbrl_extract_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **xbrl_extract_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **xbrl_extract_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **xbrl_extract_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **xbrl_extract_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
@@ -284,7 +284,7 @@ To fine-tune a model for the FinanceBench task, you can use one of the following
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py financebench_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -298,7 +298,7 @@ To fine-tune a model for the FinanceBench task, you can use one of the following
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **financebench_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **financebench_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **financebench_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **financebench_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **financebench_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.

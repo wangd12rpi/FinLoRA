@@ -125,7 +125,7 @@ Due to the copyright restrictions on the certification exam datasets, we cannot 
 
 .. code-block:: bash
 
-   # Standard LoRA with 8-bit quantization and rank 8
+   # Vanilla LoRA with 8-bit quantization and rank 8
    python lora/finetune.py cfa_llama_3_1_8b_8bits_r8
 
    # QLoRA with 4-bit quantization and rank 4
@@ -139,7 +139,7 @@ Due to the copyright restrictions on the certification exam datasets, we cannot 
 
 These configurations use different combinations of quantization bits, rank, and LoRA methods:
 
-- **cfa_llama_3_1_8b_8bits_r8**: Standard LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
+- **cfa_llama_3_1_8b_8bits_r8**: Vanilla LoRA with 8-bit quantization and rank 8, providing a good balance between performance and efficiency.
 - **cfa_llama_3_1_8b_4bits_r4**: QLoRA with 4-bit quantization and rank 4, reducing memory usage at the cost of some precision.
 - **cfa_llama_3_1_8b_8bits_r8_dora**: DoRA (Weight-Decomposed Low-Rank Adaptation) with 8-bit quantization and rank 8, which can improve performance by decomposing weights into magnitude and direction components.
 - **cfa_llama_3_1_8b_8bits_r8_rslora**: RSLoRA (Rank-Stabilized LoRA) with 8-bit quantization and rank 8, which uses a different scaling factor to improve stability.
