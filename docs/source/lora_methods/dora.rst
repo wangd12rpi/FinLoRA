@@ -133,10 +133,10 @@ References
 
 .. [1] Liu, S. Y., Wang, C. Y., Yin, H., Molchanov, P., Wang, Y. C. F., Cheng, K. T., & Chen, M. H. (2024). DoRA: Weight-Decomposed Low-Rank Adaptation. *arXiv preprint arXiv:2402.09353*.
 
-Why This Paper?
+Why This Method?
 ~~~~~~~~~~~~~~~
 
-The DoRA paper is important for understanding advanced parameter-efficient fine-tuning techniques that bridge the gap between LoRA and full fine-tuning. It introduces weight decomposition analysis that reveals fundamental differences in learning patterns, providing both theoretical insights and practical improvements. The paper demonstrates how decomposing optimization into magnitude and direction components can enhance learning capacity while maintaining efficiency.
+DoRA is important because it addresses a funadmental flaw in LoRA that causes it to lag behind in accuracy compared to full fine-tuning. It shows how decomposing into magnitude and direction components can enhance fine-tuning by allowing the model to capture more fine-grained patterns.
 
 Useful Links
 ~~~~~~~~~~~~

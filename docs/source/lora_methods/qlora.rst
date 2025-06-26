@@ -120,10 +120,10 @@ References
 
 .. [1] Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). QLoRA: Efficient Finetuning of Quantized LLMs. *arXiv preprint arXiv:2305.14314*.
 
-Why This Paper?
+Why This Method?
 ~~~~~~~~~~~~~~~
 
-The QLoRA paper is important for understanding memory-efficient fine-tuning of large language models that are too large to fit on a single GPU. It introduces key quantization techniques that enable LoRA fine-tuning to be done on consumer hardware without losing performance. The paper provides practical innovations for 4-bit fine-tuning that make fine-tuning accessible to a wider range of researchers at an affordable cost.
+QLoRA is important for understanding memory-efficient fine-tuning of large language models that are too large to fit on a single GPU. It introduces key quantization techniques that enable LoRA fine-tuning to be done on consumer hardware without losing performance. QLoRA provides practical innovations for 4-bit fine-tuning that make fine-tuning accessible to a wider range of researchers at an affordable cost.
 
 Useful Links
 ~~~~~~~~~~~~
