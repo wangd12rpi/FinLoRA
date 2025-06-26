@@ -5,7 +5,7 @@ rsLoRA
 .. contents:: Table of Contents
 
 Background
-~~~~~~~~~~
+----------
 
 **Citation:** `A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA (Kalajdzievski, 2023) <https://arxiv.org/abs/2312.03732>`_
 
@@ -77,9 +77,9 @@ Enable rsLoRA in your FinLoRA configuration:
 The scaling factor :math:`\gamma_r = \alpha/\sqrt{r} = 16/\sqrt{64} = 2.0` enables gradient stability at higher ranks.
 
 References
-~~~~~~~~~~
+----------
 
-* Kalajdzievski, D. (2023). `A rank stabilization scaling factor for fine-tuning with lora <https://arxiv.org/abs/2312.03732>`_. *arXiv preprint arXiv:2312.03732*.
+.. [1] Kalajdzievski, D. (2023). A rank stabilization scaling factor for fine-tuning with lora. *arXiv preprint arXiv:2312.03732*.
 
 Why This Paper?
 ~~~~~~~~~~~~~~~
