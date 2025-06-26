@@ -81,7 +81,7 @@ References
 
 .. [1] Kalajdzievski, D. (2023). A rank stabilization scaling factor for fine-tuning with lora. *arXiv preprint arXiv:2312.03732*.
 
-Why This Paper?
+Why This Method?
 ~~~~~~~~~~~~~~~
 
 rsLoRA enables gradient stability at higher ranks, which allows researchers to achieve consistently better performance at higher ranks for complex tasks without additional inference cost. It is particularly valuable for complex financial NLP tasks where higher model capacity can capture nuanced and complex domain-specific patterns.

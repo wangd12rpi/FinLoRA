@@ -132,10 +132,10 @@ References
 
 .. [1] Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., ... & Chen, W. (2022). Lora: Low-rank adaptation of large language models. ICLR, 1(2), 3.
 
-Why This Paper?
+Why This Method?
 ~~~~~~~~~~~~~~~
 
-The original LoRA paper is important to understanding parameter-efficient fine-tuning. It introduces the core mathematical techniques that all subsequent LoRA variants build upon. The paper provides theoretical justification for low-rank adaptations and has been widely adopted for fine-tuning LLMs.
+LoRA is important to understanding parameter-efficient fine-tuning. It introduced the core mathematical techniques that all subsequent LoRA variants built upon. The LoRA paper provides theoretical justification for low-rank adaptations and has been widely adopted for fine-tuning LLMs.
 
 Useful Links
 ~~~~~~~~~~~~
