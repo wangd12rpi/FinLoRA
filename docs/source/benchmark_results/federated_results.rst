@@ -1,10 +1,9 @@
-Results on Federated Learning with LoRA (FedLoRA) Tasks
-========================================================
-
+FedLoRA Results
+===============
 Performance Comparison: Central vs FedLoRA
 -------------------------------------------
 
-The sensitive nature of financial data necessitates privacy-preserving techniques like Federated Learning for collaborative training. We evaluated FedLoRA in a four-node environment using the FedAvg algorithm, where sentiment analysis datasets were partitioned across nodes.
+The sensitive nature of financial data necessitates privacy-preserving techniques like Federated Learning for collaborative training. We evaluated federated learning with LoRA (FedLoRA) in a four-node environment using the FedAvg algorithm, where sentiment analysis datasets were partitioned across nodes.
 
 .. list-table:: Performance Comparison on Sentiment Analysis Tasks
    :header-rows: 2
