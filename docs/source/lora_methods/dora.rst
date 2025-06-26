@@ -13,10 +13,9 @@ DoRA introduces improvements that are intended to close the issue of LoRA's accu
 Quick Facts
 ~~~~~~~~~~~
 
-#. DoRA is a weight-decomposed fine-tuning method that extends LoRA with magnitude-direction decomposition.
-#. DoRA can often but not in all cases (such as ours)achieve accuracy close to full fine-tuning while maintaining the same parameter count as LoRA.
+#. DoRA uses weight-decomposed fine-tuning to extend LoRA with magnitude-direction decomposition.
+#. DoRA can often but not in all cases (such as ours) achieve accuracy close to full fine-tuning while maintaining the same parameter count as LoRA.
 #. DoRA introduces no additional inference latency when weights are merged.
-#. DoRA works with any neural network containing dense layers.
 
 Algorithmic Idea
 ~~~~~~~~~~~~~~~~
@@ -25,12 +24,11 @@ LoRA's limitations come from coupling magnitude and direction updates. DoRA sepa
 
 For a pre-trained weight matrix :math:`\mathbf{W}_0`, DoRA decomposes it into a magnitude vector :math:`\mathbf{m}` and direction matrix :math:`\mathbf{V}` where :math:`\mathbf{m} = ||\mathbf{W}_0||_c` (column-wise norm) and :math:`\mathbf{V} = \mathbf{W}_0`. The magnitude vector consists of the :math:`\ell_2` norms of each column, while the direction matrix contains the original weight matrix.
 
-During training, the following hold true:
+During fine-tuning, the following hold true:
 
-#. :math:`\mathbf{W}_0` is decomposed into trainable magnitude :math:`\mathbf{m}` and direction components :math:`\mathbf{V}`.
-#. Only the direction matrix receives LoRA updates :math:`\Delta\mathbf{V} = \mathbf{B}\mathbf{A}` while magnitude is trained directly.
+#. :math:`\mathbf{W}_0` is decomposed into a magnitude component :math:`\mathbf{m}` and a direction component :math:`\mathbf{V}`.
+#. Only the direction matrix receives LoRA updates :math:`\Delta\mathbf{V} = \mathbf{B}\mathbf{A}` while the magnitude vector is trained directly.
 #. The forward pass becomes: :math:`\mathbf{W}' = \mathbf{m} \frac{\mathbf{V} + \Delta\mathbf{V}}{||\mathbf{V} + \Delta\mathbf{V}||_c}`.
-#. DoRA exhibits learning patterns closer to full fine-tuning with negative correlation between magnitude and direction changes.
 
 Key Equations
 ~~~~~~~~~~~~

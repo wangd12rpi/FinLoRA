@@ -8,14 +8,13 @@ Background
 
 **Citation:** `QLoRA: Efficient Finetuning of Quantized LLMs (Dettmers et al., 2023) <https://arxiv.org/abs/2305.14314>`_
 
-QLoRA addresses the issue of LoRA fine-tuning still requiring substantial GPU memory, which becomes prohibitive for very large LLMs. QLoRA combines LoRA's parameter efficiency with 4-bit quantization, enabling fine-tuning of 65B parameter models on a single 48GB GPU while preserving full 16-bit fine-tuning task performance. It can reduce the average memory requirements from >780GB to <48GB without degrading performance.
+QLoRA addresses the issue of LoRA fine-tuning still requires substantial GPU memory, which becomes prohibitive for very large LLMs. QLoRA combines LoRA's parameter efficiency with 4-bit quantization, enabling fine-tuning of 65B parameter models on a single 48GB GPU while preserving full 16-bit fine-tuning task performance. It can reduce the average memory requirements from >780GB to <48GB without degrading performance.
 
 Quick Facts
 ~~~~~~~~~~~
 
-#. QLoRA is a memory-efficient fine-tuning method that extends LoRA with 4-bit quantization.
-#. QLoRA can reduce GPU memory requirements by up to 16x compared to full fine-tuning.
-#. QLoRA introduces no performance degradation compared to 16-bit LoRA fine-tuning.
+#. QLoRA is a memory-efficient fine-tuning method that uses 4-bit quantization.
+#. QLoRA introduces no decrease in performance compared to the full 16-bit LoRA fine-tuning.
 #. QLoRA works with any neural network containing dense layers.
 
 Algorithmic Idea
@@ -25,12 +24,12 @@ The core idea behind QLoRA is that LoRA fine-tuning can be further optimized by 
 
 For a pre-trained weight matrix :math:`\mathbf{W}_0`, QLoRA quantizes it to 4-bit NormalFloat format. During computation, the quantized weights are dynamically dequantized back to 16 bits when performing operations with the input sequence :math:`\mathbf{x}` and the adapter matrices :math:`\mathbf{A}` and :math:`\mathbf{B}`, which remain in 16-bit precision.
 
-During training, the following hold true:
+During fine-tuning, the following hold true:
 
-#. :math:`\mathbf{W}_0` is quantized to 4-bit and frozen, receiving no gradient updates.
+#. :math:`\mathbf{W}_0` is quantized to 4-bit precision and frozen and doesn't receive any gradient updates.
 #. Only :math:`\mathbf{A}` and :math:`\mathbf{B}` contain trainable parameters in 16-bit precision.
 #. The forward pass dynamically dequantizes weights: :math:`\mathbf{h} = p_{16}(\mathbf{W}_0^{\text{NF4}}) \mathbf{x} + \gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`.
-#. QLoRA uses techniques like NF4 quantization and paged optimizers to maximize memory efficiency.
+#. QLoRA uses NF4 quantization and paged optimizers to reduce memory usage dynamically.
 
 Key Equations
 ~~~~~~~~~~~~

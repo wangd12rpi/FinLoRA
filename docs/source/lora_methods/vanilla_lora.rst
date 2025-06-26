@@ -16,7 +16,6 @@ Quick Facts
 #. LoRA is a parameter-efficient fine-tuning method.
 #. LoRA can reduce trainable parameters by up to 10,000x compared to full fine-tuning.
 #. LoRA introduces no additional inference latency when weights are merged.
-#. LoRA works with any neural network containing dense layers.
 
 Algorithmic Idea
 ~~~~~~~~~~~~~~~~

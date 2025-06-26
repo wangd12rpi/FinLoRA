@@ -1,40 +1,91 @@
-Rank-Stabilized LoRA (rsLoRA)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LoRA scales the weight matrix update :math:`\boldsymbol{BA}` by :math:`\frac{\alpha}{r}`, which can cause gradients to explode or diminish as the rank :math:`r` increases. In contrast, rsLoRA uses a scaling factor :math:`\frac{\alpha}{\sqrt{r}}`:
+================
+rsLoRA
+================
+
+Background
+~~~~~~~~~~
+
+**Citation:** `A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA (Kalajdzievski, 2023) <https://arxiv.org/abs/2312.03732>`_
+
+rsLoRA addresses a limitation of vanilla LoRA where the scaling factor :math:`\alpha/r` can cause gradient instability as rank increases, which means fine-tuning can be unstable at high ranks in practice. rsLoRA introduces fixes this issue by using a rank-stabilized scaling factor :math:`\alpha/\sqrt{r}` that maintains gradient stability at higher ranks, enabling higher-rank adapters to be used for increased performance on complex tasks without additional inference cost.
+
+Quick Facts
+~~~~~~~~~~~
+
+#. rsLoRA only changes the scaling factor that's used in LoRA, changing it from :math:`\alpha/r` to :math:`\alpha/\sqrt{r}`.
+#. rsLoRA enables stable fine-tuning at higher ranks, which can increase performance for complex tasks.
+#. rsLoRA has the same inference cost as LoRA.
+
+Algorithmic Idea
+~~~~~~~~~~~~~~~~
+
+The core insight behind rsLoRA is that vanilla LoRA's scaling factor can cause the gradient magnitude to collapse as rank increases. This can prevent effective fine-tuning at higher ranks. rsLoRA's rank-stabilized scaling factor enables higher-rank adapters to be used for increased performance on complex tasks without additional inference cost.
+
+During fine-tuning, the following hold true:
+
+#. The :math:`\alpha/\sqrt{r}` scaling factor in rsLoRA leads to consistent gradient magnitudes across all ranks, allowing rsLoRA to capture more complex details for nuanced and complex tasks.
+
+Key Equations
+~~~~~~~~~~~~~
+
+The rsLoRA adapter modifies the pre-trained weight matrix :math:`\mathbf{W}_0 \in \mathbb{R}^{d \times k}` as:
 
 .. math::
+   
+   \mathbf{W}' = \mathbf{W}_0 + \frac{\alpha}{\sqrt{r}} \mathbf{B} \mathbf{A}
 
-   \boldsymbol W'=\boldsymbol W_0+\frac{\alpha}{\sqrt{r}}\boldsymbol B\boldsymbol A.
+where :math:`\mathbf{A} \in \mathbb{R}^{r \times d}` and :math:`\mathbf{B} \in \mathbb{R}^{k \times r}` with :math:`r \ll \min(d,k)`.
 
-This scaling results in gradient-scale stability at higher ranks, enabling the rank to be higher to capture more details in long-context tasks like XBRL extraction. rsLoRA also results in lower perplexity—the model assigns higher probabilities to correct words—than LoRA at higher ranks.
+The key theoretical result proves that for rank-stabilized adapters, the scaling factor must satisfy:
 
-Using RSLoRA in FinLoRA
-----------------------
+.. math::
+   
+   \gamma_r \in \Theta\left(\frac{1}{\sqrt{r}}\right)
 
-To use RSLoRA in FinLoRA, you need to set the ``peft_use_rslora`` parameter to ``true`` in your configuration. Here's an example of how to configure RSLoRA for fine-tuning:
+This ensures that both forward activations and backward gradients maintain :math:`\Theta(1)` magnitude regardless of rank :math:`r`.
 
-.. code-block:: bash
+Implementation in FinLoRA
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   python lora/finetune.py sentiment_llama_3_1_8b_8bits_r8_rslora
+FinLoRA automatically uses rsLoRA when the ``use_rsLoRA`` parameter is enabled in the configuration.
 
-This uses the configuration from ``lora/finetune_configs.json``:
+**Key Parameters:**
 
-.. code-block:: json
+* :math:`r` (``lora_rank``): Adapter rank, can be set higher than vanilla LoRA for better performance
+* :math:`\alpha` (``lora_alpha``): Scaling parameter, typically set to 16 or 32
+* ``use_rsLoRA``: Boolean flag to enable rank-stabilized scaling
 
-   "sentiment_llama_3_1_8b_8bits_r8_rslora": {
-     "base_model": "meta-llama/Llama-3.1-8B-Instruct",
-     "dataset_path": "../data/train/finlora_sentiment_train.jsonl",
-     "lora_r": 8,
-     "quant_bits": 8,
-     "learning_rate": 0.0001,
-     "num_epochs": 4,
-     "batch_size": 8,
-     "gradient_accumulation_steps": 2,
-     "peft_use_rslora": true
-   }
+Usage Example
+~~~~~~~~~~~~~
 
-The key parameters for RSLoRA are:
-- ``peft_use_rslora``: Set to ``true`` to enable RSLoRA
-- ``lora_r``: The rank of the LoRA adapter (RSLoRA works well with higher ranks)
+Enable rsLoRA in your FinLoRA configuration:
 
-RSLoRA adapters are saved in the ``lora_adapters/8bits_r8_rslora`` directory after fine-tuning.
+.. code-block:: yaml
+
+   # Enable rsLoRA with higher rank for complex tasks
+   use_rsLoRA: true
+   lora_rank: 64        # Higher ranks work effectively with rsLoRA
+   lora_alpha: 16
+   quant_bits: 8
+   
+   # rsLoRA particularly beneficial for complex financial tasks
+   dataset: "xbrl_extract_train.jsonl"
+   model_name: "meta-llama/Llama-3.1-8B-Instruct"
+
+The scaling factor :math:`\gamma_r = \alpha/\sqrt{r} = 16/\sqrt{64} = 2.0` enables gradient stability at higher ranks.
+
+References
+~~~~~~~~~~
+
+* Kalajdzievski, D. (2023). `A rank stabilization scaling factor for fine-tuning with lora <https://arxiv.org/abs/2312.03732>`_. *arXiv preprint arXiv:2312.03732*.
+
+Why This Paper?
+~~~~~~~~~~~~~~~
+
+rsLoRA enables gradient stability at higher ranks, which allows researchers to achieve consistently better performance at higher ranks for complex tasks without additional inference cost. It is particularly valuable for complex financial NLP tasks where higher model capacity can capture nuanced and complex domain-specific patterns.
+
+Useful Links
+~~~~~~~~~~~~
+
+* `rsLoRA Technical Blog by Author <https://huggingface.co/blog/damjan-k/rsLoRA>`_ - Technical blog by the rsLoRA paper's author
+* `Axolotl <https://github.com/OpenAccess-AI-Collective/axolotl>`_ - Training framework with rsLoRA support used in FinLoRA
