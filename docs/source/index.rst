@@ -32,6 +32,7 @@ FinLoRA
    tutorials/setup
    tutorials/data_processing
    tutorials/finetune
+   tutorials/fedlora
    tutorials/eval
 
 
@@ -49,7 +50,7 @@ FinLoRA
    :maxdepth: 3
    :caption: LoRA Methods
 
-   lora_methods/lora_methods
+   lora_methods/vanilla_lora
    lora_methods/qlora
    lora_methods/dora
    lora_methods/rslora

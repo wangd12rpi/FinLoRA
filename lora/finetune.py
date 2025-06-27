@@ -22,6 +22,9 @@ AXOLOTL_YAML_TEMPLATE = {
 
     "load_in_8bit": False,  # Placeholder
     "load_in_4bit": False,  # Placeholder
+    "bnb_4bit_use_double_quant": True,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16",
     "adapter": "lora",
     "lora_model_dir": None,  # Usually not needed unless merging later
     "lora_r": 8,  # Placeholder
@@ -134,16 +137,19 @@ def generate_axolotl_yaml(run_config, run_name, template):
     if quant_bits == 8:
         yaml_config['load_in_8bit'] = True
         yaml_config['load_in_4bit'] = False
-        yaml_config['optimizer'] = 'adamw_bnb_8bit'  # Defaulting to 8bit optimizer
+        yaml_config['optimizer'] = 'adamw_bnb_8bit'
+        yaml_config['bnb_4bit_use_double_quant'] = False
+        yaml_config['bnb_4bit_quant_type'] = None
+        yaml_config['bnb_4bit_compute_dtype'] = None
 
     elif quant_bits == 4:
         yaml_config['load_in_8bit'] = False
         yaml_config['load_in_4bit'] = True
-        # yaml_config['bnb_4bit_compute_dtype'] = "bfloat16"  # Or float16, common practice
-        # yaml_config['bnb_4bit_quant_type'] = "nf4"  # Common practice
-        # yaml_config['bnb_4bit_use_double_quant'] = True  # Common practice
-        # Ensure optimizer is suitable for 4bit
-        yaml_config['optimizer'] = 'adamw_torch_fused'
+        yaml_config['bnb_4bit_use_double_quant'] = True
+        yaml_config['bnb_4bit_quant_type'] = "nf4"
+        yaml_config['bnb_4bit_compute_dtype'] = "bfloat16"
+        yaml_config['gradient_checkpointing'] = True
+        yaml_config['optimizer'] = 'paged_adamw_8bit'
     else:
         print("Error: 'quant_bits' must be either 8 or 4.'")
         sys.exit(1)
