@@ -6,117 +6,182 @@
     <title>Financial Model Performance</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/tables.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=open_in_new"/>
     <style>
+        .material-symbols-outlined {
+            font-size: 14px;
+            vertical-align: super;
+            color: #4a5568;
+        }
+
+        a:hover .material-symbols-outlined {
+            color: #2b6cb0;
+        }
     </style>
 </head>
 <body class="text-gray-900">
 
-    <div class="max-w-7xl mx-auto">
-        <p class="text-sm text-gray-500 mb-6">
-            Scores: <span class="accuracy-score font-semibold">Accuracy</span> / <span class="f1-score font-semibold">F1 Score</span>.
-        </p>
+<div class="max-w-7xl mx-auto">
+    <p class="text-sm text-gray-500 mb-6">
+        Scores: <span class="accuracy-score font-semibold">Accuracy</span> / <span class="f1-score font-semibold">F1 Score</span>.
+    </p>
 
-        <div class="overflow-x-auto rounded-lg table-container">
-            <table class="w-full text-sm text-left whitespace-nowrap">
-                <thead class="bg-gray-200 text-xs text-gray-600 uppercase tracking-wider">
-                    <tr>
-                        <th scope="col" class="px-4 py-2 font-semibold text-left">Model Grouping</th>
-                        <th scope="col" class="px-4 py-2 font-semibold text-left">Model Name</th>
-                        <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 1</th>
-                        <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 2</th>
-                        <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 3</th>
-                        <th scope="col" class="px-2 py-2 font-semibold text-center">CPA REG</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <!-- Financial Models Group -->
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-bold align-top" rowspan="1">Financial Models</td>
-                        <td class="px-4 py-2 font-semibold text-gray-400">Model</td>
-                        <td class="px-2 py-2 text-center">-</td>
-                        <td class="px-2 py-2 text-center">-</td>
-                        <td class="px-2 py-2 text-center">-</td>
-                        <td class="px-2 py-2 text-center">-</td>
-                    </tr>
+    <div class="overflow-x-auto rounded-lg table-container">
+        <table class="w-full text-sm text-left whitespace-nowrap">
+            <thead class="bg-gray-200 text-xs text-gray-600 uppercase tracking-wider">
+            <tr>
+                <th scope="col" class="px-4 py-2 font-semibold text-left">Model Grouping</th>
+                <th scope="col" class="px-4 py-2 font-semibold text-left">Model Name</th>
+                <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 1</a>
+                </th>
+                <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 2</a>
+                </th>
+                <th scope="col" class="px-2 py-2 font-semibold text-center">CFA Level 3</a>
+                </th>
+                <th scope="col" class="px-2 py-2 font-semibold text-center">CPA REG</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+            <!-- Financial Models Group -->
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-bold align-top" rowspan="1">Financial Models</td>
+                <td class="px-4 py-2 font-semibold text-gray-400">Model</td>
+                <td class="px-2 py-2 text-center">-</td>
+                <td class="px-2 py-2 text-center">-</td>
+                <td class="px-2 py-2 text-center">-</td>
+                <td class="px-2 py-2 text-center">-</td>
+            </tr>
 
-                    <!-- Base Models Group -->
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 font-bold align-top" rowspan="5">Base Models</td>
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 8B</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">13.33</span><br><span class="f1-score">0.133</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">19.48</span><br><span class="f1-score">0.199</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">16.67</span><br><span class="f1-score">0.179</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">31.68</span><br><span class="f1-score">0.317</span></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 70B</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">42.22</span><br><span class="f1-score">0.418</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">29.87</span><br><span class="f1-score">0.303</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">24.36</span><br><span class="f1-score">0.271</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">41.58</span><br><span class="f1-score">0.426</span></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 font-semibold">DeepSeek V3</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">54.44</span><br><span class="f1-score">0.556</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">46.75</span><br><span class="f1-score">0.485</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">47.44</span><br><span class="f1-score">0.496</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">65.35</span><br><span class="f1-score">0.654</span></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 font-semibold">GPT-4o</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">63.33</span><br><span class="f1-score">0.631</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">55.84</span><br><span class="f1-score">0.563</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.517</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">67.33</span><br><span class="f1-score">0.667</span></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 font-semibold">Gemini 2.0 FL</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">55.56</span><br><span class="f1-score">0.556</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">56.67</span><br><span class="f1-score">0.567</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">52.56</span><br><span class="f1-score">0.538</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">63.37</span><br><span class="f1-score">0.638</span></td>
-                    </tr>
+            <!-- Base Models Group -->
+            <tr class="bg-white">
+                <td class="px-4 py-2 font-bold align-top" rowspan="5">Base Models</td>
+                <td class="px-4 py-2 font-semibold">Llama 3.1 8B<a
+                        href="https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct" target="_blank"><span
+                        class="material-symbols-outlined">open_in_new</span></a></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">13.33</span><br><span class="f1-score">0.133</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">19.48</span><br><span class="f1-score">0.199</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">16.67</span><br><span class="f1-score">0.179</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">31.68</span><br><span class="f1-score">0.317</span>
+                </td>
+            </tr>
+            <tr class="bg-white">
+                <td class="px-4 py-2 font-semibold">Llama 3.1 70B<a
+                        href="https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct" target="_blank"><span
+                        class="material-symbols-outlined">open_in_new</span></a></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">42.22</span><br><span class="f1-score">0.418</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">29.87</span><br><span class="f1-score">0.303</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">24.36</span><br><span class="f1-score">0.271</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">41.58</span><br><span class="f1-score">0.426</span>
+                </td>
+            </tr>
+            <tr class="bg-white">
+                <td class="px-4 py-2 font-semibold">DeepSeek V3<a href="https://github.com/deepseek-ai/DeepSeek-V3"
+                                                                  target="_blank"><span
+                        class="material-symbols-outlined">open_in_new</span></a></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">54.44</span><br><span class="f1-score">0.556</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">46.75</span><br><span class="f1-score">0.485</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">47.44</span><br><span class="f1-score">0.496</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">65.35</span><br><span class="f1-score">0.654</span>
+                </td>
+            </tr>
+            <tr class="bg-white">
+                <td class="px-4 py-2 font-semibold">GPT-4o<a href="https://openai.com/index/hello-gpt-4o/"
+                                                             target="_blank"><span class="material-symbols-outlined">open_in_new</span></a>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">63.33</span><br><span class="f1-score">0.631</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">55.84</span><br><span class="f1-score">0.563</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.517</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">67.33</span><br><span class="f1-score">0.667</span>
+                </td>
+            </tr>
+            <tr class="bg-white">
+                <td class="px-4 py-2 font-semibold">Gemini 2.0 FL<a
+                        href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-0-flash-lite"
+                        target="_blank"><span class="material-symbols-outlined">open_in_new</span></a></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">55.56</span><br><span class="f1-score">0.556</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">56.67</span><br><span class="f1-score">0.567</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">52.56</span><br><span class="f1-score">0.538</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">63.37</span><br><span class="f1-score">0.638</span>
+                </td>
+            </tr>
 
-                    <!-- Fine-tuned Models Group -->
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-bold align-top" rowspan="5">Fine-tuned Models</td>
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 8B LoRA</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">86.67</span><br><span class="f1-score">0.867</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">88.31</span><br><span class="f1-score">0.883</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">70.51</span><br><span class="f1-score">0.705</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">80.20</span><br><span class="f1-score">0.802</span></td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 8B QLoRA</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span class="f1-score"><b>0.878</b></span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">83.12</span><br><span class="f1-score">0.835</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">66.67</span><br><span class="f1-score">0.675</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">88.12</span><br><span class="f1-score">0.885</span></td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 8B DoRA</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span class="f1-score"><b>0.878</b></span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">90.91</span><br><span class="f1-score">0.909</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">69.23</span><br><span class="f1-score">0.697</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>90.10</b></span><br><span class="f1-score"><b>0.901</b></span></td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-semibold">Llama 3.1 8B rsLoRA</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span class="f1-score"><b>0.878</b></span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>92.21</b></span><br><span class="f1-score"><b>0.922</b></span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>79.49</b></span><br><span class="f1-score"><b>0.795</b></span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>90.10</b></span><br><span class="f1-score"><b>0.901</b></span></td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 font-semibold">Gemini 2.0 FL N/A</td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">52.22</span><br><span class="f1-score">0.530</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">51.11</span><br><span class="f1-score">0.519</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.557</span></td>
-                        <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.557</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <!-- Fine-tuned Models Group -->
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-bold align-top" rowspan="5">Fine-tuned Models</td>
+                <td class="px-4 py-2 font-semibold">Llama 3.1 8B LoRA</td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">86.67</span><br><span class="f1-score">0.867</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">88.31</span><br><span class="f1-score">0.883</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">70.51</span><br><span class="f1-score">0.705</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">80.20</span><br><span class="f1-score">0.802</span>
+                </td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-semibold">Llama 3.1 8B QLoRA</td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span
+                        class="f1-score"><b>0.878</b></span></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">83.12</span><br><span class="f1-score">0.835</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">66.67</span><br><span class="f1-score">0.675</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">88.12</span><br><span class="f1-score">0.885</span>
+                </td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-semibold">Llama 3.1 8B DoRA</td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span
+                        class="f1-score"><b>0.878</b></span></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">90.91</span><br><span class="f1-score">0.909</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">69.23</span><br><span class="f1-score">0.697</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>90.10</b></span><br><span
+                        class="f1-score"><b>0.901</b></span></td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-semibold">Llama 3.1 8B rsLoRA</td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>87.78</b></span><br><span
+                        class="f1-score"><b>0.878</b></span></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>92.21</b></span><br><span
+                        class="f1-score"><b>0.922</b></span></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>79.49</b></span><br><span
+                        class="f1-score"><b>0.795</b></span></td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score"><b>90.10</b></span><br><span
+                        class="f1-score"><b>0.901</b></span></td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-semibold">Gemini 2.0 FL N/A</td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">52.22</span><br><span class="f1-score">0.530</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">51.11</span><br><span class="f1-score">0.519</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.557</span>
+                </td>
+                <td class="px-2 py-2 text-center"><span class="accuracy-score">51.28</span><br><span class="f1-score">0.557</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>
