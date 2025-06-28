@@ -31,6 +31,7 @@ Datasets
 
 Large Language Models
 --------------------
+.. [BloombergGPT] Wu, S., et al. (2023). *BloombergGPT: A Large Language Model for Finance*. arXiv preprint arXiv:2303.17564.
 
 .. [Llama3] Touvron, H., et al. (2024). *Llama 3: A Family of State-of-the-Art Open Language Models*. Meta AI.
 
@@ -53,11 +54,18 @@ LoRA Methods
 
 .. [FedLoRA] Liu, X. Y., Zhu, R., Zha, D., Gao, J., Zhong, S., White, M., & Qiu, M. (2025). *Differentially private low-rank adaptation of large language model using federated learning*. ACM Transactions on Management Information Systems, 16(2), 1-24.
 
+.. [Sun2024] Youbang Sun, Zitao Li, Yaliang Li, and Bolin Ding. Improving loRA in privacy-preserving federated learning. In The Twelfth International Conference on Learning Representations, 2024.
+
 Other Papers
 -----------
-
-.. [BloombergGPT] Wu, S., et al. (2023). *BloombergGPT: A Large Language Model for Finance*. arXiv preprint arXiv:2303.17564.
 
 .. [BERTScore] Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2019). *BERTScore: Evaluating Text Generation with BERT*. arXiv preprint arXiv:1904.09675.
 
 .. [FinLoRA] Wang, D., Patel, J., Zha, D., Yang, S. Y., & Liu, X. Y. (2025). *FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets*. arXiv preprint arXiv:2505.19819.
+
+.. [Liu2022] Haokun Liu, Derek Tam, Mohammed Muqeeth, Jay Mohta, Tenghao Huang, Mohit Bansal, and Colin A Raffel. Few-shot parameter-efficient fine-tuning is better and cheaper than in-context learning. Advances in Neural Information Processing Systems, 35:1950–1965, 2022.
+
+.. [Liu2024] Jiayu Liu, Zhenya Huang, Tong Xiao, Jing Sha, Jinze Wu, Qi Liu, Shijin Wang, and Enhong Chen. SocraticLM: Exploring socratic personalized teaching with large language models. In The Thirty-eighth Annual Conference on Neural Information Processing Systems, 2024.]
+
+.. [Xie2024] Qianqian Xie, Weiguang Han, Zhengyu Chen, et al. FinBen: An holistic financial benchmark for large language models. In The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track, 2024.
+
