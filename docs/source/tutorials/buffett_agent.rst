@@ -1,7 +1,7 @@
 Buffett Agent
 =============
 
-This tutorial demonstrates how to fine-tune a financial advisor model that mimics Warren Buffett's investment philosophy and communication style using the FinLoRA framework [FinLoRA]_. The complete process costs less than $20 and showcases a practical application of fine-tuning LLMs for financial advisory tasks.
+This tutorial demonstrates how to fine-tune a financial advisor model that mimics Warren Buffett using the FinLoRA framework [FinLoRA]_. The complete process costs less than $20 and showcases a practical application of fine-tuning LLMs for financial advisory tasks.
 
 Motivation
 ----------
