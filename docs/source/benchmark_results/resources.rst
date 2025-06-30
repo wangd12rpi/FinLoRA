@@ -1,8 +1,10 @@
 Resource Usage and Cost Analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fine-tuning Costs Comparison
+Fine-tuning Costs
 ----------------------------
+
+*Part of Benchmark Angle III: Resources of LoRA Fine-tuning and Inference*
 
 The computational requirements for fine-tuning large language models vary dramatically depending on the approach used. The following table compares the cost and time requirements across different methods:
 
