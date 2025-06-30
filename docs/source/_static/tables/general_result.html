@@ -16,6 +16,20 @@
         a:hover .material-symbols-outlined {
             color: #2b6cb0;
         }
+        .footnote-ref {
+            vertical-align: super;
+            font-size: 1em;
+            color: #4a5568;
+        }
+        .footnotes {
+            margin-top: .5rem;
+            padding-top: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .footnote-item {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body class="text-gray-900">
@@ -44,7 +58,7 @@
                     <!-- Financial Models Group -->
                     <tr class="model-group-light">
                         <td class="p-2 font-bold align-top" rowspan="2">Financial Models</td>
-                        <td class="p-2 font-semibold">FinGPT<a href="https://openreview.net/pdf?id=FuOMomaQa8" target="_blank"><span class="material-symbols-outlined">open_in_new</span></a></td>
+                        <td class="p-2 font-semibold">FinGPT<span class="footnote-ref">†</span><a href="https://openreview.net/pdf?id=FuOMomaQa8" target="_blank"><span class="material-symbols-outlined">open_in_new</span></a></td>
                         <td class="p-2 text-center data-cell"><span class="f1-score">0.861</span></td>
                         <td class="p-2 text-center data-cell"><span class="f1-score">0.825</span></td>
                         <td class="p-2 text-center data-cell"><span class="f1-score">0.890</span></td>
@@ -53,7 +67,7 @@
                         <td class="p-2 text-center data-cell"><span class="f1-score">-</span></td>
                     </tr>
                     <tr class="model-group-light">
-                        <td class="p-2 font-semibold">BloombergGPT<a href="https://arxiv.org/abs/2303.17564" target="_blank"><span class="material-symbols-outlined">open_in_new</span></a></td>
+                        <td class="p-2 font-semibold">BloombergGPT<span class="footnote-ref">‡</span><a href="https://arxiv.org/abs/2303.17564" target="_blank"><span class="material-symbols-outlined">open_in_new</span></a></td>
                         <td class="p-2 text-center data-cell"><span class="accuracy-score">51.07</span></td>
                         <td class="p-2 text-center data-cell"><span class="accuracy-score">75.07</span></td>
                         <td class="p-2 text-center data-cell"><span class="accuracy-score">-</span></td>
@@ -159,6 +173,16 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Footnotes -->
+        <div class="footnotes">
+            <div class="footnote-item">
+                <strong>†</strong> FinGPT is based on Llama 2 7B fine-tuned model. Results are from the paper.
+            </div>
+            <div class="footnote-item">
+                <strong>‡</strong> BloombergGPT is a closed model. Results are from the paper.
+            </div>
         </div>
     </div>
 
