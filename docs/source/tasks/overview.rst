@@ -2,7 +2,7 @@ Financial Tasks Overview
 ===================
 
 Task Categories Summary
-=======================
+******************
 
 .. list-table:: Financial Task Categories Overview
    :widths: 20 15 15 25 25
@@ -36,7 +36,7 @@ Task Categories Summary
      - XBRL extraction, formula calculation, financial mathematics
 
 Why These Financial Tasks Matter
-================================
+*****************
 
 We have selected four main categories of financial tasks, each representing a critical area of financial application.
 
@@ -107,14 +107,14 @@ Financial Analysis Tasks
 - Represent actual analyst work with comprehensive financial report analysis
 
 Why Financial AI Tasks Are Critical
-===================================
+***********************
 
 The financial industry demands exceptional accuracy and reliability because errors can result in regulatory violations, substantial financial losses, and market instability. Financial professionals face significant legal liability, and the entire financial system depends on public confidence in accuracy and integrity.
 
 FinLoRA's comprehensive task coverage ensures AI systems can handle critical financial functions while maintaining the rigorous standards required by the financial industry.
 
 Related Documentation
-=====================
+*******************
 
 For detailed information about each task category:
 
