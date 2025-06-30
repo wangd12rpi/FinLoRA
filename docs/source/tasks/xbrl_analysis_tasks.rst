@@ -21,7 +21,7 @@ Financial Statement Analysis
      - 200
      - 116
      - Accuracy
-     - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx>`__
+     - `GitHub <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/formulas_with_explanations_with_questions_with_gt.xlsx>`__
      - `formula_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/formula_train.jsonl>`__
      - `formula_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/formula_test.jsonl>`__
    * - Tag Extraction
@@ -30,7 +30,7 @@ Financial Statement Analysis
      - 2.9k
      - 3.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `Hugging Face <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
      - `xbrl_extract_tags_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_tags_test.jsonl>`__
    * - Value Extraction
@@ -39,7 +39,7 @@ Financial Statement Analysis
      - 2.5k
      - 3.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `Hugging Face <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
      - `xbrl_extract_value_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_value_test.jsonl>`__
    * - Formula Construction
@@ -48,7 +48,7 @@ Financial Statement Analysis
      - 835
      - 3.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `Hugging Face <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
      - `xbrl_extract_formula_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_formula_test.jsonl>`__
    * - Formula Calculation
@@ -57,7 +57,7 @@ Financial Statement Analysis
      - 835
      - 3.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
+     - `Hugging Face <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - `xbrl_extract_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_extract_train.jsonl>`__
      - `xbrl_extract_formula_calculations_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_extract_formula_calculations_test.jsonl>`__
    * - FinanceBench
@@ -66,7 +66,7 @@ Financial Statement Analysis
      - 43
      - 983
      - BERTScore
-     - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx>`__
+     - `GitHub <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/financebench.xlsx>`__
      - `financebench_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/financebench_train.jsonl>`__
      - `financebench_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/financebench_test.jsonl>`__
 
