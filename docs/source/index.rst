@@ -34,6 +34,7 @@ FinLoRA
    tutorials/finetune
    tutorials/fedlora
    tutorials/eval
+   tutorials/buffett_agent
 
 
 .. toctree::

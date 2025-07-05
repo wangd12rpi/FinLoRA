@@ -22,7 +22,7 @@ XBRL tagging is a crucial step in creating XBRL reports. This process involves t
      - 7.4k
      - 1.8k
      - Accuracy, F1
-     - `huggingface <https://huggingface.co/datasets/nlpaueb/finer-139>`__
+     - `Hugging Face <https://huggingface.co/datasets/nlpaueb/finer-139>`__
      - `finer_train_batched.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/finer_train_batched.jsonl>`__
      - `finer_test_batched.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/finer_test_batched.jsonl>`__
    * - FNXL
@@ -31,7 +31,7 @@ XBRL tagging is a crucial step in creating XBRL reports. This process involves t
      - 247
      - 7.1k
      - Accuracy, F1
-     - `github <https://github.com/soummyaah/FNXL>`__
+     - `GitHub <https://github.com/soummyaah/FNXL>`__
      - Test only dataset
      - `fnxl_test_batched.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/fnxl_test_batched.jsonl>`__
    * - XBRL Term
@@ -40,7 +40,7 @@ XBRL tagging is a crucial step in creating XBRL reports. This process involves t
      - 651
      - 25
      - BERTScore
-     - `github <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx>`__
+     - `GitHub <https://github.com/KirkHan0920/XBRL-Agent/blob/main/Datasets/XBRL%20Terminology.xlsx>`__
      - `xbrl_term_train.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/train/xbrl_term_train.jsonl>`__
      - `xbrl_term_test.jsonl <https://github.com/Open-Finance-Lab/FinLoRA/blob/main/data/test/xbrl_term_test.jsonl>`__
 
