@@ -1,4 +1,4 @@
-Financial Tasks Overview
+Overview
 ===================
 
 Task Categories Summary
