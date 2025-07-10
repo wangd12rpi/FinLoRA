@@ -22,14 +22,28 @@ Algorithmic Idea
 
 The core idea behind LoRA is that the change in weights during model adaptation has a low "intrinsic rank". LoRA preserves the weights of the pre-trained model and introduces a smaller set of trainable weights through low-rank decomposition.
 
-For a pre-trained weight matrix :math:`\mathbf{W}_0 \in \mathbb{R}^{d \times k}`, instead of updating all parameters, LoRA only updates a small subset of parameters using low-rank matrices :math:`\mathbf{A} \in \mathbb{R}^{r \times k}` and :math:`\mathbf{B} \in \mathbb{R}^{d \times r}` where the rank :math:`r \ll \min(d,k)`.
+**Step 1: Fine-tuning Process**
 
-During training, the following hold true:
+For a pre-trained weight matrix :math:`\mathbf{W}_0 \in \mathbb{R}^{d \times k}`, LoRA introduces a dual path adaptation:
 
-#. :math:`\mathbf{W}_0` is frozen and receives no gradient updates.
-#. Only :math:`\mathbf{A}` and :math:`\mathbf{B}` contain trainable parameters with significantly fewer parameters.
-#. The forward pass becomes: :math:`\mathbf{h} = \mathbf{W}_0 \mathbf{x} + \gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`.
-#. :math:`\mathbf{A}` is initialized randomly while :math:`\mathbf{B}` is initialized to zero.
+1. **Add a second path**: Introduce two low-rank matrices :math:`\mathbf{A} \in \mathbb{R}^{r \times k}` and :math:`\mathbf{B} \in \mathbb{R}^{d \times r}` where the rank :math:`r \ll \min(d,k)`.
+
+2. **Feedforward pass**: The forward pass becomes :math:`\mathbf{h} = \mathbf{W}_0 \mathbf{x} + \gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`, where the original path :math:`\mathbf{W}_0 \mathbf{x}` runs in parallel with the adaptation path :math:`\gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`. This dual-path output is then used to compute the loss function.
+
+3. **Backpropagation**: :math:`\mathbf{W}_0` is frozen and receives no gradient updates. Only :math:`\mathbf{A}` and :math:`\mathbf{B}` receive gradients and are updated during training. :math:`\mathbf{A}` is initialized randomly while :math:`\mathbf{B}` is initialized to zero, ensuring :math:`\Delta\mathbf{W} = 0` at training start.
+
+**Step 2: Inference Weight Merging**
+
+After training, the learned adaptation can be merged with the original weights for efficient inference:
+
+.. math::
+
+   \mathbf{W}_{merged} = \mathbf{W}_0 + \Delta\mathbf{W} = \mathbf{W}_0 + \gamma_r \mathbf{B}\mathbf{A}
+
+Once merged, inference becomes a standard matrix multiplication :math:`\mathbf{h} = \mathbf{W}_{merged} \mathbf{x}` with no additional computational overhead.
+
+Only the small matrices :math:`\mathbf{A}` and :math:`\mathbf{B}` require gradient computation and storage as LoRA adapters, dramatically reducing memory requirements and trainable parameters compared to full fine-tu
+
 
 Key Equations
 ~~~~~~~~~~~~
