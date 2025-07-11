@@ -429,6 +429,8 @@ flwr run . --run-config "num-server-rounds=50 strategy.fraction-fit=0.25"
 
 ### Evaluation
 
+Please note that the fp16 adapters we created are experimental and untested. They may not be suitable for use.
+
 To test adapters, navigate to the test directory:
 
 ```bash
