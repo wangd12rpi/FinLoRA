@@ -20,6 +20,10 @@ body {
     color: #4b5563; /* text-gray-600 */
 }
 
+.bertscore-f1 {
+    color: #22c55e; /* text-green-500 */
+}
+
 .model-group-light {
     background-color: #f9fafb; /* bg-gray-50 */
 }
