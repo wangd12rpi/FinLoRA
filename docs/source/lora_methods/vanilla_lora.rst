@@ -21,23 +21,25 @@ Quick Facts
 Algorithmic Idea
 ~~~~~~~~~~~~~~~~
 
+
 The core idea behind LoRA is that the change in weights during model adaptation has a low "intrinsic rank." LoRA preserves the weights of the pre-trained model and introduces a smaller set of trainable weights through low-rank decomposition.
 
 **Stage One: Fine-tuning Process**
 
+
 1. **Add a second path**: Introduce two low-rank matrices :math:`\mathbf{A} \in \mathbb{R}^{r \times n}` and :math:`\mathbf{B} \in \mathbb{R}^{n \times r}` where the rank :math:`r \ll n`.
 
-2. **Feedforward pass**: The forward pass becomes :math:`\mathbf{h} = \mathbf{W}_0 \mathbf{x} + \gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`, where the original path :math:`\mathbf{W}_0 \mathbf{x}` runs in parallel with the adaptation path :math:`\gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`. This dual-path output is then used to compute the loss function.
+2. **Feedforward pass**: The forward pass becomes :math:`\mathbf{h} = \mathbf{W}_0 \mathbf{x} + \gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`, where the contribution from the frozen weights is :math:`\mathbf{W}_0 \mathbf{x}` and the adapter contribution is :math:`\gamma_r \mathbf{B}\mathbf{A} \mathbf{x}`. This combined output is then used to compute the loss function.
 
 3. **Backpropagation**: :math:`\mathbf{W}_0` is frozen and receives no gradient updates. Only :math:`\mathbf{A}` and :math:`\mathbf{B}` receive gradients and are updated during training. :math:`\mathbf{A}` is initialized randomly while :math:`\mathbf{B}` is initialized to zero, ensuring :math:`\Delta\mathbf{W} = 0` at training start.
 
 **Stage Two: Inference Weight Merging**
 
-After training, the learned adaptation can be merged with the original weights for efficient inference:
+After training, the learned adapter can be merged with the original weights for efficient inference:
 
 .. math::
 
-   \mathbf{W}_{merged} = \mathbf{W}_0 + \Delta\mathbf{W} = \mathbf{W}_0 + \gamma_r \mathbf{B}\mathbf{A}
+   \mathbf{W}_{merged} = \mathbf{W}_0 + \Delta\mathbf{W} = \mathbf{W}_0 + \gamma_r \mathbf{B}\mathbf{A}, where \gamma_r = \frac{\alpha}{r}.
 
 Once merged, inference becomes a standard matrix multiplication :math:`\mathbf{h} = \mathbf{W}_{merged} \mathbf{x}` with no additional computational overhead.
 
@@ -160,6 +162,7 @@ LoRA is crucial to understanding parameter-efficient fine-tuning. It introduced 
 
 Useful Links
 ~~~~~~~~~~~~
+
 
 * `Microsoft LoRA <https://github.com/microsoft/LoRA>`_ - Original implementation  
 * `LoRA Explained by Primary Author <https://www.youtube.com/watch?v=DhRoTONcyZE>`_  
