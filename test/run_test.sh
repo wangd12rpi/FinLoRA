@@ -5,12 +5,12 @@
 #---- ner ----
 
 python test.py \
---dataset xbrl_term \
+--dataset fpb \
 --batch_size 1 \
 --quant_bits 8 \
 --source google \
---sample_ratio .1 \
---base_model projects/1023064188719/locations/us-central1/endpoints/578348613768314880 \
+--sample_ratio .01 \
+--base_model projects/1023064188719/locations/us-central1/endpoints/1842980499757203456 \
 #--base_model meta-llama/Llama-3.1-8B \
 #--peft_model ../lora_adapters/8bits_r8/finer_llama_3_1_8b_8bits_r8
 

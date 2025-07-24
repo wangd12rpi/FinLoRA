@@ -51,6 +51,7 @@ FinLoRA
    :maxdepth: 3
    :caption: LoRA Methods
 
+   lora_methods/overview
    lora_methods/vanilla_lora
    lora_methods/qlora
    lora_methods/dora
