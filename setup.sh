@@ -1,4 +1,4 @@
-export HF_TOKEN=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
+export HF_TOKEN=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
 pip install tqdm tensorboard dotenv fireworks-ai google-genai anthropic together dotenv tqdm datasets bert-score scikit-learn mixlora deepeval
 #pip install cupy-cuda12x
 #git clone https://github.com/YangletLiu/FinLoRA
