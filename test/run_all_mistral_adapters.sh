@@ -84,13 +84,11 @@ for dataset in "${!dataset_adapter_map[@]}"; do
 done
 
 {
-    echo "============================================================"
     echo "Run finished : $(date)"
     echo "Log saved to : $RESULTS_FILE"
     echo
-    echo "SUMMARY OF TESTED ADAPTERS:"
+    echo "Summary:"
     echo "- ${#dataset_adapter_map[@]} total datasets tested"
     echo "- Base model: $BASE_MODEL"
     echo "- Configuration: 8bits_r8"
-    echo "============================================================"
 } | tee -a "$RESULTS_FILE" 
