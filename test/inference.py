@@ -36,7 +36,8 @@ def load_local_model(args):
     )
 
     model = AutoModelForCausalLM.from_pretrained(
-        model_name, trust_remote_code=True,
+        model_name,
+        trust_remote_code=True,
         quantization_config=bnb_config,
         device_map="auto",
         torch_dtype=torch.bfloat16,
@@ -51,13 +52,19 @@ def load_local_model(args):
         device_map="auto"
     )
 
+    # ensure a pad token exists and embeddings match
+    if tokenizer.pad_token is None:
+        tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
     tokenizer.padding_side = "left"
+
+    # resize model embedding layer if tokenizer length changed
+    if len(tokenizer) != model.get_input_embeddings().weight.size(0):
+        model.resize_token_embeddings(len(tokenizer))
+
+    # qwen special ids
     if args.base_model == 'qwen':
         tokenizer.eos_token_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
         tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('<|extra_0|>')
-
-    tokenizer.pad_token = tokenizer.eos_token
-    print(f'pad: {tokenizer.pad_token_id}, eos: {tokenizer.eos_token_id}')
 
     if args.peft_model != "":
         model = PeftModel.from_pretrained(model, args.peft_model)
@@ -87,7 +94,6 @@ def inference(args, inputs, max_new_token=60, delimiter="\n", model=None,
             if response.status_code == 200:
                 answer.append(response.json()["choices"][0]["message"]["content"])
             else:
-                print(f"Error calling Together AI API: {response.status_code} - {response.text}")
                 answer.append("Error: Failed to get response from Together AI API")
         return answer
 
@@ -206,47 +212,37 @@ def evaluate_accuracy(out, target, target_type_list):
                 if index != -1:
                     found_labels_info.append({'label': valid_label, 'index': index})
             except AttributeError:
-                print(f"Warning: Attribute error during find for x='{x_str}', label='{valid_label}'")
                 continue
         is_current_prediction_correct = False
-        if not found_labels_info:
-            is_current_prediction_correct = False
-        else:
+        if found_labels_info:
             found_labels_info.sort(key=lambda item: item['index'])
             first_occurred_label = found_labels_info[0]['label']
             if first_occurred_label == y_lower:
                 is_current_prediction_correct = True
-            else:
-                is_current_prediction_correct = False
         if is_current_prediction_correct:
             correct_count += 1
             response.append(y)
         else:
             response.append(x)
-    accuracy = 0.0
-    if len(out) > 0:
-        accuracy = correct_count / len(out)
+    accuracy = correct_count / len(out) if len(out) > 0 else 0.0
     return accuracy, response
 
 
 def process_batched(out_text_list, target_list):
     processed_out_text_list = []
     processed_target_list = []
-
     for out_text, target in zip(out_text_list, target_list):
         split_output = [x.strip().replace("\n", "") for x in out_text.split(',')]
         split_target = [x.strip().replace("\n", "") for x in target.split(',')]
-        processed_target_list += (split_target)
+        processed_target_list += split_target
         output_len = len(split_output)
         target_len = len(split_target)
-
         if output_len != target_len:
             if output_len > target_len:
-                processed_out_text_list += (split_output[:target_len])
+                processed_out_text_list += split_output[:target_len]
             else:
-                padding_needed = target_len - output_len
-                processed_out_text_list += (split_output + [""] * padding_needed)
+                processed_out_text_list += split_output + [""] * (target_len - output_len)
         else:
-            processed_out_text_list += (split_output)
+            processed_out_text_list += split_output
     assert len(processed_out_text_list) == len(processed_target_list)
     return processed_out_text_list, processed_target_list
