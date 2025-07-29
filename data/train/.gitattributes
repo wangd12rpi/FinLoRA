@@ -1,0 +1,4 @@
+xbrl_extract_train.jsonl filter=lfs diff=lfs merge=lfs -text
+multi/analysis_multi.jsonl filter=lfs diff=lfs merge=lfs -text
+multi/reporting_multi.jsonl filter=lfs diff=lfs merge=lfs -text
+multi/general_multi.jsonl filter=lfs diff=lfs merge=lfs -text

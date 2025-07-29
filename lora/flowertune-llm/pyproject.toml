@@ -33,7 +33,7 @@ serverapp = "flowertune_llm.server_app:app"
 clientapp = "flowertune_llm.client_app:app"
 
 [tool.flwr.app.config]
-dataset.name = "wangd12/finlora_sentiment_train"
+dataset.name = "wangd12/xbrl_analysis_train"
 model.name = "meta-llama/Llama-3.1-8B-Instruct"
 model.quantization = 8
 model.gradient-checkpointing = true
@@ -42,13 +42,13 @@ model.lora.peft-lora-alpha = 32
 train.save-every-round = 5
 train.learning-rate-max = 1e-4
 train.learning-rate-min = 1e-5
-train.seq-length = 512
+train.seq-length = 5120
 train.training-arguments.output-dir = ""
 train.training-arguments.learning-rate = ""
-train.training-arguments.per-device-train-batch-size = 8
+train.training-arguments.per-device-train-batch-size = 1
 train.training-arguments.gradient-accumulation-steps = 2
 train.training-arguments.logging-steps = 20
-train.training-arguments.num-train-epochs = 4
+train.training-arguments.num-train-epochs = 1
 train.training-arguments.max-steps = 20
 train.training-arguments.save-steps = 1000
 train.training-arguments.save-total-limit = 20
@@ -56,7 +56,7 @@ train.training-arguments.gradient-checkpointing = true
 train.training-arguments.lr-scheduler-type = "constant"
 strategy.fraction-fit = 0.1
 strategy.fraction-evaluate = 0.0
-num-server-rounds = 100
+num-server-rounds = 200
 
 [tool.flwr.federations]
 default = "local-simulation"
