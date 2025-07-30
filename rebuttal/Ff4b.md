@@ -55,7 +55,7 @@ calculation, Finance Bench, and financial math improve under the multi-task sett
 underlying knowledge like the structure of financial statements and basic numerical reasoning. Learning them together
 helps the model build a broader and more useful representation.
 
-In contrast we see negative transfer in General Financial and Financial Reporting tasks, where the multi-task model
+In contrast, we see negative transfer in General Financial and Financial Reporting tasks, where the multi-task model
 performs worse on TFNS, Headline, FiNER, and FNXL. We suspect the problem comes from differences in task format and
 objective. Even with balanced sampling the model struggles to optimize for very different objectives at the same time.
 
