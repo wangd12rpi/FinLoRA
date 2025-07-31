@@ -11,7 +11,7 @@ We have extended our “out-of-domain” suite beyond MMLU and GSM8K to addition
 | MMLU          |       0.229       |               0.229               |
 | GSM8K         |       0.011       |               0.011               |
 | TriviaQA-Open |       0.667       |               0.663               |
-| CoQA          |                   |                                   |
+| CoQA          |       0.711       |               0.709               |
 
 Overall we find minimal signs of catastrophic forgetting after the fine-tuning process.
 
@@ -35,33 +35,33 @@ performs best.
 
 ## Q3 Model Diversity
 
-| **Datasets**                           | **Llama 3.1 8B** Base | Ministral-8B Base | **Llama 3.1 8B LoRA 8bit-r8** (Single-task) | Ministral-8B LoRA 8bit-r8 (Single-task) |
-|:---------------------------------------|:---------------------:|:-----------------:|:-------------------------------------------:|:---------------------------------------:|
-| **General Financial Tasks**            |                       |                   |                                             |                                         |
-| FPB                                    |         68.73         |       73.08       |                    85.64                    |                **86.71**                |
-| FiQA SA                                |         46.55         |       52.86       |                  **81.28**                  |                  80.00                  |
-| TFNS                                   |         69.97         |       22.07       |                  **88.02**                  |                  45.85                  |
-| NWGI                                   |         43.86         |       21.25       |                    54.16                    |                **56.90**                |
-| NER                                    |         48.89         |       58.61       |                  **98.05**                  |                  98.05                  |
-| Headline                               |         45.34         |       62.64       |                    84.66                    |                **97.51**                |
-| **Financial Certification Tasks**      |                       |                   |                                             |                                         |
-| CFA 1                                  |         13.33         |     **88.89**     |                    86.67                    |                  87.77                  |
-| CFA 2                                  |         19.48         |     **94.80**     |                    88.31                    |                  94.80                  |
-| CFA 3                                  |         16.67         |     **78.20**     |                    70.51                    |                **78.20**                |
-| CPA                                    |         31.68         |       87.12       |                    80.20                    |                **91.08**                |
-| **Financial Reporting Tasks**          |                       |                   |                                             |                                         |
-| FiNER                                  |         21.28         |       22.62       |                  **74.10**                  |                  69.56                  |
-| FNXL                                   |         03.64         |       02.55       |                    23.57                    |                **33.67**                |
-| XBRL Term (BERTScore)                  |         0.574         |       0.563       |                    0.599                    |                **0.672**                |
-| **Financial Statement Analysis Tasks** |                       |                   |                                             |                                         |
-| Tag Extraction                         |         69.16         |       74.15       |                  **89.13**                  |                  84.51                  |
-| Value Extraction                       |         52.46         |       74.21       |                    98.49                    |                **98.80**                |
-| Formula Construction                   |         12.92         |       11.91       |                  **77.61**                  |                  62.39                  |
-| Formula Calculation                    |         27.27         |       47.62       |                  **98.68**                  |                  48.50                  |
-| Finance Bench (BERTScore)              |         0.443         |       0.584       |                    0.511                    |                **0.617**                |
-| Financial Math                         |         11.00         |       36.00       |                    30.00                    |                **46.00**                |
-| **Overall Average**                    |                       |                   |                                             |                                         |
-| Aggregated                             |         37.05         |       53.86       |                  **74.74**                  |                  73.12                  |
+| **Datasets**                           | Llama 3.1 8B Base | Ministral-8B Base | Llama 3.1 8B LoRA 8bit-r8 (Single-task) | Ministral-8B LoRA 8bit-r8 (Single-task) |
+|:---------------------------------------|:-----------------:|:-----------------:|:---------------------------------------:|:---------------------------------------:|
+| **General Financial Tasks**            |                   |                   |                                         |                                         |
+| FPB                                    |       68.73       |       73.08       |                  85.64                  |                **86.71**                |
+| FiQA SA                                |       46.55       |       52.86       |                **81.28**                |                  80.00                  |
+| TFNS                                   |       69.97       |       22.07       |                **88.02**                |                  45.85                  |
+| NWGI                                   |       43.86       |       21.25       |                  54.16                  |                **56.90**                |
+| NER                                    |       48.89       |       58.61       |                **98.05**                |                  98.05                  |
+| Headline                               |       45.34       |       62.64       |                  84.66                  |                **97.51**                |
+| **Financial Certification Tasks**      |                   |                   |                                         |                                         |
+| CFA 1                                  |       13.33       |     **88.89**     |                  86.67                  |                  87.77                  |
+| CFA 2                                  |       19.48       |     **94.80**     |                  88.31                  |                  94.80                  |
+| CFA 3                                  |       16.67       |     **78.20**     |                  70.51                  |                **78.20**                |
+| CPA                                    |       31.68       |       87.12       |                  80.20                  |                **91.08**                |
+| **Financial Reporting Tasks**          |                   |                   |                                         |                                         |
+| FiNER                                  |       21.28       |       22.62       |                **74.10**                |                  69.56                  |
+| FNXL                                   |       03.64       |       02.55       |                  23.57                  |                **33.67**                |
+| XBRL Term (BERTScore)                  |       0.574       |       0.563       |                  0.599                  |                **0.672**                |
+| **Financial Statement Analysis Tasks** |                   |                   |                                         |                                         |
+| Tag Extraction                         |       69.16       |       74.15       |                **89.13**                |                  84.51                  |
+| Value Extraction                       |       52.46       |       74.21       |                  98.49                  |                **98.80**                |
+| Formula Construction                   |       12.92       |       11.91       |                **77.61**                |                  62.39                  |
+| Formula Calculation                    |       27.27       |       47.62       |                **98.68**                |                  48.50                  |
+| Finance Bench (BERTScore)              |       0.443       |       0.584       |                  0.511                  |                **0.617**                |
+| Financial Math                         |       11.00       |       36.00       |                  30.00                  |                **46.00**                |
+| **Overall Average**                    |                   |                   |                                         |                                         |
+| Aggregated                             |       37.05       |       53.86       |                **74.74**                |                  73.12                  |
 
 The Ministral-8B base model outperforms the Llama 3.1 base on several financial tasks (e.g., FPB,
 Headline) but underperforms on TFNS and some reporting benchmarks. Overall, Ministral-8b performs better than Llama 3.1
@@ -122,7 +122,9 @@ sectors. We will add a remark to the dataset description that the dataset should
 fairness.
 
 ---
+
 [1] Q. Xie et al., "FinBen: A Holistic Financial Benchmark for Large Language Models," in Advances in Neural Information Processing Systems (NeurIPS 2024).
+
 ---
 
 We appreciate your feedback. Your comments led to a stronger benchmark.
