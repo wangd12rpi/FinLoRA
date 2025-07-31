@@ -22,12 +22,12 @@ four-node federated setting covering four XBRL Analysis subtasks. The experiment
 non-federated version) and 30 rounds.
 
 | Task             | Base  | Centralized LoRA | Federated LoRA |
-|:-----------------|:------|:-----------------|:---------------|
-| Tag-Extraction   | 69.16 | **89.13**        | 69.04          |
-| Value-Extraction | 52.46 | **98.49**        | 79.76          |
-| Formula-Constr.  | 19.92 | **77.61**        | 13.10          |
-| Formula-Calc.    | 27.27 | **98.68**        | 28.57          |
-| **Average**      | 42.20 | **90.98**        | 47.62          |
+|:-----------------|:-----:|:----------------:|:--------------:|
+| Tag-Extraction   | 69.16 |    **89.13**     |     69.04      |
+| Value-Extraction | 52.46 |    **98.49**     |     79.76      |
+| Formula-Constr.  | 19.92 |    **77.61**     |     13.10      |
+| Formula-Calc.    | 27.27 |    **98.68**     |     28.57      |
+| **Average**      | 42.20 |    **90.98**     |     47.62      |
 
 Federated training noticeably improves value extraction, matches tag extraction and formula calculation, and slightly
 reduces formula construction. Overall, performance improves relative to the base model, although centralized LoRA still
@@ -97,8 +97,8 @@ on general knowledge datasets. We will present the results for the camera-ready 
 ## Q7 Prompt Formatting
 
 All datasets use a standardized prompt format. We will publish the instruction template in the supplementary materials
-before the camera-ready deadline. For most tasks we follow the instruction formats from prior work such as FinBen [1]
-and PIXIU [2]. The basic template for XBRL Analysis tasks is:
+before the camera-ready deadline. For most tasks we follow the instruction formats from prior work such as FinBen [1].
+The basic template for XBRL Analysis tasks is:
 
 ```
 <|system|>
@@ -121,7 +121,8 @@ selecting US GAAP tags. However, we note potential coverage bias—e.g., Dow Jon
 sectors. We will add a remark to the dataset description that the dataset should not be used to benchmark sector‑level
 fairness.
 
-
+---
+[1] Q. Xie et al., "FinBen: A Holistic Financial Benchmark for Large Language Models," in Advances in Neural Information Processing Systems (NeurIPS 2024).
 ---
 
 We appreciate your feedback. Your comments led to a stronger benchmark.

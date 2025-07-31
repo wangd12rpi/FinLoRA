@@ -27,6 +27,16 @@ Financial data poses three main challenges:
 
 ## Q3 Future research directions in fine-tuning: what drives adaptation performance?
 
+We selected these three future directions to investigate the core drivers of fine-tuning performance. 
+In our original submission we only tested single task fine-tuning. We are adding
+multi-task fine-tuning results for rebuttal, and our initial results displayed a trade-off between single- and
+multi-task learning, where some tasks benefited while others suffered from negative transfer. This made investigating
+the single- vs. multi-task dynamic a starting point. The observed interference led to our second
+direction: exploring adapter capacity. We believe that small LoRA capacity (i.e., a low LoRA rank) may causes those
+lower performance in multi-task settings. Finally, to manage these challenges, we also hope
+ to explore cross-task routing mechanisms like Mixture of LoRA Experts (MoLE). If multi-tasking is suboptimal,
+expert selection might further mitigate interference and display the actual benefits of joint training.
+
 ### Single-task vs. multi-task fine-tuning
 
 We performed additional experiments to compare single-task and multi-task LoRA fine-tuning and added an additional 3
@@ -79,38 +89,18 @@ divergent tasks often harm each other.
 
 We plan to extend the multi-task experiment to other LoRA methods as well.
 
-### Federated LoRA on complex tasks
-
-We also evaluated Federated LoRA on the XBRL analysis tasks, a more complex scenario compared to our earlier
-sentiment-task experiment. The preliminary results are shown below, and we will extend this to the XBRL tagging task
-before the camera-ready submission.
-
-| Task             | Base      | Centralized LoRA | Federated LoRA |
-|------------------|-----------|------------------|----------------|
-| Tag-Extraction   | 69.16     | **89.13**        | 61.22          |
-| Value-Extraction | 52.46     | **98.49**        | 61.51          |
-| Formula-Constr.  | **19.92** | 77.61            | 15.48          |
-| Formula-Calc.    | **27.27** | 98.68            | 22.62          |
-
-Federated training noticeably improves value extraction, matches tag extraction and formula calculation, and slightly
-reduces formula construction. Overall, performance improves relative to the base model, although centralized LoRA still
-performs best.
-
 ### Adapter capacity: lora rank vs task complexity, how did it affect performance?
 
 We compared LoRA ranks of 4 and 8 and observed rank 8 provided higher accuracy across most tasks. However, certain
 particularly challenging tasks, especially under multi-task fine-tuning, may benefit from even higher LoRA ranks (e.g.,
 16 or 32). We plan to benchmark LoRA ranks above 8 to identify optimal configurations for complex scenarios.
 
-#### Cross‑task interference & routing
+### Cross‑task interference & routing
 
-Currently, adapters are selected manually according to task type. However we plan to adopt Mixture‑of‑LoRA‑Experts (
+Currently, adapters are selected manually according to task types. However, we plan to adopt Mixture‑of‑LoRA‑Experts (
 MoLE) routing which dynamically selects adapters via a small gating network. We are running a test on such method and
 will append a brief result to supplementary materials for camera‑ready version.
 
-We also fine-tuned a multi-task version with a total of only four LoRA adapters with merged training datasets from tasks
-that are similar. This will mitigate some issues with too many adapters. The overall results are displayed below.
-Overall we observed some knowledge transfer on some tasks and interference on other tasks.
 
 ## Q4 Additional Catastrophic Forgetting Experiments
 
