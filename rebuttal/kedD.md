@@ -2,13 +2,21 @@ Dear NeurIPS Reviewer:
 
 Thank you for your constructive suggestions.
 
-## Data Imbalance
+## Q1 Data Imbalance
 
-In the submitted version we used single-task fine-tuning for every experiment. Some tasks contain several datasets that
-share an identical format. We balanced those tasks by over-sampling the smaller datasets. As a result, the cross-dataset
-imbalance mentioned in Limitation 1 does not affect our experiments.
+We appreciate that you are highlighting the important issue of data imbalance across tasks. We would like to clarify a
+potential misunderstanding. In the submitted version, all experiments were
+conducted using a single-task fine-tuning approach. Consequently, the imbalance between tasks within a major category
+did not affect the results. Some tasks contain several datasets that share an identical format. We balanced those tasks
+by over-sampling the smaller
+datasets. As a result, the cross-dataset imbalance mentioned in Limitation 1 does not affect our experiments.
 
-## Alternative Baseline: few-shot method
+However, your point is still highly relevant and crucial for multi-task learning.
+Inspired by this feedback, we have added a new suite of multi-task fine-tuning experiments in our revision (see Section
+Q3). In this new setup, we directly address the imbalance issue by implementing a rebalancing strategy that over-samples
+data from smaller datasets.
+
+## Q2 Alternative Baseline: few-shot method
 
 We agree that low-resource tasks deserve few-shot or in-context learning baselines. We therefore re-evaluated all
 19 datasets with three-shot prompting using Llama-3-8B-Instruct. The detailed numbers appear in the table below.
@@ -46,14 +54,30 @@ We agree that low-resource tasks deserve few-shot or in-context learning baselin
 _For financial certification tasks, there is no multi-task score as we consider them to be only one task due to similar
 format_
 
-### Three-shot analysis
+### Experiment
+
+For each test question, we randomly select three question answer pairs from the training set and use them for three shot
+prompting. The format is similar to the following: 
+```
+Instruction: what is the sentiment...
+Input: The prices...
+Answer: negative
+Input: Sales from...
+Answer: positive
+Input: The company...
+Answer: positive
+Input: The stock...
+Answer: 
+```
+
+### Analysis
 
 On average, three-shot prompting raises the base model score by roughly 10 points. Gains are most visible
 on certification and statement analysis tasks where the extra context helps the model recall domain knowledge.
 Three-shot prompting never matches LoRA single-task fine-tuning. The LoRA fine-tuned adapters still clearly outperform
 the three-shot baseline.
 
-## Single-Task vs. Multi-Task Fine-tuning
+## Q3 Single-Task vs. Multi-Task Fine-tuning
 
 We apologize for the lack of clarity in our paper. The original nine LoRA adapters obtained from single-task
 fine-tuning. They were listed in Table 2 of the Supplementary Material and are available on Hugging Face. We will state
@@ -83,7 +107,7 @@ divergent tasks often harm each other.
 
 ### Task similarity analysis
 
-We will compute cosine similarity between TF-IDF vectors of instruction texts and present the resulting matrix in the
+We will compute cosine similarity between instruction texts and present the resulting matrix in the
 supplementary materials. This analysis will help confirm that tasks with higher textual similarity also support positive
 transfer.
 

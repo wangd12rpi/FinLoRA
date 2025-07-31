@@ -12,7 +12,7 @@ running concurrent multi-task fine-tuning.
 Before fine-tuning we balanced every category. For smaller datasets we duplicated its samples to achieve random
 over-sampling. Final sample counts will be provided in the supplementary materials of the camera-ready version.
 
-We also introduced a three-shot prompting baseline.
+We also introduced a three-shot prompting baseline based on the suggestion from another reviewer.
 
 | **Datasets**                           | Llama 3.1 8B | **Llama 3.1 8B (3 shot)** | Llama 3.1 8B LoRA 8bit-r8 (Single-task) | **Llama 3.1 8B LoRA 8bit-r8 (Multi-task)** |
 |:---------------------------------------|:------------:|:-------------------------:|:---------------------------------------:|:------------------------------------------:|
@@ -49,6 +49,8 @@ format_
 
 ### Takeaways
 
+#### Single-task vs. Multi-task
+
 Multi-task fine-tuning produces clear gains in Financial Statement Analysis. Formula construction, formula
 calculation, Finance Bench, and financial math improve under the multi-task setting. These tasks share similar
 underlying knowledge like the structure of financial statements and numerical reasoning. Learning them together
@@ -61,9 +63,16 @@ objective. Even with balanced sampling, the model struggles to optimize for very
 Overall performance drops slightly when tasks are merged. Closely related tasks can benefit from joint training, while
 divergent tasks often harm each other.
 
+#### Three-shot prompting
+
+On average, three-shot prompting raises the base model score by roughly 10 points. Gains are most visible
+on certification and statement analysis tasks where the extra context helps the model recall domain knowledge.
+Three-shot prompting never matches LoRA single-task fine-tuning. The LoRA fine-tuned adapters still clearly outperform
+the three-shot baseline.
+
 ### Task similarity analysis
 
-We will compute cosine similarity between TF-IDF vectors of instruction texts and present the resulting matrix in the
+We will compute cosine similarity between instruction texts and present the resulting matrix in the
 supplementary materials. This analysis will help confirm that tasks with higher textual similarity also support positive
 transfer.
 
@@ -74,21 +83,11 @@ parameter efficient methods. Due to limited computation resource we could not co
 
 Full fine-tuning the Llama 3.1 8B model requires updating all ~8 billion of its parameters. LoRA
 setup (with rank 8) updates only ~4.7 million parameters - a reduction of over 1,700 times. We estimated full
-fine-tuning demands a multi-GPU server with over 120 GB of VRAM and takes 8 GPU hours per epoch per task, a resource
-beyond our budget.
+fine-tuning demands a multi-GPU server with over 120 GB of VRAM and takes 8 GPU hours per epoch per task. We therefore
+could not finish it within the rebuttal timeframe and we will add it as future work. 
 
 Our main contribution is a benchmark that compares several LoRA methods in the financial context. These methods remain
 the only practical option for financial institutions that have limited computational resources.
-
-## Concluding answers
-
-1. Could merging or restructuring tasks help:  
-   Only when subtasks share both format and objective, as shown by our new experiments. We will publish guidelines for
-   dataset merging on our documentation website and release per-category adapters on HuggingFace so that future work can
-   explore dynamic routing without retraining from scratch.
-
-2. Need for a full fine-tuning baseline:   
-   We could not provide results due to high computational cost.
 
 ---
 
