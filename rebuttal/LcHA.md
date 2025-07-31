@@ -122,7 +122,9 @@ sectors. We will add a remark to the dataset description that the dataset should
 fairness.
 
 ---
+
 [1] Q. Xie et al., "FinBen: A Holistic Financial Benchmark for Large Language Models," in Advances in Neural Information Processing Systems (NeurIPS 2024).
+
 ---
 
 We appreciate your feedback. Your comments led to a stronger benchmark.
