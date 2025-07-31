@@ -89,7 +89,7 @@ others.
 
 ## Q6 Domain Shift at Larger Ranks and Longer Training
 
-To further measure the effect of larger ranks and extended training, we will conduct new experiment that increase the
+To further measure the effect of larger ranks and extended training, we will conduct new experiments that increase the
 LoRA rank from 8 to 32 and trained on two representative financial tasks (Sentiment Analysis and XBRL Analysis) for 8
 epoch and measure the effects
 on general knowledge datasets. We will present the results for the camera-ready version.

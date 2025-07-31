@@ -9,7 +9,7 @@ Thank you for the constructive suggestions.
 | **1. Unfamiliarity with US GAAP tags and Hallucination** | Mis-tags \$2bn as `MajorityEquityInterest`     | `MajorityEquityInterest` is not part of the US GAAP taxonomy. The base model hallucinated and created an non-existing tag.                           | After seeing the US GAAP tags during the fine-tuning process, the model know the valid tag name.                   |
 | **2. Unfamiliarity with financial formula**              | Picks 1,209,000,000 instead of 125,978,000,000 | Base model did not know the formula of equality multiplier. `EquityMultiplier = Assets / Equity`, therefore did not select the correct assets value. | Fine-tuning exposed the LLM with relevant financial concepts and formula, allowing it to select the correct value. |
 
-Overall, LoRA succeeds because fine-tuning exposed the model with financial concepts.
+Overall, LoRA succeeds because fine-tuning exposed the model with financial concepts that the base model does not have.
 
 ## Q2 What are the most difficult points in financial data?
 
@@ -21,8 +21,9 @@ Financial data poses three main challenges:
 2. Mixed formats: A single report can contain narrative text, XML tags, tables, and raw numbers. The model must process
    information across these varied structures.
 
-3. Long context windows: XBRL documents remain lengthy even after boilerplate is removed. Inputs often reach about four
-   thousand tokens, and numbers required by the same formula may be thousands of tokens apart.
+3. Long context windows: XBRL documents remain lengthy even after excessive texts are removed. For example, in XBRL
+   Analysis, inputs often reach about four thousand tokens, and numbers required by the same formula may be thousands of
+   tokens apart.
 
 ## Q3 Future research directions in fine-tuning: what drives adaptation performance?
 
@@ -122,7 +123,7 @@ We have extended our “out-of-domain” suite beyond MMLU and GSM8K to addition
 | TriviaQA-Open |       0.667       |               0.663               |
 | CoQA          |                   |                                   |
 
-Overall we find minimal signs of catastrophic forgetting after the fine-tuning process.
+Overall, we find minimal signs of catastrophic forgetting after the fine-tuning process.
 
 ---
 
