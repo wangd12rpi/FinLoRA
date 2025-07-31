@@ -21,13 +21,13 @@ Running federated learning only on sentiment analysis was not sufficient. We the
 four-node federated setting covering four XBRL Analysis subtasks. The experiment uses one epoch (identical to the
 non-federated version) and 30 rounds.
 
-| Task             | Base  | Centralized LoRA | Federated LoRA |
-|:-----------------|:------|:-----------------|:---------------|
-| Tag-Extraction   | 69.16 | **89.13**        | 69.04          |
-| Value-Extraction | 52.46 | **98.49**        | 79.76          |
-| Formula-Constr.  | 19.92 | **77.61**        | 13.10          |
-| Formula-Calc.    | 27.27 | **98.68**        | 28.57          |
-| **Average**      | 42.20 | **90.98**        | 47.62          |
+| Task             |  Base  | Centralized LoRA  | Federated LoRA  |
+|:-----------------|:------:|:-----------------:|:---------------:|
+| Tag-Extraction   | 69.16  |     **89.13**     |      69.04      |
+| Value-Extraction | 52.46  |     **98.49**     |      79.76      |
+| Formula-Constr.  | 19.92  |     **77.61**     |      13.10      |
+| Formula-Calc.    | 27.27  |     **98.68**     |      28.57      |
+| **Average**      | 42.20  |     **90.98**     |      47.62      |
 
 Federated training noticeably improves value extraction, matches tag extraction and formula calculation, and slightly
 reduces formula construction. Overall, performance improves relative to the base model, although centralized LoRA still

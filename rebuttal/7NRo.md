@@ -85,12 +85,12 @@ We also evaluated Federated LoRA on the XBRL analysis tasks, a more complex scen
 sentiment-task experiment. The preliminary results are shown below, and we will extend this to the XBRL tagging task
 before the camera-ready submission.
 
-| Task             | Base      | Centralized LoRA | Federated LoRA |
-|------------------|-----------|------------------|----------------|
-| Tag-Extraction   | 69.16     | **89.13**        | 61.22          |
-| Value-Extraction | 52.46     | **98.49**        | 61.51          |
-| Formula-Constr.  | **19.92** | 77.61            | 15.48          |
-| Formula-Calc.    | **27.27** | 98.68            | 22.62          |
+| Task             |    Base     |  Centralized LoRA  |  Federated LoRA  |
+|------------------|:-----------:|:------------------:|:----------------:|
+| Tag-Extraction   |    69.16    |     **89.13**      |      61.22       |
+| Value-Extraction |    52.46    |     **98.49**      |      61.51       |
+| Formula-Constr.  |  **19.92**  |       77.61        |      15.48       |
+| Formula-Calc.    |  **27.27**  |       98.68        |      22.62       |
 
 Federated training noticeably improves value extraction, matches tag extraction and formula calculation, and slightly
 reduces formula construction. Overall, performance improves relative to the base model, although centralized LoRA still
