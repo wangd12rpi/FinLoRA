@@ -42,7 +42,6 @@ We also introduced a three-shot prompting baseline.
 | **Overall Average**                    |              |                           |                                         |                                            |
 | Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
-
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
 
 _For financial certification tasks, there is no multi-task score as we consider them to be only one task due to similar
@@ -68,10 +67,15 @@ We will compute cosine similarity between TF-IDF vectors of instruction texts an
 supplementary materials. This analysis will help confirm that tasks with higher textual similarity also support positive
 transfer.
 
-## Q2 Full fine-tuning vs LoRA baseline
+## Q2 Full-parameter fine-tuning vs LoRA baseline
 
 A full-parameter fine-tuning baseline would give an upper bound on performance and clarify the trade-off against
 parameter efficient methods. Due to limited computation resource we could not complete full fine-tuning.
+
+Full fine-tuning the Llama 3.1 8B model requires updating all ~8 billion of its parameters. LoRA
+setup (with rank 8) updates only ~4.7 million parameters - a reduction of over 1,700 times. We estimated full
+fine-tuning demands a multi-GPU server with over 120 GB of VRAM and takes 8 GPU hours per epoch per task, a resource
+beyond our budget.
 
 Our main contribution is a benchmark that compares several LoRA methods in the financial context. These methods remain
 the only practical option for financial institutions that have limited computational resources.
@@ -84,8 +88,7 @@ the only practical option for financial institutions that have limited computati
    explore dynamic routing without retraining from scratch.
 
 2. Need for a full fine-tuning baseline:   
-   We could not provide results due to high computational cost. 
-   
+   We could not provide results due to high computational cost.
 
 ---
 
