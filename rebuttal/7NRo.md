@@ -57,23 +57,24 @@ shot baseline. The detailed results are summarized below:
 | Finance Bench (BERTScore)              |    0.443     |           0.580           |                  0.511                  |                 **0.621**                  |
 | Financial Math                         |    11.00     |           32.00           |                  30.00                  |                 **58.00**                  |
 | **Overall Average**                    |              |                           |                                         |                                            |
-| Aggregated                             |    41.52     |           47.38           |                **72.96**                |                   65.69                    |
+| Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
-_Financial Certification Tasks are shown as a single task because they share the same format in our original
-submission._
 
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
 
-Multi-task fine-tuning produces clear gains in Financial Statement Analysis. Tasks such as formula construction, formula
-calculation, Finance Bench, and financial math improve under the multi-task setting. These tasks appear to share
-underlying knowledge like the structure of financial statements and basic numerical reasoning. Learning them together
-helps the model build a broader and more useful representation.
+_For financial certification tasks, there is no multi-task score as we consider them to be only one task due to similar
+format_
 
-In contrast we see negative transfer in General Financial and Financial Reporting tasks, where the multi-task model
+Multi-task fine-tuning produces clear gains in Financial Statement Analysis. Formula construction, formula
+calculation, Finance Bench, and financial math improve under the multi-task setting. These tasks share similar
+underlying knowledge like the structure of financial statements and numerical reasoning. Learning them together
+helps the model to achieve an enhanced understanding in these topics.
+
+In contrast, we see negative transfer in General Financial and Financial Reporting tasks, where the multi-task model
 performs worse on TFNS, Headline, FiNER, and FNXL. We suspect the problem comes from differences in task format and
-objective. Even with balanced sampling the model struggles to optimize for very different objectives at the same time.
+objective. Even with balanced sampling, the model struggles to optimize for very different objectives at the same time.
 
-Overall performance drops when unrelated tasks are merged. Closely related tasks can benefit from joint training, while
+Overall performance drops slightly when tasks are merged. Closely related tasks can benefit from joint training, while
 divergent tasks often harm each other.
 
 We plan to extend the multi-task experiment to other LoRA methods as well.
@@ -110,3 +111,18 @@ that are similar. This will mitigate some issues with too many adapters. The ove
 Overall we observed some knowledge transfer on some tasks and interference on other tasks.
 
 ## Q4 Additional Catastrophic Forgetting Experiments
+
+We have extended our “out-of-domain” suite beyond MMLU and GSM8K to additional general-knowledge benchmarks:
+
+| Benchmark     | Llama 3.1 8B Base | Llama 3.1 8B Fine-tuned for FiNER |
+|---------------|:-----------------:|:---------------------------------:|
+| MMLU          |       0.229       |               0.229               |
+| GSM8K         |       0.011       |               0.011               |
+| TriviaQA-Open |       0.667       |               0.663               |
+| CoQA          |                   |                                   |
+
+Overall we find minimal signs of catastrophic forgetting after the fine-tuning process.
+
+---
+
+We appreciate your feedback. Your comments led to a stronger benchmark.
