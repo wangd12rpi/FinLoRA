@@ -59,7 +59,6 @@ shot baseline. The detailed results are summarized below:
 | **Overall Average**                    |              |                           |                                         |                                            |
 | Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
-
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
 
 _For financial certification tasks, there is no multi-task score as we consider them to be only one task due to similar
@@ -83,7 +82,7 @@ We plan to extend the multi-task experiment to other LoRA methods as well.
 
 We also evaluated Federated LoRA on the XBRL analysis tasks, a more complex scenario compared to our earlier
 sentiment-task experiment. The preliminary results are shown below, and we will extend this to the XBRL tagging task
-before the camera-ready submission
+before the camera-ready submission.
 
 | Task             | Base      | Centralized LoRA | Federated LoRA |
 |------------------|-----------|------------------|----------------|
@@ -92,7 +91,9 @@ before the camera-ready submission
 | Formula-Constr.  | **19.92** | 77.61            | 15.48          |
 | Formula-Calc.    | **27.27** | 98.68            | 22.62          |
 
-*replace this text with results interpretation*
+Federated training noticeably improves value extraction, matches tag extraction and formula calculation, and slightly
+reduces formula construction. Overall, performance improves relative to the base model, although centralized LoRA still
+performs best.
 
 ### Adapter capacity: lora rank vs task complexity, how did it affect performance?
 
