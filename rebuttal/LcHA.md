@@ -4,13 +4,16 @@ Thank you for the constructive suggestions.
 
 ## Q1 Broader Catastrophic Forgetting Study
 
-We have extended our “out-of-domain” suite beyond MMLU and GSM8K to three additional knowledge-heavy benchmarks:
+We have extended our “out-of-domain” suite beyond MMLU and GSM8K to additional general-knowledge benchmarks:
 
-| Benchmark        | Metric | Zero-shot (LLM-3-8B) | LoRA-r8 single-task |
-|------------------|--------|----------------------|---------------------|
-| TriviaQA-Open    | EM     |                      |                     |
-| NaturalQuestions | F1     |                      |                     |
-| CoQA             | F1     |                      |                     |
+| Benchmark     | Llama 3.1 8B Base | Llama 3.1 8B Fine-tuned for FiNER |
+|---------------|:-----------------:|:---------------------------------:|
+| MMLU          |       0.229       |               0.229               |
+| GSM8K         |       0.011       |               0.011               |
+| TriviaQA-Open |       0.667       |               0.663               |
+| CoQA          |                   |                                   |
+
+Overall we find minimal signs of catastrophic forgetting after the fine-tuning process.
 
 ## Q2 Federated LoRA on Complex Tasks
 
@@ -35,37 +38,36 @@ performs best.
 | **Datasets**                           | **Llama 3.1 8B** Base | Ministral-8B Base | **Llama 3.1 8B LoRA 8bit-r8** (Single-task) | Ministral-8B LoRA 8bit-r8 (Single-task) |
 |:---------------------------------------|:---------------------:|:-----------------:|:-------------------------------------------:|:---------------------------------------:|
 | **General Financial Tasks**            |                       |                   |                                             |                                         |
-| FPB                                    |         68.73         |       73.08       |                  **85.64**                  |                  86.71                  |
-| FiQA SA                                |         46.55         |       52.86       |                    81.28                    |                  80.00                  |
+| FPB                                    |         68.73         |       73.08       |                    85.64                    |                **86.71**                |
+| FiQA SA                                |         46.55         |       52.86       |                  **81.28**                  |                  80.00                  |
 | TFNS                                   |         69.97         |       22.07       |                  **88.02**                  |                  45.85                  |
-| NWGI                                   |         43.86         |       21.25       |                  **54.16**                  |                  56.90                  |
+| NWGI                                   |         43.86         |       21.25       |                    54.16                    |                **56.90**                |
 | NER                                    |         48.89         |       58.61       |                  **98.05**                  |                  98.05                  |
-| Headline                               |         45.34         |       62.64       |                  **84.66**                  |                  97.51                  |
+| Headline                               |         45.34         |       62.64       |                    84.66                    |                **97.51**                |
 | **Financial Certification Tasks**      |                       |                   |                                             |                                         |
-| CFA 1                                  |         13.33         |       88.89       |                    86.67                    |                  87.77                  |
-| CFA 2                                  |         19.48         |       94.80       |                    88.31                    |                  94.80                  |
-| CFA 3                                  |         16.67         |       78.20       |                    70.51                    |                  78.20                  |
-| CPA                                    |         31.68         |       87.12       |                    80.20                    |                  91.08                  |
+| CFA 1                                  |         13.33         |     **88.89**     |                    86.67                    |                  87.77                  |
+| CFA 2                                  |         19.48         |     **94.80**     |                    88.31                    |                  94.80                  |
+| CFA 3                                  |         16.67         |     **78.20**     |                    70.51                    |                **78.20**                |
+| CPA                                    |         31.68         |       87.12       |                    80.20                    |                **91.08**                |
 | **Financial Reporting Tasks**          |                       |                   |                                             |                                         |
-| FiNER                                  |         21.28         |       00.27       |                  **74.10**                  |                                         |
-| FNXL                                   |         3.64          |       00.00       |                  **23.57**                  |                                         |
-| XBRL Term (BERTScore)                  |         0.574         |       00.56       |                    0.599                    |                  0.672                  |
+| FiNER                                  |         21.28         |       22.62       |                  **74.10**                  |                  69.56                  |
+| FNXL                                   |         03.64         |       02.55       |                    23.57                    |                **33.67**                |
+| XBRL Term (BERTScore)                  |         0.574         |       0.563       |                    0.599                    |                **0.672**                |
 | **Financial Statement Analysis Tasks** |                       |                   |                                             |                                         |
 | Tag Extraction                         |         69.16         |       74.15       |                  **89.13**                  |                  84.51                  |
-| Value Extraction                       |         52.46         |       74.21       |                  **98.49**                  |                  98.80                  |
-| Formula Construction                   |         12.92         |       11.91       |                    77.61                    |                  62.39                  |
-| Formula Calculation                    |         27.27         |       47.62       |                    98.68                    |                  48.50                  |
-| Finance Bench (BERTScore)              |         0.443         |       0.584       |                    0.511                    |                  0.617                  |
-| Financial Math                         |         11.00         |       36.00       |                    30.00                    |                  0.464                  |
+| Value Extraction                       |         52.46         |       74.21       |                    98.49                    |                **98.80**                |
+| Formula Construction                   |         12.92         |       11.91       |                  **77.61**                  |                  62.39                  |
+| Formula Calculation                    |         27.27         |       47.62       |                  **98.68**                  |                  48.50                  |
+| Finance Bench (BERTScore)              |         0.443         |       0.584       |                    0.511                    |                **0.617**                |
+| Financial Math                         |         11.00         |       36.00       |                    30.00                    |                **46.00**                |
 | **Overall Average**                    |                       |                   |                                             |                                         |
-| Aggregated                             |         37.05         |       52.53       |                  **74.74**                  |                                         |
+| Aggregated                             |         37.05         |       53.86       |                  **74.74**                  |                  73.12                  |
 
 The Ministral-8B base model outperforms the Llama 3.1 base on several financial tasks (e.g., FPB,
-Headline) but underperforms on TFNS and some reporting benchmarks. Overall Ministral-8b performs better than Llama 3.1
-8B base. After single-task
-LoRA fine-tuning, the Ministral variant gains sizeable improvements on most tasks—often close to the tuned
-Llama model and in a few cases surpassing it (e.g., FPB, Value Extraction). However, performance remains uneven on tasks
-where the base was already weak (TFNS, Formula Calculation). 
+Headline) but underperforms on TFNS and some reporting benchmarks. Overall, Ministral-8b performs better than Llama 3.1
+8B base significantly. After single-task LoRA fine-tuning, the Ministral variant still gains sizable improvements on
+most tasks—often close to the tuned Llama model and in a few cases surpassing it (e.g., FPB, Value Extraction). Overall,
+the fine-tuned ministral and llama 8B have very similar performance.
 
 ## Q4 Task Difficulty & Ground-Truth Validity
 
@@ -118,3 +120,8 @@ framework to derive fairness test cases from financial statement analysis.
 selecting US GAAP tags. However, we note potential coverage bias—e.g., Dow Jones 30 firms over‑represent certain
 sectors. We will add a remark to the dataset description that the dataset should not be used to benchmark sector‑level
 fairness.
+
+
+---
+
+We appreciate your feedback. Your comments led to a stronger benchmark.

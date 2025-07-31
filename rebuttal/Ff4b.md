@@ -9,9 +9,8 @@ Thank you for the constructive suggestions.
 We trained three new LoRA adapters (rank 8, 8-bit) by merging the training sets within each original task category and
 running concurrent multi-task fine-tuning.
 
-Before fine-tuning we balanced every category. When one dataset was much larger than the rest we performed random
-under-sampling. When a dataset was much smaller we duplicated its samples to achieve random over-sampling. Final sample
-counts will be provided in the supplementary materials of the camera-ready version.
+Before fine-tuning we balanced every category. For smaller datasets we duplicated its samples to achieve random
+over-sampling. Final sample counts will be provided in the supplementary materials of the camera-ready version.
 
 We also introduced a three-shot prompting baseline.
 
@@ -41,25 +40,26 @@ We also introduced a three-shot prompting baseline.
 | Finance Bench (BERTScore)              |    0.443     |           0.580           |                  0.511                  |                 **0.621**                  |
 | Financial Math                         |    11.00     |           32.00           |                  30.00                  |                 **58.00**                  |
 | **Overall Average**                    |              |                           |                                         |                                            |
-| Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   65.69                    |
+| Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
-_Financial Certification Tasks are shown as a single task because they share the same format in our original
-submission._
 
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
 
+_For financial certification tasks, there is no multi-task score as we consider them to be only one task due to similar
+format_
+
 ### Takeaways
 
-Multi-task fine-tuning produces clear gains in Financial Statement Analysis. Tasks such as formula construction, formula
-calculation, Finance Bench, and financial math improve under the multi-task setting. These tasks appear to share
-underlying knowledge like the structure of financial statements and basic numerical reasoning. Learning them together
-helps the model build a broader and more useful representation.
+Multi-task fine-tuning produces clear gains in Financial Statement Analysis. Formula construction, formula
+calculation, Finance Bench, and financial math improve under the multi-task setting. These tasks share similar
+underlying knowledge like the structure of financial statements and numerical reasoning. Learning them together
+helps the model to achieve an enhanced understanding in these topics.
 
 In contrast, we see negative transfer in General Financial and Financial Reporting tasks, where the multi-task model
 performs worse on TFNS, Headline, FiNER, and FNXL. We suspect the problem comes from differences in task format and
-objective. Even with balanced sampling the model struggles to optimize for very different objectives at the same time.
+objective. Even with balanced sampling, the model struggles to optimize for very different objectives at the same time.
 
-Overall performance drops when unrelated tasks are merged. Closely related tasks can benefit from joint training, while
+Overall performance drops slightly when tasks are merged. Closely related tasks can benefit from joint training, while
 divergent tasks often harm each other.
 
 ### Task similarity analysis
@@ -70,23 +70,23 @@ transfer.
 
 ## Q2 Full fine-tuning vs LoRA baseline
 
-A full-parameter fine-tuning baseline would indeed give an upper bound on performance and clarify the trade-off against
-parameter efficient methods. Due to limited compute we could not finish full fine-tuning before the rebuttal deadline.
-We have started a full fine-tuning run for XBRL Analysis and plan to include the results in the camera-ready version.
+A full-parameter fine-tuning baseline would give an upper bound on performance and clarify the trade-off against
+parameter efficient methods. Due to limited computation resource we could not complete full fine-tuning.
 
-Our main contribution is a benchmark that compares several parameter efficient approaches such as LoRA, QLoRA, and DoRA
-in a demanding financial context. These methods remain the only practical option for many financial institutions that
-lack large compute clusters.
+Our main contribution is a benchmark that compares several LoRA methods in the financial context. These methods remain
+the only practical option for financial institutions that have limited computational resources.
 
 ## Concluding answers
 
 1. Could merging or restructuring tasks help:  
    Only when subtasks share both format and objective, as shown by our new experiments. We will publish guidelines for
-   dataset merging on our documentation website and release per category adapters on HuggingFace so that future work can
+   dataset merging on our documentation website and release per-category adapters on HuggingFace so that future work can
    explore dynamic routing without retraining from scratch.
 
 2. Need for a full fine-tuning baseline:   
-   We could not provide results within the rebuttal period but have already begun full fine-tuning on XBRL Analysis.
-   Results will appear in the camera-ready version.
+   We could not provide results due to high computational cost. 
+   
 
-We appreciate your feedback. Your comments led to a clearer view of inter-task transfer and a stronger benchmark.
+---
+
+We appreciate your feedback. Your comments led to a stronger benchmark.
