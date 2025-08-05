@@ -46,7 +46,7 @@ We agree that low-resource tasks deserve few-shot or in-context learning baselin
 | Formula Calculation                    |    27.27     |           33.65           |                  98.68                  |                 **99.04**                  |
 | Finance Bench (BERTScore)              |    0.443     |           0.580           |                  0.511                  |                 **0.621**                  |
 | Financial Math                         |    11.00     |           32.00           |                  30.00                  |                 **58.00**                  |
-| **Overall Average**                    |              |                           |                                         |                                            |
+| **Overall Average**  (Using BERTScore F1 × 100)                  |              |                           |                                         |                                            |
 | Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
@@ -102,7 +102,7 @@ In contrast, we see negative transfer in General Financial and Financial Reporti
 performs worse on TFNS, Headline, FiNER, and FNXL. We suspect the problem comes from differences in task format and
 objective. Even with balanced sampling, the model struggles to optimize for very different objectives at the same time.
 
-Overall performance drops slightly when tasks are merged. Closely related tasks can benefit from joint training, while
+Overall, performance drops by 11 points when tasks are merged. Closely related tasks can benefit from joint training, while
 divergent tasks often harm each other.
 
 ### Task similarity analysis
