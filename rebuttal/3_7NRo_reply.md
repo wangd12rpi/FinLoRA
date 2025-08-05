@@ -29,8 +29,7 @@ The results show a clear correlation between the similarity of LoRA adapters and
   constructive.
 
 - Negative Interference: The General Financial and Financial Reporting tasks and have low similarity
-  scores (0.0043 and 0.0048). This dissimilarity leads to interference (or catastrophic
-  forgetting) in the multi-task setting, causing a significant performance drop of -29.85 and -27.22 points compared to
+  scores (0.0043 and 0.0048). This dissimilarity leads to interference in the multi-task setting, causing a significant performance drop of -29.85 and -27.22 points compared to
   their single-task counterparts. This indicates that the parameter updates required for these tasks are conflicting.
 
 ## A Benchmark for Alleviating Interference
