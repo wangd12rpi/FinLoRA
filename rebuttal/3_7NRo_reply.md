@@ -29,7 +29,8 @@ The results show a clear correlation between the similarity of LoRA adapters and
   constructive.
 
 - Negative Interference: The General Financial and Financial Reporting tasks and have low similarity
-  scores (0.0043 and 0.0048). This dissimilarity leads to interference in the multi-task setting, causing a significant performance drop of -29.85 and -27.22 points compared to
+  scores (0.0043 and 0.0048). This dissimilarity leads to interference in the multi-task setting, causing a significant
+  performance drop of -29.85 and -27.22 points compared to
   their single-task counterparts. This indicates that the parameter updates required for these tasks are conflicting.
 
 ## A Benchmark for Alleviating Interference
@@ -38,11 +39,11 @@ While our benchmark itself does not actively alleviate interference, Its structu
 controlled environment for developing and validating methods that do.
 
 To ensure we fully address your concern, could you please clarify what you mean by "provide unique problems to
-alleviate the interference of LoRA?" For example, are you referring to creating a specific training dataset that inherently
+alleviate the interference of LoRA?" For example, are you referring to creating a specific training dataset that
+inherently
 reduces interference? Your clarification would be invaluable for us to improve our work.
 
-In the meantime, we will proceed with an experiment to see if increasing the LoRA rank, which provides more model
-capacity, can help mitigate the negative interference we observed. We can share these results during the discussion
-period.
+---
 
+Thank you again for your valuable feedback. 
 
