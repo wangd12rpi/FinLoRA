@@ -10,8 +10,8 @@ from pathlib import Path
 # Define the base Axolotl YAML configuration structure as a Python dictionary
 # We will override parts of this with values from the JSON config
 AXOLOTL_YAML_TEMPLATE = {
-    "base_model": "NousResearch/Meta-Llama-3.1-8B-Instruct",  # Placeholder, will be overridden
-    "model_type": "LlamaForCausalLM",  # Adjust if base model is not Llama
+    "base_model": "placeholder-model",  # Placeholder, will be overridden
+    "model_type": "AutoModelForCausalLM",  # Will be set based on model type
     "tokenizer_type": "AutoTokenizer",
     "gradient_accumulation_steps": 4,  # Placeholder
     "micro_batch_size": 2,  # Placeholder
@@ -116,7 +116,6 @@ def load_config(json_path):
 def generate_axolotl_yaml(run_config, run_name, template):
     """Generates the specific Axolotl YAML config dictionary for a run."""
     yaml_config = template.copy()  # Start with the template
-    print("*****CONFIG******\n", yaml_config, "\n", "*" * 10)
     # --- Override template values with JSON config ---
     yaml_config['base_model'] = run_config.get('base_model', template['base_model'])
     yaml_config['gradient_accumulation_steps'] = run_config.get('gradient_accumulation_steps',
@@ -172,11 +171,16 @@ def generate_axolotl_yaml(run_config, run_name, template):
     # Wandb name
     yaml_config['wandb_name'] = run_name
 
-    # Model/Tokenizer specific adjustments (Example for Llama 3)
+    # Model/Tokenizer specific adjustments
     # Add more model-specific checks if needed
     if "Llama-3" in yaml_config['base_model']:
         yaml_config['chat_template'] = "llama3"
         yaml_config['model_type'] = "LlamaForCausalLM"
+        yaml_config['tokenizer_type'] = "LlamaTokenizerFast"
+        yaml_config['special_tokens']['pad_token'] = "<|end_of_text|>"
+    elif "mistral" in yaml_config['base_model'].lower():
+        yaml_config['model_type'] = "AutoModelForCausalLM"  # Use AutoModelForCausalLM for Mistral
+        yaml_config['tokenizer_type'] = "AutoTokenizer"  # Use AutoTokenizer for Mistral
         yaml_config['special_tokens']['pad_token'] = "<|end_of_text|>"
 
 
@@ -196,6 +200,7 @@ def generate_axolotl_yaml(run_config, run_name, template):
     #    yaml_config['datasets'][0]['type']['format'] = dataset_format_overrides['format']
     # ... etc for other format fields ...
 
+    print("*****FINAL CONFIG******\n", yaml_config, "\n", "*" * 10)
     return yaml_config
 
 
