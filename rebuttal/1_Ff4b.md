@@ -14,33 +14,33 @@ over-sampling. Final sample counts will be provided in the supplementary materia
 
 We also introduced a three-shot prompting baseline based on the suggestion from another reviewer.
 
-| **Datasets**                           | Llama 3.1 8B | **Llama 3.1 8B (3 shot)** | Llama 3.1 8B LoRA 8bit-r8 (Single-task) | **Llama 3.1 8B LoRA 8bit-r8 (Multi-task)** |
-|:---------------------------------------|:------------:|:-------------------------:|:---------------------------------------:|:------------------------------------------:|
-| **General Financial Tasks**            |              |                           |                                         |                                            |
-| FPB                                    |    68.73     |           76.40           |                **85.64**                |                   85.31                    |
-| FiQA SA                                |    46.55     |           64.68           |                  81.28                  |                 **82.20**                  |
-| TFNS                                   |    69.97     |           28.81           |                **88.02**                |                   34.51                    |
-| NWGI                                   |    43.86     |           32.20           |                **54.16**                |                   36.51                    |
-| NER                                    |    48.89     |           55.34           |                **98.05**                |                   76.07                    |
-| Headline                               |    45.34     |           70.01           |                **84.66**                |                   13.90                    |
-| **Financial Certification Tasks**      |              |                           |                                         |                                            |
-| CFA 1                                  |    13.33     |           51.11           |                **86.67**                |                     -                      |
-| CFA 2                                  |    19.48     |           37.66           |                **88.31**                |                     -                      |
-| CFA 3                                  |    16.67     |           51.28           |                **70.51**                |                     -                      |
-| CPA                                    |    31.68     |           45.54           |                **80.20**                |                     -                      |
-| **Financial Reporting Tasks**          |              |                           |                                         |                                            |
-| FiNER                                  |    21.28     |           30.76           |                **74.10**                |                    0.41                    |
-| FNXL                                   |     3.64     |           13.15           |                **23.57**                |                    0.00                    |
-| XBRL Term (BERTScore)                  |    0.574     |           0.595           |                  0.599                  |                 **0.676**                  |
-| **Financial Statement Analysis Tasks** |              |                           |                                         |                                            |
-| Tag Extraction                         |    69.16     |           70.22           |                **89.13**                |                   88.78                    |
-| Value Extraction                       |    52.46     |           72.27           |                **98.49**                |                   97.62                    |
-| Formula Construction                   |    12.92     |           17.73           |                  77.61                  |                 **83.33**                  |
-| Formula Calculation                    |    27.27     |           33.65           |                  98.68                  |                 **99.04**                  |
-| Finance Bench (BERTScore)              |    0.443     |           0.580           |                  0.511                  |                 **0.621**                  |
-| Financial Math                         |    11.00     |           32.00           |                  30.00                  |                 **58.00**                  |
-| **Overall Average**                    |              |                           |                                         |                                            |
-| Aggregated                             |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
+| **Datasets**                                                   | Llama 3.1 8B | **Llama 3.1 8B (3 shot)** | Llama 3.1 8B LoRA 8bit-r8 (Single-task) | **Llama 3.1 8B LoRA 8bit-r8 (Multi-task)** |
+|:---------------------------------------------------------------|:------------:|:-------------------------:|:---------------------------------------:|:------------------------------------------:|
+| **General Financial Tasks**                                    |              |                           |                                         |                                            |
+| FPB                                                            |    68.73     |           76.40           |                **85.64**                |                   85.31                    |
+| FiQA SA                                                        |    46.55     |           64.68           |                  81.28                  |                 **82.20**                  |
+| TFNS                                                           |    69.97     |           28.81           |                **88.02**                |                   34.51                    |
+| NWGI                                                           |    43.86     |           32.20           |                **54.16**                |                   36.51                    |
+| NER                                                            |    48.89     |           55.34           |                **98.05**                |                   76.07                    |
+| Headline                                                       |    45.34     |           70.01           |                **84.66**                |                   13.90                    |
+| **Financial Certification Tasks**                              |              |                           |                                         |                                            |
+| CFA 1                                                          |    13.33     |           51.11           |                **86.67**                |                     -                      |
+| CFA 2                                                          |    19.48     |           37.66           |                **88.31**                |                     -                      |
+| CFA 3                                                          |    16.67     |           51.28           |                **70.51**                |                     -                      |
+| CPA                                                            |    31.68     |           45.54           |                **80.20**                |                     -                      |
+| **Financial Reporting Tasks**                                  |              |                           |                                         |                                            |
+| FiNER                                                          |    21.28     |           30.76           |                **74.10**                |                    0.41                    |
+| FNXL                                                           |     3.64     |           13.15           |                **23.57**                |                    0.00                    |
+| XBRL Term (BERTScore)                                          |    0.574     |           0.595           |                  0.599                  |                 **0.676**                  |
+| **Financial Statement Analysis Tasks**                         |              |                           |                                         |                                            |
+| Tag Extraction                                                 |    69.16     |           70.22           |                **89.13**                |                   88.78                    |
+| Value Extraction                                               |    52.46     |           72.27           |                **98.49**                |                   97.62                    |
+| Formula Construction                                           |    12.92     |           17.73           |                  77.61                  |                 **83.33**                  |
+| Formula Calculation                                            |    27.27     |           33.65           |                  98.68                  |                 **99.04**                  |
+| Finance Bench (BERTScore)                                      |    0.443     |           0.580           |                  0.511                  |                 **0.621**                  |
+| Financial Math                                                 |    11.00     |           32.00           |                  30.00                  |                 **58.00**                  |
+| **Overall Average** (Using BERTScore F1 × 100)                 |              |                           |                                         |                                            |
+| Aggregated                                                     |    37.05     |           47.38           |                **74.74**                |                   63.74                    |
 
 *Due to character limit, the table only lists Accuracy. For BERTScore we report the F1 value.*
 
@@ -60,7 +60,7 @@ In contrast, we see negative transfer in General Financial and Financial Reporti
 performs worse on TFNS, Headline, FiNER, and FNXL. We suspect the problem comes from differences in task format and
 objective. Even with balanced sampling, the model struggles to optimize for very different objectives at the same time.
 
-Overall performance drops slightly when tasks are merged. Closely related tasks can benefit from joint training, while
+Overall performance drops by 10 points when tasks are merged. Closely related tasks can benefit from joint training, while
 divergent tasks often harm each other.
 
 #### Three-shot prompting

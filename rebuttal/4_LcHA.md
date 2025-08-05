@@ -60,7 +60,7 @@ performs best.
 | Formula Calculation                    |       27.27       |       47.62       |                **98.68**                |                  48.50                  |
 | Finance Bench (BERTScore)              |       0.443       |       0.584       |                  0.511                  |                **0.617**                |
 | Financial Math                         |       11.00       |       36.00       |                  30.00                  |                **46.00**                |
-| **Overall Average**                    |                   |                   |                                         |                                         |
+| **Overall Average** (Using BERTScore F1 × 100)                   |                   |                   |                                         |                                         |
 | Aggregated                             |       37.05       |       53.86       |                **74.74**                |                  73.12                  |
 
 The Ministral-8B base model outperforms the Llama 3.1 base on several financial tasks (e.g., FPB,
