@@ -1,29 +1,14 @@
-_**reviewer comments: **
-Thank you for the additional experiments and analysis.
-
-I have few questions based on the added results.
-
-1. For financial certification tasks, doesn't it also include two categories, Analyst Exam and Accountant Exam, based on
-   the Table 2? Otherwise, shouldn't it will be 8 LoRA adapter instead of 9 based on the task type?
-
-2. Does the results within the Financial Reporting Task indicate adding the training data of XBRL Term will make the
-   fine-tuned model perform even worse than the original model? Can the authors also show the zero/three-shots
-   performance of the model solely fine-tuned on XBRL Term, on the FiNER and FNXL tasks?
-
-3. If the adding the training data from some tasks will decrease the overall performance within the task category, what
-   is the meaning to include them in the same category?
-
--------------------------------
--------------------------------
 Dear Reviewer,
 
 Thank you for your insightful questions.
 
 ### Regarding Q1: Clarification on LoRA Adapters and Task Categorization
 
-You are correct that our "Financial Certification" category includes both the Analyst (CFA) and Accountant (CPA) exams.
-While their subjects differ, their mock exam formats are nearly identical (multiple-choice questions). Due to this
-structural similarity, we merged them into one "Certification" task for fine-tuning, hence a single LoRA adapter.
+You are correct that our "Financial Certification" category includes both the Analyst mock exam (CFA) and the regulation
+section of the Accountant mock exam (CPA REG). However, the dataset we used has a clear focus on regulations/ethics,
+and their formats are nearly identical (multiple-choice questions). Due to the subject and structural similarity, we
+consider them a single task, hence a single LoRA adapter. We apologize for the lack of clarity, and we will make sure to
+emphasize this in the camera-ready version.
 
 The table below clarifies the 9 single-task LoRA adapters used in our study.
 
@@ -73,17 +58,16 @@ reasoning behind each tag choice. We plan to explore this for the camera-ready v
 
 ### Regarding Q3: Rationale for Task Categorization
 
-Our task categories are based on **financial domain application**
-to create an intuitive framework for the finance sector.
+We based our task categories on financial domain application to provide an intuitive framework for the finance sector.
+However, we acknowledge this conceptual grouping doesn't guarantee positive transfer during multi-task training. As our
+results show, disparate task formats within a single category can lead to negative transfer.
 
-We acknowledge this conceptual grouping does not guarantee positive transfer for multi-task training. As shown, tasks
-within a category can have disparate formats, leading to negative transfer.
-
-For the camera-ready version, we will add a discussion on an alternative grouping to guide readers on
-which tasks are best suited for multi-task fine-tuning.
+To address this for the camera-ready version, we will introduce a discussion on alternative groupings to guide readers
+on which tasks are best suited for multi-task fine-tuning. Furthermore, we will conduct more comprehensive multi-task
+experiments and release the resulting high-performing merged datasets on Hugging Face.
 
 Thank you again for your constructive feedback.
 
 Sincerely,
 
-The Authors_
+The Authors
