@@ -1,4 +1,4 @@
-# Append the following after the last paragraph in the section `## Expanded Model Diversity` in the summary
+# Append the following to the last paragraph of section `## Expanded Model Diversity` in the summary
 
 Furthermore, we have begun evaluating and fine-tuning the newly released **`GPT-oss-20B`** model. Due to the tight
 rebuttal timeframe, we have only completed the fine-tuning for the sentiment analysis task so far. The initial results
