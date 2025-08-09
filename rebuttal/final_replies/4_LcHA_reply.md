@@ -17,7 +17,7 @@ We have also added the experiment you requested with a higher LoRA rank (rank 32
 | TriviaQA-Open (F1) |      0.667      |            0.658            |            0.673             |               0.666               |            0.663            |             0.663             |
 | CoQA (F1)          |      0.711      |            0.709            |            0.697             |               0.715               |            0.707            |             0.715             |
 
-This new results indicates that, even at larger ranks, LoRA introduce negligible
+This new result indicates that, even at larger ranks, LoRA introduce negligible
 catastrophic forgetting: they preserve broad knowledge learned during pre-training while still enabling gains on the
 in-domain financial tasks.
 
