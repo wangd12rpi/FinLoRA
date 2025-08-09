@@ -13,9 +13,9 @@ We have also added the experiment you requested with a higher LoRA rank (rank 32
 | Benchmark          | Llama-3 8B Base | FiNER – LoRA (8-bit, r = 8) | FiNER – QLoRA (4-bit, r = 4) | **FiNER – QLoRA (4-bit, r = 32)** | FiNER – DoRA (8-bit, r = 8) | FiNER – rsLoRA (8-bit, r = 8) |
 |:-------------------|:---------------:|:---------------------------:|:----------------------------:|:---------------------------------:|:---------------------------:|:-----------------------------:|
 | MMLU               |      0.229      |            0.229            |            0.229             |               0.229               |            0.229            |             0.229             |
-| GSM8K              |      0.011      |            0.011            |            0.014             |                 —                 |            0.011            |             0.016             |
-| TriviaQA-Open (F1) |      0.667      |            0.658            |            0.673             |               0.666               |            0.663            |             0.663             |
-| CoQA (F1)          |      0.711      |            0.709            |            0.697             |               0.715               |            0.707            |             0.715             |
+| GSM8K              |      0.011      |            0.011            |            0.014             |               0.099               |            0.011            |           **0.016**           |
+| TriviaQA-Open (F1) |      0.667      |            0.658            |          **0.673**           |               0.666               |            0.663            |             0.663             |
+| CoQA (F1)          |      0.711      |            0.709            |            0.697             |             **0.715**             |            0.707            |           **0.715**           |
 
 This new result indicates that, even at larger ranks, LoRA introduce negligible
 catastrophic forgetting: they preserve broad knowledge learned during pre-training while still enabling gains on the
